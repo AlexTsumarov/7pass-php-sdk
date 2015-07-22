@@ -2,5 +2,9 @@
     "require": {
         "rmccue/requests": ">=1.0",
         "namshi/jose": "~5.0"
+    },
+    "require-dev": {
+        "php-vcr/php-vcr": "~1.2",
+        "php-vcr/phpunit-testlistener-vcr": "~1.1"
     }
 }
