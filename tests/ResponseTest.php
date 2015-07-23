@@ -59,13 +59,18 @@ class ResponseTest extends PHPUnit_Framework_TestCase
     $this->assertEquals(400, $response->code);
   }
 
-  public function testSuccessFromGuzzle() {
+  private function mockedResponse($status_code, $body) {
     $mock = new MockHandler([
-      new Psr7Response(200, [], '{"status":"success","data":{"available":true}}'),
+      new Psr7Response($status_code, [], $body),
     ]);
+
     $handler = HandlerStack::create($mock);
-    $client = new Client(['handler' => $handler]);
-    $r = $client->get('/');
+    $client = new Client(['handler' => $handler, 'http_errors' => false]);
+    return $client->get('/');
+  }
+
+  public function testSuccessFromGuzzle() {
+    $r = $this->mockedResponse(200, '{"status":"success","data":{"available":true}}');
 
     $response = Response::fromGuzzlehttpResponse($r);
     $this->assertEquals(true, $response->data->available);
@@ -75,12 +80,7 @@ class ResponseTest extends PHPUnit_Framework_TestCase
   }
 
   public function testErrorFromGuzzle() {
-    $mock = new MockHandler([
-      new Psr7Response(400, [], '{"status":"error","error":{"message":"invalid_request","status":400,"detail":"username is a mandatory parameter for this action"}}'),
-    ]);
-    $handler = HandlerStack::create($mock);
-    $client = new Client(['handler' => $handler, 'http_errors' => false]);
-    $r = $client->get('/');
+    $r = $this->mockedResponse(400, '{"status":"error","error":{"message":"invalid_request","status":400,"detail":"username is a mandatory parameter for this action"}}');
 
     $response = Response::fromGuzzlehttpResponse($r);
     $this->assertEquals('invalid_request', $response->error->message);
