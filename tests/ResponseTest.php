@@ -2,6 +2,10 @@
 
 use \P7\SSO\Response;
 use \GuzzleHttp\Client;
+use \GuzzleHttp\Handler\MockHandler;
+use \GuzzleHttp\Psr7\Response as Psr7Response;
+use \GuzzleHttp\HandlerStack;
+
 
 class ResponseTest extends PHPUnit_Framework_TestCase
 {
@@ -55,19 +59,13 @@ class ResponseTest extends PHPUnit_Framework_TestCase
     $this->assertEquals(400, $response->code);
   }
 
-  /**
-   * @vcr valid_response
-   */
   public function testSuccessFromGuzzle() {
-    $client = new Client();
-    $r = $client->post('http://sso.7pass.dev/api/session/checkUsername', array(
-      'form_params' => array(
-        'username' => 'fancy_nick',
-        'flags' => array(
-          'client_id' => '55b0b8964a616e16b9320000'
-        )
-      )
-    ));
+    $mock = new MockHandler([
+      new Psr7Response(200, [], '{"status":"success","data":{"available":true}}'),
+    ]);
+    $handler = HandlerStack::create($mock);
+    $client = new Client(['handler' => $handler]);
+    $r = $client->get('/');
 
     $response = Response::fromGuzzlehttpResponse($r);
     $this->assertEquals(true, $response->data->available);
@@ -76,19 +74,13 @@ class ResponseTest extends PHPUnit_Framework_TestCase
     $this->assertEquals(200, $response->code);
   }
 
-  /**
-   * @vcr invalid_response
-   */
   public function testErrorFromGuzzle() {
-    $client = new Client();
-    $r = $client->post('http://sso.7pass.dev/api/session/checkUsername', array(
-      'form_params' => array(
-        'flags' => array(
-          'client_id' => '55b0b8964a616e16b9320000'
-        )
-      ),
-      'http_errors' => false
-    ));
+    $mock = new MockHandler([
+      new Psr7Response(400, [], '{"status":"error","error":{"message":"invalid_request","status":400,"detail":"username is a mandatory parameter for this action"}}'),
+    ]);
+    $handler = HandlerStack::create($mock);
+    $client = new Client(['handler' => $handler, 'http_errors' => false]);
+    $r = $client->get('/');
 
     $response = Response::fromGuzzlehttpResponse($r);
     $this->assertEquals('invalid_request', $response->error->message);
