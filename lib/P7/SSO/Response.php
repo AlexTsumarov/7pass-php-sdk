@@ -14,7 +14,6 @@ class Response {
 
     $result = json_decode($raw);
 
-
     if(isset($result->error)) {
       $error = $result->error;
 
