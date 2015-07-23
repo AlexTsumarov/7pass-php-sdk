@@ -1,0 +1,34 @@
+
+-
+    request:
+        method: POST
+        url: 'http://sso.7pass.dev/api/session/checkUsername'
+        headers:
+            Host: sso.7pass.dev
+            Expect: null
+            Accept-Encoding: null
+            User-Agent: 'GuzzleHttp/6.0.2 curl/7.37.1 PHP/5.6.11'
+            Content-Type: application/x-www-form-urlencoded
+            Accept: null
+        body: flags%5Bclient_id%5D=55b0b8964a616e16b9320000
+    response:
+        status:
+            http_version: '1.1'
+            code: '400'
+            message: 'Bad Request'
+        headers:
+            server: nginx/1.8.0
+            date: 'Thu, 23 Jul 2015 16:13:04 GMT'
+            content-type: 'application/json; charset=utf-8'
+            content-length: '130'
+            connection: keep-alive
+            x-request-id: 342304bc-74bc-4b73-af9f-b7c4d53e736a
+            access-control-allow-origin: '*'
+            access-control-allow-methods: 'GET,HEAD,PUT,POST,DELETE'
+            cache-control: 'no-store, no-cache'
+            x-content-type-options: nosniff
+            x-download-options: noopen
+            x-xss-protection: '1; mode=block'
+            x-frame-options: DENY
+            x-response-time: 3ms
+        body: '{"status":"error","error":{"message":"invalid_request","status":400,"detail":"username is a mandatory parameter for this action"}}'

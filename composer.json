@@ -1,4 +1,7 @@
 {
+    "autoload": {
+        "psr-4": {"P7\\": "lib/P7/"}
+    },
     "require": {
         "namshi/jose": "~5.0",
         "guzzlehttp/guzzle": "~6.0"
