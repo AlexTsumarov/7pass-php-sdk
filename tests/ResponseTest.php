@@ -40,7 +40,7 @@ class ResponseTest extends PHPUnit_Framework_TestCase
     $response = new Response(200, $body);
 
     $this->assertEquals($body, $response->raw);
-    $this->assertEquals((object)array('unsubscribed' => true), $response->data);
+    $this->assertEquals((object)['unsubscribed' => true], $response->data);
     $this->assertEquals(null, $response->error);
     $this->assertEquals(true, $response->success);
     $this->assertEquals(200, $response->code);

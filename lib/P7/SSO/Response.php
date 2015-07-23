@@ -19,16 +19,16 @@ class Response {
       $error = $result->error;
 
       if(is_object($error)) {
-        $ret = array(
+        $ret = [
           'message' => $error->message,
           'description' => $error->detail
           // TODO: + status ?
-        );
+        ];
       } else {
-        $ret = array(
+        $ret = [
           'message' => $error,
           'description' => $result->error_description
-        );
+        ];
       }
 
       $this->error = (object)$ret;
