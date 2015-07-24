@@ -9,8 +9,8 @@ use \GuzzleHttp\Psr7\Response;
 class HttpTest extends PHPUnit_Framework_TestCase
 {
   /**
-   * @vcr http_data_merge_get
-   */
+  * @vcr http_data_merge_get
+  */
   public function testDataMergeGet() {
     $client = new Http(['data' => ['foo' => 'bar']]);
     $response = $client->get('http://httpbin.org/get', ['bar' => 'baz']);
@@ -21,8 +21,8 @@ class HttpTest extends PHPUnit_Framework_TestCase
   }
 
   /**
-   * @vcr http_data_merge_post
-   */
+  * @vcr http_data_merge_post
+  */
   public function testDataMergePostJSON() {
     $client = new Http(['data' => ['foo' => 'bar']]);
     $response = $client->post('http://httpbin.org/post', ['bar' => 'baz']);
@@ -32,8 +32,8 @@ class HttpTest extends PHPUnit_Framework_TestCase
   }
 
   /**
-   * @vcr http_base_uri_get
-   */
+  * @vcr http_base_uri_get
+  */
   public function testWorksWithBaseUri() {
     $client = new Http(['base_uri' => 'http://httpbin.org/']);
     $response = $client->get('/get', ['foo' => 'bar']);
@@ -43,8 +43,8 @@ class HttpTest extends PHPUnit_Framework_TestCase
   }
 
   /**
-   * @vcr http_get_auth_basic
-   */
+  * @vcr http_get_auth_basic
+  */
   public function testSendsAuthBasic() {
     $client = new Http([
       'auth' => ['pretty_nick', 'verysecretkey']
@@ -56,8 +56,8 @@ class HttpTest extends PHPUnit_Framework_TestCase
   }
 
   /**
-   * @vcr http_get_auth_bearer
-   */
+  * @vcr http_get_auth_bearer
+  */
   public function testSendsAuthBearer() {
     $client = new Http([
       'headers' => [
