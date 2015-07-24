@@ -20,7 +20,7 @@ class Response {
       if(is_object($error)) {
         $ret = [
           'message' => $error->message,
-          'description' => $error->detail
+          'description' => (isset($error->detail) ? $error->detail : null)
           // TODO: + status ?
         ];
       } else {
