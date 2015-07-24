@@ -10,6 +10,7 @@ use \P7\SSO\Http;
 use \P7\SSO\Configuration;
 use \P7\SSO\Session;
 use \P7\SSO\Response;
+use \Namshi\JOSE\SimpleJWS;
 
 /**
  * @property string $client_id
@@ -28,12 +29,16 @@ class SSO {
   // public static function rediscover() {
   // }
 
+  private function nonce() {
+    return base64_encode(openssl_random_pseudo_bytes(32));
+  }
+
   public function uri($options) {
     $default_options = [
       'response_type' => 'code',
       'client_id' => $this->config->client_id,
       'scope' => 'openid profile email',
-      'nonce' => base64_encode(openssl_random_pseudo_bytes(32))
+      'nonce' => $this->nonce()
     ];
 
     $data = array_merge($default_options, $options);
@@ -67,7 +72,24 @@ class SSO {
     ]);
   }
 
-  // TODO: implement me!
-  // public function backoffice() {
-  // }
+  public function backoffice($user_id = null) {
+    $jws  = new SimpleJWS(array(
+        'alg' => 'RS256'
+    ));
+
+    $jws->setPayload(array(
+        'service_id' => $this->config->client_id,
+        'nonce' => $this->nonce(),
+        'timestamp' => time()
+    ));
+
+    $jws->sign($this->config->backoffice_key);
+
+    return new Http([
+      'base_uri' => $this->config->host . '/api/accounts/',
+      'headers' => [
+        'Authorization' => '7Pass-Backoffice ' . $jws->getTokenString()
+      ]
+    ]);
+  }
 }

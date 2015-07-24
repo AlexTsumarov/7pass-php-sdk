@@ -11,7 +11,8 @@ class SSOTest extends PHPUnit_Framework_TestCase
     return new SSO([
       'client_id' => '55b0b8964a616e16b9320000',
       'client_secret' => '6b776407825a50b0f72941315194a3d50886b86b81bc40bbcf1714bdf50b3aa4',
-      'environment' => 'test'
+      'environment' => 'test',
+      'backoffice_key' => file_get_contents(__DIR__ . '/fixtures/certs/rsa.pem')
     ]);
   }
 
@@ -75,6 +76,19 @@ class SSOTest extends PHPUnit_Framework_TestCase
     $this->assertObjectHasAttribute('birthdate', $data);
     $this->assertObjectHasAttribute('email_id', $data);
     $this->assertObjectNotHasAttribute('email_verified', $data);
+  }
+
+  /**
+  * @vcr api_get_backoffice
+  */
+  public function testGetsAccountInfoUsingBackoffice() {
+    $sso = $this->validSSO();
+    $api = $sso->backoffice();
+
+    $data = $api->get('/55acdb27b42f77842d745f4c')->data;
+    $this->assertObjectHasAttribute('birthdate', $data);
+    $this->assertObjectHasAttribute('email_id', $data);
+    $this->assertObjectHasAttribute('email_verified', $data);
   }
 
   /**

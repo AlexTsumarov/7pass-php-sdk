@@ -1,0 +1,590 @@
+
+-
+    request:
+        method: GET
+        url: 'http://sso.7pass.dev/api/accounts/55acdb27b42f77842d745f4c'
+        headers:
+            Host: sso.7pass.dev
+            Accept-Encoding: null
+            Accept: application/json
+            Authorization: '7Pass-Backoffice eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXUyJ9.eyJzZXJ2aWNlX2lkIjoiNTViMGI4OTY0YTYxNmUxNmI5MzIwMDAwIiwibm9uY2UiOiJ4OE1qK2M2NHhvSnhvdEc4VlRlWXY0Z3JWWVlcL3hqazFDV3lmb1h1eWdQMD0iLCJ0aW1lc3RhbXAiOjE0Mzc3NTcwOTAsImlhdCI6IjE0Mzc3NTcwOTAifQ.EV1QCx_bX7JBXjRJnA34RzAGv97YXsjkW9xwcqpb-cEVY-P-Iixz6JaPidjF17byjC2ilTsYAFCxb68EYLHbwx7JvLviMaOnyexh1fv5Veht3KNN-cuI1DGbS6zRXPeFEu-XhuiGSbeNe-04AS1CFtOst2Oo_wsFcCga9TpRd_5yBLObuPempc6W7bcAUpy4tT4zNv4m4KKnSc6F975eIxrlcBOklTsnqwdahBd2snSFLfv7OSCAWhjWheFESbCAYaAHgBiw2YoOTmo3DgE47fEtdCFnCkD43ftMNXBi3_LkA4CxAJk8IUfQvjxeVcPQJ33nSsJTVtgN5ev-9RdunxEP0EKuV4oMtm2U6baWnUbvbb5eH0q9F1Xq1qO7L20uaCpkfYu8qrVQiVMAFwoqgQ-skzxb7ioDvVsq-ZFm8zIxSFrCByN_XiGJIsJJ9c32cyaqqZatht-e1Z3xpUDGEq3tykvilRkj5RhAJciYYprmJne-lnp_k2XFhMCixdpNcdfV2rHsPtKjAL-8ARuQOeCZgaFOzzlR4qK2_nG1tlT5xUO2haaNrBtloOMKRCPItbJaKMKCayKwLoFUJazRO8YRYqAQCVaCynUn2Cf3q9M0oh_DO2Y4fup9APhckZLcFDYqe9rsXCWGb2GQ1jUCYHf_2yWAsAxmyWu3fXJMOs8'
+            User-Agent: 'GuzzleHttp/6.0.2 curl/7.37.1 PHP/5.6.11'
+    response:
+        status:
+            http_version: '1.1'
+            code: '200'
+            message: OK
+        headers:
+            server: nginx/1.8.0
+            date: 'Fri, 24 Jul 2015 16:58:10 GMT'
+            content-type: 'application/json; charset=utf-8'
+            content-length: '386'
+            connection: keep-alive
+            x-request-id: ea701f4e-3f1b-494d-89dc-f14d8f930175
+            access-control-allow-origin: '*'
+            access-control-allow-methods: 'GET,HEAD,PUT,POST,DELETE'
+            cache-control: 'no-store, no-cache'
+            x-content-type-options: nosniff
+            x-download-options: noopen
+            x-xss-protection: '1; mode=block'
+            x-frame-options: DENY
+            x-response-time: 41ms
+        body: '{"status":"success","data":{"_id":"55acdb27b42f77842d745f4c","birthdate":"1987-10-16T00:00:00.000Z","first_name":"Votava","last_name":"Jan","preferred_language":"en","email":"cyner@overflow.cz","unsubscribe_token":"b14ba81b70b567ee9251ebeee3ceb9928a20c68f6d55333c60ad45f8123c0f16","birthdate_verified":false,"email_verified":false,"email_id":"55acdb27b42f77842d745f4d","identities":{}}}'
+-
+    request:
+        method: GET
+        url: 'http://sso.7pass.dev/api/accounts/55acdb27b42f77842d745f4c'
+        headers:
+            Host: sso.7pass.dev
+            Accept-Encoding: null
+            Accept: application/json
+            Authorization: '7Pass-Backoffice eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXUyJ9.eyJzZXJ2aWNlX2lkIjoiNTViMGI4OTY0YTYxNmUxNmI5MzIwMDAwIiwibm9uY2UiOiI2YWJzM3BhYXhCbGtpRTArOWFEUFhtcFFkdGNVNVdja3RucU1yOEVmU1I0PSIsInRpbWVzdGFtcCI6MTQzNzc1NzEwMCwiaWF0IjoiMTQzNzc1NzEwMCJ9.l7q7FahFZQy8gFpUpvdyH_zuy3rBd9vixRW_CrA6KPk7BJqOLhSA-I0YWnJ37vq4v5Pxui9ErD03w1_4CISI9AIbPyj7yovofctPxw5JUYkH9QMZRAl4EhIC6VHGN-5OxrDJypp4w_74dHJ9aTYjNQ7KVbarmgfj6bpErfejjQWQOX74mnZ7Xw_IpgVmmmnfnqujLV6bILOgg7w-e7PpB_zcxFJ5S2gON-9IV4VJTX42-0f8bmlqElfFJuGhXE2gqFMWO9KWtXDEa6STKEMwCN7ohuQ77_As1vuovlwVRsRnnC8Ll_Y8NpgtXcIQZw6OS4LOFkCBROoYInVCGv9vEMoUi95FhdERApnL8vk-7_wo5RnTf6mB8J8H9W3FNtXS_JzeoVz0ePwdMTNiM-ZSgDFqWtN7-8v8xExTBgfTiXMzPyErjWN3zBSKeeVKFB1yKTKXnqGjqg-K5kOJ5dKmL14NXD2rn1Z9ZlMIURia5zPjnu7ADFUG2PjHQ6mRuu4X8fGu1UAS9IFfc1hZ70guJ0whCs40qQMkCNyj4iQU4BAcGemmkCz6AMsCavsOpc782nNjUZqCdgZeldLAtgJDQifT7sqhHcjP0V9mE8P6encYdqHBCcpJCRY3pZpbEVAiZ85XCM-rr7A2IXFKkajL0auEcxOaBbO6HZI1-t2SbtQ'
+            User-Agent: 'GuzzleHttp/6.0.2 curl/7.37.1 PHP/5.6.11'
+    response:
+        status:
+            http_version: '1.1'
+            code: '200'
+            message: OK
+        headers:
+            server: nginx/1.8.0
+            date: 'Fri, 24 Jul 2015 16:58:20 GMT'
+            content-type: 'application/json; charset=utf-8'
+            content-length: '386'
+            connection: keep-alive
+            x-request-id: 0e721cb2-fbfa-4b61-8961-04668584a0de
+            access-control-allow-origin: '*'
+            access-control-allow-methods: 'GET,HEAD,PUT,POST,DELETE'
+            cache-control: 'no-store, no-cache'
+            x-content-type-options: nosniff
+            x-download-options: noopen
+            x-xss-protection: '1; mode=block'
+            x-frame-options: DENY
+            x-response-time: 40ms
+        body: '{"status":"success","data":{"_id":"55acdb27b42f77842d745f4c","birthdate":"1987-10-16T00:00:00.000Z","first_name":"Votava","last_name":"Jan","preferred_language":"en","email":"cyner@overflow.cz","unsubscribe_token":"b14ba81b70b567ee9251ebeee3ceb9928a20c68f6d55333c60ad45f8123c0f16","birthdate_verified":false,"email_verified":false,"email_id":"55acdb27b42f77842d745f4d","identities":{}}}'
+-
+    request:
+        method: GET
+        url: 'http://sso.7pass.dev/api/accounts/55acdb27b42f77842d745f4c'
+        headers:
+            Host: sso.7pass.dev
+            Accept-Encoding: null
+            Accept: application/json
+            Authorization: '7Pass-Backoffice eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXUyJ9.eyJzZXJ2aWNlX2lkIjoiNTViMGI4OTY0YTYxNmUxNmI5MzIwMDAwIiwibm9uY2UiOiJoTnZVd0VCU1NcL3FYVFkyRVh5T0xhS2RwZ3pQWUdpOVBcL3A3dW90K3NrZTA9IiwidGltZXN0YW1wIjoxNDM3NzU3MTE4LCJpYXQiOiIxNDM3NzU3MTE4In0.PxJGrmCpzLvFqLK8oI6nq2IQJD69p3cVbuD6o_DRnUYdwcWU5pcWX9_0srpTuH2JI6rUrzKVJF3Woue-gpf8bL45C_KYkRlmi2SXjnnbs9rmMyBx5kAvW0Xc7p5qfSlhQ4h379hp9LlV0UUgjQbsi5roq5jGarYp_D9VsSU4wcThf0t1q4HVC9eFgBpaY6rVykrfqShlN6dlUaIHiEaZfplirBdnLGHZvd8hGTGev3qHocZqAsBtiMfdJRiw4fO9aE4EKnn4DtCfCD2zapw4uyW8EsoNeRgHWQz1t4jP42ag67sojd6GiN-c7uN9G8MxKKVWmNK_0UAHPQqEyqSdFXHg50Ks6WzcZdunkS8cKb03CSIGcdro8g92Q9G3aK5HU8gvi686NvH0nLvUHBWL5sANgTwhw1aSzMgpmr7GA2Ykw1Qbs_2Bn0LSciZ-oSpqPWfZwFOxkVzDCEzPiFK6wN8E5Qnq3mY2NJyJH9GE4Xbq89ZIxOrv11FBvU-3Szq69-C5dsbFrfhKn_ufTwlKWY1QRc5ESwYLlbfaGMeWhwyu33XpgByJgbLwclneH61jSjoxAyQSV34iP7YWb-KkJaNlDKaMo3n6D00XD4BmXKCszAZnFGsLthQii6uhXxfUCRenSfxBjnXiPuJt4noPKc0oYUcbn0rH-snjDoSJxxE'
+            User-Agent: 'GuzzleHttp/6.0.2 curl/7.37.1 PHP/5.6.11'
+    response:
+        status:
+            http_version: '1.1'
+            code: '200'
+            message: OK
+        headers:
+            server: nginx/1.8.0
+            date: 'Fri, 24 Jul 2015 16:58:38 GMT'
+            content-type: 'application/json; charset=utf-8'
+            content-length: '386'
+            connection: keep-alive
+            x-request-id: 6e6111d7-df20-4372-ad22-9af440814784
+            access-control-allow-origin: '*'
+            access-control-allow-methods: 'GET,HEAD,PUT,POST,DELETE'
+            cache-control: 'no-store, no-cache'
+            x-content-type-options: nosniff
+            x-download-options: noopen
+            x-xss-protection: '1; mode=block'
+            x-frame-options: DENY
+            x-response-time: 42ms
+        body: '{"status":"success","data":{"_id":"55acdb27b42f77842d745f4c","birthdate":"1987-10-16T00:00:00.000Z","first_name":"Votava","last_name":"Jan","preferred_language":"en","email":"cyner@overflow.cz","unsubscribe_token":"b14ba81b70b567ee9251ebeee3ceb9928a20c68f6d55333c60ad45f8123c0f16","birthdate_verified":false,"email_verified":false,"email_id":"55acdb27b42f77842d745f4d","identities":{}}}'
+-
+    request:
+        method: GET
+        url: 'http://sso.7pass.dev/api/accounts/55acdb27b42f77842d745f4c'
+        headers:
+            Host: sso.7pass.dev
+            Accept-Encoding: null
+            Accept: application/json
+            Authorization: '7Pass-Backoffice eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXUyJ9.eyJzZXJ2aWNlX2lkIjoiNTViMGI4OTY0YTYxNmUxNmI5MzIwMDAwIiwibm9uY2UiOiJnVGZhSFNnTzdMaXF5cjM4OEltRFFNZVFGNFhKOEJNMUozVmkzQStTOVFZPSIsInRpbWVzdGFtcCI6MTQzNzc1NzEyMywiaWF0IjoiMTQzNzc1NzEyMyJ9.S9xDHEyfkworiCjWjVMmlpMPua26EsLagkuHXX9ypOecvJQZk44FJrf4m_IkLZ-uWExl-zTmcr0TGuqw0LHQIbQujlY0ImbSTGJZxQz7fVUc5GJzLL05zOFgMBVoW6F9Zy4qK3tYyQUkn7-80N-CRMcFQ_U3_MXG9V-6HTpTdwUNLV5ea2w_mYOmgZ3rnWLW25P_9hNnjYXbPDbxTq0-AqfkrcFINnDN_5VYvvND18B99BxVT4mJW7ObV4SSUng9nBtUJwJKewRleSsD2LEpwUal2ghRnTFvckAyG818fIEvxgOEDLJGf_GK0o51Iv6XNpdkjQJIv1dUxHMUB8FodkJHqQjELocDTD6R6LONlOCp8QRZYsIQimU5yje5_l1y-gzocgVD1hN2qCZx30z4t_wBTYSi-F4pwC6AcjA_KcZ3Ew5aX_k28nk7HNkZduWN5WcLgIG1x5PkslT9TcNGO-tDhMMaI_bUHgdBO8jMYy-SCgK7u-1wdZVAXpt8bTa0wcggYXsXqQIv6NWVeps0tisjmZTDea5rmILFTwUVOrrgNQV3hs2Uc73-tG9NPcZ0j3OIAEvDPQ1jd-IngFo45KRCYceqWRuQja0vng9AQqi8S8tM4LR9jHiM0v5To3lKiEySSRk4B4eNZfMSGSFsm0EI7AXBwS1PdW1aIXmPdhE'
+            User-Agent: 'GuzzleHttp/6.0.2 curl/7.37.1 PHP/5.6.11'
+    response:
+        status:
+            http_version: '1.1'
+            code: '200'
+            message: OK
+        headers:
+            server: nginx/1.8.0
+            date: 'Fri, 24 Jul 2015 16:58:43 GMT'
+            content-type: 'application/json; charset=utf-8'
+            content-length: '386'
+            connection: keep-alive
+            x-request-id: ab161a14-0cc5-4cf8-b59e-d66864577058
+            access-control-allow-origin: '*'
+            access-control-allow-methods: 'GET,HEAD,PUT,POST,DELETE'
+            cache-control: 'no-store, no-cache'
+            x-content-type-options: nosniff
+            x-download-options: noopen
+            x-xss-protection: '1; mode=block'
+            x-frame-options: DENY
+            x-response-time: 37ms
+        body: '{"status":"success","data":{"_id":"55acdb27b42f77842d745f4c","birthdate":"1987-10-16T00:00:00.000Z","first_name":"Votava","last_name":"Jan","preferred_language":"en","email":"cyner@overflow.cz","unsubscribe_token":"b14ba81b70b567ee9251ebeee3ceb9928a20c68f6d55333c60ad45f8123c0f16","birthdate_verified":false,"email_verified":false,"email_id":"55acdb27b42f77842d745f4d","identities":{}}}'
+-
+    request:
+        method: GET
+        url: 'http://sso.7pass.dev/api/accounts/55acdb27b42f77842d745f4c'
+        headers:
+            Host: sso.7pass.dev
+            Accept-Encoding: null
+            Accept: application/json
+            Authorization: '7Pass-Backoffice eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXUyJ9.eyJzZXJ2aWNlX2lkIjoiNTViMGI4OTY0YTYxNmUxNmI5MzIwMDAwIiwibm9uY2UiOiJRRUlGUFRwTE1PUkh5T1ljRTM0eEJDM1Bna1RxYmkxSENKSG9abnpLOXFvPSIsInRpbWVzdGFtcCI6MTQzNzc1NzEzMCwiaWF0IjoiMTQzNzc1NzEzMCJ9.hjIri0P42_qhy6Q_Wwm6AYaY_8KPqQkP2tNfT6L_OOv0UB3o6bRQmR8LnpOyqu0M3ZN_tBoi6BrBTHCKLE698Daxn3Cgs-WUYdPWdI4aeziue3QFPLISLBdIIhS2VNHVBEqIsAPmY1FrFypaqKxQ2Hjo_byKm6jw4vZ-pgFv7c8cb6ivB2arKJJNweUZB213hMr9pf0IY__B6xNWZzg_aH4WxTuYBjgTA8vK_qt1k1_3ZBnNEE3W6ykE0MGLZ5hJI5H7m46sjH9sYb28RCXnVmTA_B4m2YiEy8eEbupG5Rx8k9WmdMiCVxUiNhWFR8B7ccv_voq1NeXC1HmBgn78LvQU2jnmzSIYInpWigLqgA03OgoP-CTojdlOlAJDlBUkrihByZhspvWB5iVpm1GSYi_DzpLi6Hrk3nas3CczqWA9rbRj6MyW8teovY5kqD5CmzJ-YmheCUnDvqiVrYKP1CwKOSc1s2l35Q7_Y01uhMobs-G4zMsE4lv3JAKtAgK0f7FdJDtgvxvxx7tYeMRZMAKg1knwSaK3q0nIrid4CWgscqkum-7Xie_lsfbf-jmnelmsmou1GsupTLgFCxiPyM1AWy766CqKp9mUBiIOUyexltHOHqqUwKIPG0Uv59HiOp0t7UPpyFxmVIqNIdsonA7YI4ETnXq9qJgIiIYDwCA'
+            User-Agent: 'GuzzleHttp/6.0.2 curl/7.37.1 PHP/5.6.11'
+    response:
+        status:
+            http_version: '1.1'
+            code: '200'
+            message: OK
+        headers:
+            server: nginx/1.8.0
+            date: 'Fri, 24 Jul 2015 16:58:50 GMT'
+            content-type: 'application/json; charset=utf-8'
+            content-length: '386'
+            connection: keep-alive
+            x-request-id: 8b71abaf-4ff3-4315-b37b-8e366bdbc913
+            access-control-allow-origin: '*'
+            access-control-allow-methods: 'GET,HEAD,PUT,POST,DELETE'
+            cache-control: 'no-store, no-cache'
+            x-content-type-options: nosniff
+            x-download-options: noopen
+            x-xss-protection: '1; mode=block'
+            x-frame-options: DENY
+            x-response-time: 39ms
+        body: '{"status":"success","data":{"_id":"55acdb27b42f77842d745f4c","birthdate":"1987-10-16T00:00:00.000Z","first_name":"Votava","last_name":"Jan","preferred_language":"en","email":"cyner@overflow.cz","unsubscribe_token":"b14ba81b70b567ee9251ebeee3ceb9928a20c68f6d55333c60ad45f8123c0f16","birthdate_verified":false,"email_verified":false,"email_id":"55acdb27b42f77842d745f4d","identities":{}}}'
+-
+    request:
+        method: GET
+        url: 'http://sso.7pass.dev/api/accounts/55acdb27b42f77842d745f4c'
+        headers:
+            Host: sso.7pass.dev
+            Accept-Encoding: null
+            Accept: application/json
+            Authorization: '7Pass-Backoffice eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXUyJ9.eyJzZXJ2aWNlX2lkIjoiNTViMGI4OTY0YTYxNmUxNmI5MzIwMDAwIiwibm9uY2UiOiJ1UUVXQ1JPd1gzMnJ5OE1jRmVkd29WY3FIWjlrVGNGQ1pqRythXC9QMExWMD0iLCJ0aW1lc3RhbXAiOjE0Mzc5ODQzNTYsImlhdCI6IjE0Mzc5ODQzNTYifQ.k96Fp6aMMRcVN5kTdRXlLZ6ieAaWCxFraPXhYTi6zf3PtJ3wa7p3B-3t0oeA9CKw42g7pkj2GKvKRGtrlTIZqBt0mGwxLWBuW3iNu8ShotEaWNT8V5X6i-rB8KMTo87d-IYR76RGEE75gd3trH57Tu8DGRv1MYe3GJoaVoEcsKmzvmHsliuQeg5JAwu9MQoB-gRSsovpn1JfRLaZRA7HLd9ejKmWjCOlCj6QcAZaHNtFd3ccg_AeroDA9ErP5Zo2kdpSQYNJH93d1pbOdahd4y9nlGoo_jN1hckr2_jWrLqgp_9fgY_LmoFq7AwF9z_E1k7c3z2phFn4R2BF_r9dwnKjmHYrpplVcxLOVE8O0iXtz1tey8YUEY8nd8xnKQ0j5UKcz3Exei8mb99ATjx-TgOetgQ6v_RYFMVOe5NvzBjQKt00UKr2E5cGyRXWXV8XOoosxy85bm3axKjeWr6IMwLIrq3v8KgJhZs6GfcvOR6OtPYT7h7dQMxrpcxPmq0dDIolX16891m0GVJszsygLyj_W87i4WZsLDtu3BlrHPIq2fRrU8dTfYvDuiYHBxs4Tvwj2V4r-7zcSuMx5NZVAYG2ZgrNk4JIOEkIad9Nrye-FPUzet1u08LuP8tL7wj85DYhzPLoEQGYs8ZrPuyuCGIZY5eKT1FvoClAKNO7oog'
+            User-Agent: 'GuzzleHttp/6.0.2 curl/7.37.1 PHP/5.6.11'
+    response:
+        status:
+            http_version: '1.1'
+            code: '200'
+            message: OK
+        headers:
+            server: nginx/1.8.0
+            date: 'Mon, 27 Jul 2015 08:05:57 GMT'
+            content-type: 'application/json; charset=utf-8'
+            content-length: '386'
+            connection: keep-alive
+            x-request-id: e75b1982-c701-403b-b7de-96cdcf2f5f90
+            access-control-allow-origin: '*'
+            access-control-allow-methods: 'GET,HEAD,PUT,POST,DELETE'
+            cache-control: 'no-store, no-cache'
+            x-content-type-options: nosniff
+            x-download-options: noopen
+            x-xss-protection: '1; mode=block'
+            x-frame-options: DENY
+            x-response-time: 71ms
+        body: '{"status":"success","data":{"_id":"55acdb27b42f77842d745f4c","birthdate":"1987-10-16T00:00:00.000Z","first_name":"Votava","last_name":"Jan","preferred_language":"en","email":"cyner@overflow.cz","unsubscribe_token":"b14ba81b70b567ee9251ebeee3ceb9928a20c68f6d55333c60ad45f8123c0f16","birthdate_verified":false,"email_verified":false,"email_id":"55acdb27b42f77842d745f4d","identities":{}}}'
+-
+    request:
+        method: GET
+        url: 'http://sso.7pass.dev/api/accounts/55acdb27b42f77842d745f4c'
+        headers:
+            Host: sso.7pass.dev
+            Accept-Encoding: null
+            Accept: application/json
+            Authorization: '7Pass-Backoffice eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXUyJ9.eyJzZXJ2aWNlX2lkIjoiNTViMGI4OTY0YTYxNmUxNmI5MzIwMDAwIiwibm9uY2UiOiJxZzBDbWl1bGZDNld0R25UUVBcLzE3ZG1UcjRkVkl2OHFOSUtDdFNjVndTMD0iLCJ0aW1lc3RhbXAiOjE0Mzc5OTA4NzUsImlhdCI6IjE0Mzc5OTA4NzUifQ.GgQtjSKmI_w73DpHJOvAW17ISoPUye9Yk2_K_VKWF1XVdC8TxRgJIClft2nXnGqU4yb29cnl2EZt6IosfvGivmHh9DR1YK0u4ghEdNfPF_K8TtW2KGm661RBcJABPys_-dJUb0iYi38dAzsd1TsVrUkNQoNZoeI1LLlNMyftKwBDznpQJ_oFehHAgZPHbt_Syauz89y7IWMr9MLzEmEl_r6UwG0AO8BHTS8kybE9RbmG1DztRBtf-ccvPMMfAAPOFqHnJH6qowH_BCU5arAxMpdI71CzOJ7EMRLQli_GjwKJIgt_bumIkOD9a9lxMqgQZX8O0Navfp0SdkAyGiLCS6846TYdOU6Xrl9mhNvR9hZybqKEgRImMOtTBXasXK7B8jzisTVAwD7a7hX-uz-Z3M-ZOYLFBzkSX6Zl8QfLlLxv_412R_xLnrgU4xhbnAtA2zgWkPeVjlMMxyGJQTev3xVo0VTuT_NCPGutHXFkxuAgG5teuu3gMskMKHhXH1U3-BwFFNSaBW4F-DhmYLlBW97Xj3Mu6wZnqujgNSuQHEFl8MUjgSf_FIeWD-OqYHyP0RG0FzqDcppku6jwJMKjQ0WUxmAb-kZIk0jeeqh6KaurmdBkIsyMVTI8NgDuF5vOMEG4RCUbEOosG0UMOcf0C2Uc1Ag5J0qpj72ZCum-_II'
+            User-Agent: 'GuzzleHttp/6.0.2 curl/7.37.1 PHP/5.6.11'
+    response:
+        status:
+            http_version: '1.1'
+            code: '200'
+            message: OK
+        headers:
+            server: nginx/1.8.0
+            date: 'Mon, 27 Jul 2015 09:54:35 GMT'
+            content-type: 'application/json; charset=utf-8'
+            content-length: '386'
+            connection: keep-alive
+            x-request-id: 232208ed-1235-4f41-a4f7-f67333f0673c
+            access-control-allow-origin: '*'
+            access-control-allow-methods: 'GET,HEAD,PUT,POST,DELETE'
+            cache-control: 'no-store, no-cache'
+            x-content-type-options: nosniff
+            x-download-options: noopen
+            x-xss-protection: '1; mode=block'
+            x-frame-options: DENY
+            x-response-time: 88ms
+        body: '{"status":"success","data":{"_id":"55acdb27b42f77842d745f4c","birthdate":"1987-10-16T00:00:00.000Z","first_name":"Votava","last_name":"Jan","preferred_language":"en","email":"cyner@overflow.cz","unsubscribe_token":"b14ba81b70b567ee9251ebeee3ceb9928a20c68f6d55333c60ad45f8123c0f16","birthdate_verified":false,"email_verified":false,"email_id":"55acdb27b42f77842d745f4d","identities":{}}}'
+-
+    request:
+        method: GET
+        url: 'http://sso.7pass.dev/api/accounts/55acdb27b42f77842d745f4c'
+        headers:
+            Host: sso.7pass.dev
+            Accept-Encoding: null
+            Accept: application/json
+            Authorization: '7Pass-Backoffice eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXUyJ9.eyJzZXJ2aWNlX2lkIjoiNTViMGI4OTY0YTYxNmUxNmI5MzIwMDAwIiwibm9uY2UiOiJJYUJZc3ZjeGxQRU1FSkVLUitjc25PU3EwMGdRS0lHUEg5UUxFTE1wdXMwPSIsInRpbWVzdGFtcCI6MTQzNzk5MTMxMywiaWF0IjoiMTQzNzk5MTMxMyJ9.m6AfhZc32bQk2SEngoSTb_5axu5guvi9yZmkpJCYl3yCrIS1_w9yEwViJ_I1ws-34gp1QgJQpAyRztMzeCXLKu_sqK83tkMHn7IZkJgEZ1Nwk5MUzIVqxwv8-w2N6trLsdL-XtQuhKebQwUAkqyYYpFk4UKGYgv5xBrZl8QxdGQcoFPrRsU-w387x6TrrnKGOJ6G5K89TEyiZ-2fAtZewF3twSusxeebUa1IMANxGTb4you3F5Vk3H2bR88gzwoq0nlXaGlQgmkGMFil_fuptEzXVTKOdMj_MuLmlnsWkvDIcmXrHVQq9lnXJcCPZoP6Hp72Je68OZLJzOMVP5Uj0mqn4dOoVSV_u_WYAr9qbV9_7_zFslgFz0RAFsieTtLG7tr2KrZaOB-8wyE6So_Jvs3zwNt3o9KCvqxDESTc4KE5cXeIYMAeKGZQhFEhzj0oL67CnF2wcfQwtCg18FaywU_B79lgOm0DYNiEniwbjdWUtudSnbdJZjllL44-vbUAkYUpX0aS2nKKRgA7ry9gId7XgolYwdrVRJI8qxXOBBB3FVNrEetYbC0W_jCL3_s45T42h7cASM2Vx6IGkyw3HYmIzEjQ2hZdfcDOG0_RrYAqHzLkHd5LciMPD_UEGUZH8m1UeX1j80PQANaFynbF12q1i7zAqzM01wXocT0rWJY'
+            User-Agent: 'GuzzleHttp/6.0.2 curl/7.37.1 PHP/5.6.11'
+    response:
+        status:
+            http_version: '1.1'
+            code: '200'
+            message: OK
+        headers:
+            server: nginx/1.8.0
+            date: 'Mon, 27 Jul 2015 10:01:54 GMT'
+            content-type: 'application/json; charset=utf-8'
+            content-length: '386'
+            connection: keep-alive
+            x-request-id: 8e3533c7-0525-48c5-831d-a28d5dc556cf
+            access-control-allow-origin: '*'
+            access-control-allow-methods: 'GET,HEAD,PUT,POST,DELETE'
+            cache-control: 'no-store, no-cache'
+            x-content-type-options: nosniff
+            x-download-options: noopen
+            x-xss-protection: '1; mode=block'
+            x-frame-options: DENY
+            x-response-time: 85ms
+        body: '{"status":"success","data":{"_id":"55acdb27b42f77842d745f4c","birthdate":"1987-10-16T00:00:00.000Z","first_name":"Votava","last_name":"Jan","preferred_language":"en","email":"cyner@overflow.cz","unsubscribe_token":"b14ba81b70b567ee9251ebeee3ceb9928a20c68f6d55333c60ad45f8123c0f16","birthdate_verified":false,"email_verified":false,"email_id":"55acdb27b42f77842d745f4d","identities":{}}}'
+-
+    request:
+        method: GET
+        url: 'http://sso.7pass.dev/api/accounts/55acdb27b42f77842d745f4c'
+        headers:
+            Host: sso.7pass.dev
+            Accept-Encoding: null
+            Accept: application/json
+            Authorization: '7Pass-Backoffice eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXUyJ9.eyJzZXJ2aWNlX2lkIjoiNTViMGI4OTY0YTYxNmUxNmI5MzIwMDAwIiwibm9uY2UiOiJoa2lpZStXQUhGV2twdGp6S2d3dTg2cFFHOUZXR0g3NWYwMjlpam9qbW9VPSIsInRpbWVzdGFtcCI6MTQzNzk5Mzc4NCwiaWF0IjoiMTQzNzk5Mzc4NCJ9.aug0iDIUZ3Guq60XtXg96O4Vz0PUi8U3AcyuBQwyvTfXdP1WxYOToHtnvf4WnByInqlHtDzwuo3sQT7TtzpAJxwPfOIwUe53kNMC08jVU9dEqugIr4zgm_8u6YHr4OZfcgsN23z4Vk4bbDjE9kXPSzv0tszJLmcr83wW2uaw635YcckEoMsL9t3ToXpm94wHM7CJwwiaNtt3nyR1QkpzcO6YdxA7RzidR0gJrW0GC4ifbNVFs9_pfLeXO9U9kXESVoyrPTLUHiLmvkaj37eJYpR4tL1eu_0DD01T_5XgII8NE1oV2F_eN8VfEWj2EhJgIyqCI1QWNGWrIKtYdhO4RLTNjw2dBPMgA7H4INWrWc2k6nfi6CBac5LuHo32RaM8y-2kXN0t23oUMQ9usZoy_NnQiv05YlOPKJT7fEg1WLUkOMXR4I8PlH1cAPeyEOIL-ajwe7EKh5ffmFvkVczNAX9zjRX8O22HCI6odLLweNTzlJolxN8PrjNFui1xthbeNgZk5Fff6VnK2s1862ZLAxB7PiaIgiG2V_Hh_RYcTqs-SlB6tj5scBV7w5nAyaMPOVfZlo_CCP3oegZvIKz_ueJ3Y9EKtP-WD58pUGzmnRqHFS2cQv2V1Qvh_2e7T7wIzo-I-E2sigT-LCXTakmJl34KhAmpkMOzMpdMjkOA0ao'
+            User-Agent: 'GuzzleHttp/6.0.2 curl/7.37.1 PHP/5.6.11'
+    response:
+        status:
+            http_version: '1.1'
+            code: '200'
+            message: OK
+        headers:
+            server: nginx/1.8.0
+            date: 'Mon, 27 Jul 2015 10:43:05 GMT'
+            content-type: 'application/json; charset=utf-8'
+            content-length: '386'
+            connection: keep-alive
+            x-request-id: e42300f0-917c-4507-b8bb-6075bcc47d1b
+            access-control-allow-origin: '*'
+            access-control-allow-methods: 'GET,HEAD,PUT,POST,DELETE'
+            cache-control: 'no-store, no-cache'
+            x-content-type-options: nosniff
+            x-download-options: noopen
+            x-xss-protection: '1; mode=block'
+            x-frame-options: DENY
+            x-response-time: 38ms
+        body: '{"status":"success","data":{"_id":"55acdb27b42f77842d745f4c","birthdate":"1987-10-16T00:00:00.000Z","first_name":"Votava","last_name":"Jan","preferred_language":"en","email":"cyner@overflow.cz","unsubscribe_token":"b14ba81b70b567ee9251ebeee3ceb9928a20c68f6d55333c60ad45f8123c0f16","birthdate_verified":false,"email_verified":false,"email_id":"55acdb27b42f77842d745f4d","identities":{}}}'
+-
+    request:
+        method: GET
+        url: 'http://sso.7pass.dev/api/accounts/55acdb27b42f77842d745f4c'
+        headers:
+            Host: sso.7pass.dev
+            Accept-Encoding: null
+            Accept: application/json
+            Authorization: '7Pass-Backoffice eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXUyJ9.eyJzZXJ2aWNlX2lkIjoiNTViMGI4OTY0YTYxNmUxNmI5MzIwMDAwIiwibm9uY2UiOiJKc0VHclNwTUV3TUxVeGh0dTZzUjVrN1RZMmlJYzFZdFwvUGorTmZDanJjRT0iLCJ0aW1lc3RhbXAiOjE0Mzc5OTM4NzgsImlhdCI6IjE0Mzc5OTM4NzgifQ.GGxUP0YRcjWJCtsvgxnZaU3LmlJsEQGHkzyihsfwWYAutGOWnx3dc965uSlZ62wwSMeTEyApbQPY-Ab9AchP_DnIR6tEVkeckSNQ1X6qPMG44MKOzt5HgKVLOzuAx5ZPKByqq5cW_l0ce8nAwdPXr7NMxUdfgPcduMGIflbA_RQfz_CVyIy4pBNzotS_wbYOvdK_sKeVN-QMiQm8SS4DeatCwojkdCkk69uUctNs3cRquhFp-d5cOYzGpFHveAOd-Wi63tbZKLORqz4YbZmgIQnMQDGqNuWgaxEF3eIE9rrTlZLpCKKJvFZGpYOR6ztDTzAQP3wpWjEHxJIUC8xO3R8r1w-Yr_z0BIUSBljfaAueDRyfXr3o4dgrix0bFnrQLBzqtVE4ep4ItXg9xXBGHqiGWIsWJ0ZEp1SAYwxO_-jhuMpJZ1q91NHLaQN4pRmWp5RLrXyB7OJrVN-VobJtl0H_T50FTAb1x-zMNJ6923KoqTid-8MsXvmlaCg9V87hnTKZwTiQLhEWFzeHhGBcbNzNsdHyg3eJF-Eyrw3J_OwaicTzR0oXscyG8R5FPx26ctOCtF6ACZcbVqndh4ejx9v91SlXA7pDgygxbrks1mFGlnAUH3q89ZAOGlBzpndcgImUaz6JtgTc8i8HQbWdEBbUgeKZhrfVeQ5fjtBVrhw'
+            User-Agent: 'GuzzleHttp/6.0.2 curl/7.37.1 PHP/5.6.11'
+    response:
+        status:
+            http_version: '1.1'
+            code: '200'
+            message: OK
+        headers:
+            server: nginx/1.8.0
+            date: 'Mon, 27 Jul 2015 10:44:38 GMT'
+            content-type: 'application/json; charset=utf-8'
+            content-length: '386'
+            connection: keep-alive
+            x-request-id: 07bf8718-24b6-4ef7-8660-2485b55d86b3
+            access-control-allow-origin: '*'
+            access-control-allow-methods: 'GET,HEAD,PUT,POST,DELETE'
+            cache-control: 'no-store, no-cache'
+            x-content-type-options: nosniff
+            x-download-options: noopen
+            x-xss-protection: '1; mode=block'
+            x-frame-options: DENY
+            x-response-time: 48ms
+        body: '{"status":"success","data":{"_id":"55acdb27b42f77842d745f4c","birthdate":"1987-10-16T00:00:00.000Z","first_name":"Votava","last_name":"Jan","preferred_language":"en","email":"cyner@overflow.cz","unsubscribe_token":"b14ba81b70b567ee9251ebeee3ceb9928a20c68f6d55333c60ad45f8123c0f16","birthdate_verified":false,"email_verified":false,"email_id":"55acdb27b42f77842d745f4d","identities":{}}}'
+-
+    request:
+        method: GET
+        url: 'http://sso.7pass.dev/api/accounts/55acdb27b42f77842d745f4c'
+        headers:
+            Host: sso.7pass.dev
+            Accept-Encoding: null
+            Accept: application/json
+            Authorization: '7Pass-Backoffice eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXUyJ9.eyJzZXJ2aWNlX2lkIjoiNTViMGI4OTY0YTYxNmUxNmI5MzIwMDAwIiwibm9uY2UiOiJISDNhWkFHTjBoVFgrS00yc1BOQlJ0R2pPNEZFZXRpcis5d0xTRnlZNHRzPSIsInRpbWVzdGFtcCI6MTQzNzk5Mzg5NCwiaWF0IjoiMTQzNzk5Mzg5NCJ9.TCeNTb2b4QCrp_23Inj7Nkhdp00LWlI3hVA3uRfaRMXVMfFAZ2C106mBg_j-1IdHyC3PGYVHDbIj8J83z7wLyzPMY7ar_pUH9oI1BbgrFu7AVOWeoCVeuJuIp7s1BqkZsow_jppl7OayQryqngZsnLwQyM8hmbuUT4n9dI08JVLzUU2CdhZDbrf0nP4kz10QaZnYD3VCWd5psZl3V1EcWENult5lwk6-ZVO3AoeHqIenSF88W8xWuFHTzCP7b6ia_-qQywihKGS6BXmzPEP6iaykr5wnQ7m9Z3ESqZ11zuuFxHjOHsY1hKduzp7rbVoIiNJLklz74QGqX8UFZdoyotfUbjrwUVkGFvblbGAwB4NVIUZswEmBRVeYC81L4kOGQB9-F-ZlX9B_La7crj-Ty9s-EvzoG4RPqaca4HRhe5wkGpW2XOpMYdAvBL2jk01WEcPgq79VigUZnp4Nxxj4jclg_tohNbfmU7LhyRbw2axLOJNi1igG5LVSIIot29Wh1imTx0G4KoDSYVZ47EHFLLAgpK1P9WiFKsMIk2gQszNZr4Nf10bEgyOzk-MhU4iBDa56ECYR1VL8BdrC8RyAozJCTTGzIIj1wZkhc3iSzmcroGU-eMFQZYAAt-u1UWOUHbdPYEOs0LoJPP5CyRe5EFGVKXGoRLloaESoLSrA4Cw'
+            User-Agent: 'GuzzleHttp/6.0.2 curl/7.37.1 PHP/5.6.11'
+    response:
+        status:
+            http_version: '1.1'
+            code: '200'
+            message: OK
+        headers:
+            server: nginx/1.8.0
+            date: 'Mon, 27 Jul 2015 10:44:54 GMT'
+            content-type: 'application/json; charset=utf-8'
+            content-length: '386'
+            connection: keep-alive
+            x-request-id: 00db1736-fa41-41e7-942b-d5a16c1038a5
+            access-control-allow-origin: '*'
+            access-control-allow-methods: 'GET,HEAD,PUT,POST,DELETE'
+            cache-control: 'no-store, no-cache'
+            x-content-type-options: nosniff
+            x-download-options: noopen
+            x-xss-protection: '1; mode=block'
+            x-frame-options: DENY
+            x-response-time: 40ms
+        body: '{"status":"success","data":{"_id":"55acdb27b42f77842d745f4c","birthdate":"1987-10-16T00:00:00.000Z","first_name":"Votava","last_name":"Jan","preferred_language":"en","email":"cyner@overflow.cz","unsubscribe_token":"b14ba81b70b567ee9251ebeee3ceb9928a20c68f6d55333c60ad45f8123c0f16","birthdate_verified":false,"email_verified":false,"email_id":"55acdb27b42f77842d745f4d","identities":{}}}'
+-
+    request:
+        method: GET
+        url: 'http://sso.7pass.dev/api/accounts/55acdb27b42f77842d745f4c'
+        headers:
+            Host: sso.7pass.dev
+            Accept-Encoding: null
+            Accept: application/json
+            Authorization: '7Pass-Backoffice eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXUyJ9.eyJzZXJ2aWNlX2lkIjoiNTViMGI4OTY0YTYxNmUxNmI5MzIwMDAwIiwibm9uY2UiOiJ4RVI4ZDRwbGdvdDBVRm5BTHFISXJxZlJYa3BON2JoT2NmaXowQ0lhQ0lJPSIsInRpbWVzdGFtcCI6MTQzNzk5MzkxMSwiaWF0IjoiMTQzNzk5MzkxMSJ9.Ev42NTYaBnBRwyxRUDISk5LBK7EKGqhk0emaKR_nUx8vr2woigdiY-Wy4z4GtxWz98pELVnfPw4N9JUtIDL4gKKINtQDS5qRxrD9S7P2VZm2uHUZgOIe_HQOGurJ8abvC6mio85EIJ4I23sJ4Y_ySY3gEZG-bTBzWMdwuMU9aH4riKg_C1Bnx1iVoaO7w7p9kecEOmpaFG9SNHXHWrxGM2-nfgwyBNnQDlWeLqDxzP8kEVPKvgy8g9_MMRBdNw5FcH6dFhx4rcgHOxIT2NnlFz48VczOOxSNQyCBi9yGx3sL0QXkjJ6_eR54TH097nTcYEJcNlk-B1NNFw0iFExCeQEOTUWzIsNMUp4Ty_-fniOo-uVl2gKf1C8OX6dKQwycPl5emfjKXEtWiUcedhKL8mbPY7O81UpwWpbCoGnxURW7nVYqvIuqBXgXCog9eJ02UlBqzHma2SMFAa6enuuJ1sLAWgqsACUOExf7KA5pc9BIaRg-1geNItJeRZ_iHS9AZoAkF9jDdl9P-MRboQbxYyEwJH3nczUUsaLEPUbQOIP-yN_Je0m6tORXa5XicleiT9x9o5s5cptaV3fuIh0JukOccPwYF8P_EFltAphdjmsuB7qZlG_OkufWn8o5AWblq4sdQYr1ItgNo500IQKY9WNK4lKOLSQhEjBLoG0DIdU'
+            User-Agent: 'GuzzleHttp/6.0.2 curl/7.37.1 PHP/5.6.11'
+    response:
+        status:
+            http_version: '1.1'
+            code: '200'
+            message: OK
+        headers:
+            server: nginx/1.8.0
+            date: 'Mon, 27 Jul 2015 10:45:11 GMT'
+            content-type: 'application/json; charset=utf-8'
+            content-length: '386'
+            connection: keep-alive
+            x-request-id: b075e554-0c7a-43df-8f11-9e6b40ce46d7
+            access-control-allow-origin: '*'
+            access-control-allow-methods: 'GET,HEAD,PUT,POST,DELETE'
+            cache-control: 'no-store, no-cache'
+            x-content-type-options: nosniff
+            x-download-options: noopen
+            x-xss-protection: '1; mode=block'
+            x-frame-options: DENY
+            x-response-time: 41ms
+        body: '{"status":"success","data":{"_id":"55acdb27b42f77842d745f4c","birthdate":"1987-10-16T00:00:00.000Z","first_name":"Votava","last_name":"Jan","preferred_language":"en","email":"cyner@overflow.cz","unsubscribe_token":"b14ba81b70b567ee9251ebeee3ceb9928a20c68f6d55333c60ad45f8123c0f16","birthdate_verified":false,"email_verified":false,"email_id":"55acdb27b42f77842d745f4d","identities":{}}}'
+-
+    request:
+        method: GET
+        url: 'http://sso.7pass.dev/api/accounts/55acdb27b42f77842d745f4c'
+        headers:
+            Host: sso.7pass.dev
+            Accept-Encoding: null
+            Accept: application/json
+            Authorization: '7Pass-Backoffice eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXUyJ9.eyJzZXJ2aWNlX2lkIjoiNTViMGI4OTY0YTYxNmUxNmI5MzIwMDAwIiwibm9uY2UiOiJ2Y0NkUkdudkhZSDUyem5WZnBCM0V3UHdBWkVjNlZCRDA3emhsb015bmxBPSIsInRpbWVzdGFtcCI6MTQzNzk5MzkyOSwiaWF0IjoiMTQzNzk5MzkyOSJ9.Od23zTc_95RhP-Fp4e-wiLPyPb0Wnk7VeaHkoHLqkKXCxig7K5UMaYgKvvb6Jc9aDZUl_NA48cFleSaKaeXiWqAfAQ4TT4HE6W3S6E9GiQEhtZJFTiOPEqwAZwUTgRR0V_8zJfTDQUYJI7QcvtLMJrU2qX7BhKje3Mtap2k0rg2MdUh-QerQbEOo844gIEBClKdNW36FBOxBFrB37BbcOQruOGO6ohhcrxiN48LeVQupLfgKgv9797Q_hEC2vUCzClEGkm1qmL3S-jsat1QURbLu_f9ISHBo3BsntfXtKSJYpGWWkBi5jzi4vM_HMXGY1brSIJQmYYs-d1S5S40jH4YRLqW4A5j98TO1FqlBJ67wN91hYRqXWZ9L4eqO-mbzIysaq-C9plUQpPt-XqGxApjwX3d4SMgqxhIvX2XbpAXwXTz78rzHYQ1HOlosRhx6JKmGlSS2Qxwnk9ZYqq5ICVMvOEcKbZJZLdpKdNRx93IwRo6z23zgv5av3ZtU1GVTVlAu93QzhNAFe2tDMvSHfql0p82ljrF3ZMaDvmamLT_fkoDECp7Wl_eFBYbO-m0cCtoZ8B__eBjUPbYeRzG4Qhe70-XFPhBqco_HYOKwnzls8-eGSwy3Zf-18vvzzMb4L3g1MCRgYyDJNeLwnxyvS_tH7A29lDhe2XO--9pzeIM'
+            User-Agent: 'GuzzleHttp/6.0.2 curl/7.37.1 PHP/5.6.11'
+    response:
+        status:
+            http_version: '1.1'
+            code: '200'
+            message: OK
+        headers:
+            server: nginx/1.8.0
+            date: 'Mon, 27 Jul 2015 10:45:30 GMT'
+            content-type: 'application/json; charset=utf-8'
+            content-length: '386'
+            connection: keep-alive
+            x-request-id: 9994574f-040c-485f-b781-27509610464a
+            access-control-allow-origin: '*'
+            access-control-allow-methods: 'GET,HEAD,PUT,POST,DELETE'
+            cache-control: 'no-store, no-cache'
+            x-content-type-options: nosniff
+            x-download-options: noopen
+            x-xss-protection: '1; mode=block'
+            x-frame-options: DENY
+            x-response-time: 37ms
+        body: '{"status":"success","data":{"_id":"55acdb27b42f77842d745f4c","birthdate":"1987-10-16T00:00:00.000Z","first_name":"Votava","last_name":"Jan","preferred_language":"en","email":"cyner@overflow.cz","unsubscribe_token":"b14ba81b70b567ee9251ebeee3ceb9928a20c68f6d55333c60ad45f8123c0f16","birthdate_verified":false,"email_verified":false,"email_id":"55acdb27b42f77842d745f4d","identities":{}}}'
+-
+    request:
+        method: GET
+        url: 'http://sso.7pass.dev/api/accounts/55acdb27b42f77842d745f4c'
+        headers:
+            Host: sso.7pass.dev
+            Accept-Encoding: null
+            Accept: application/json
+            Authorization: '7Pass-Backoffice eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXUyJ9.eyJzZXJ2aWNlX2lkIjoiNTViMGI4OTY0YTYxNmUxNmI5MzIwMDAwIiwibm9uY2UiOiIxXC9tNGtsSnRwUHQ1akRBOWpvb0hSR29iSWwxeWQrMVhDZXFrT0FWVWFxRT0iLCJ0aW1lc3RhbXAiOjE0Mzc5OTM5NDMsImlhdCI6IjE0Mzc5OTM5NDMifQ.TkqYNerkK-o8XBplGXdAZ7kOWsW7Ek-Npqm8EpjDDVsHaOT4ohb6rSwIgXa6e1i4M-X_73VHOfxCfCmyB9rvK7UguWlS-lU8e75FsYQPBXJtVlS4PSf8-Ke9h3ccCeRp-HFJeeuDmgsHV2LVsP_RCGLQk8saUu9RbABk78-oAAl63jDf_IK7lfis3qG97XHapmOyQst3D3jStnyEoAxEo0IuiDlbk0oquOm4hB9UhoMvtTbFbqbHp_6OfLBIspYLJe1ieltYHOlzUyhhxV2exm-nqfANcnzrxwut15oHFULVB_d3ffhNMpEcFc4EUHYtwoaJEuMWUy3EyrRr05Wz6zd5LlvA59u1e5V8hUEhjVNhhdZUJRHYrEesMQQV4aEyTuES5BEWOx3DcqFK1y1NUehf3nOKiBhcWhfQWgD03hsLwxElZxpii8IjhQ-BB6yCmc0_oaYE14K7u44_A8bY79y_bKMfg9BlbnH5yO9O_LVdMKS-lDbC44hxnLUtHRc6BGxkYo0RP5aQSBqtZe7uZLoufOh-Jp4PGUrQAzj9JMbyluKPQMQsTK04kqKnlr4GA8Qz-xg7gj9RTOO3d4hRYdvXZuaZYjUrl6aPzaoQFqHQWrkzKXybnW6Xu167TNNjLwf7TRTA9wdr5s5bm6fjZPin0RRAgx_jw3XSxLME6Hc'
+            User-Agent: 'GuzzleHttp/6.0.2 curl/7.37.1 PHP/5.6.11'
+    response:
+        status:
+            http_version: '1.1'
+            code: '200'
+            message: OK
+        headers:
+            server: nginx/1.8.0
+            date: 'Mon, 27 Jul 2015 10:45:43 GMT'
+            content-type: 'application/json; charset=utf-8'
+            content-length: '386'
+            connection: keep-alive
+            x-request-id: 03a28719-9397-4d59-af36-2b4c483328e2
+            access-control-allow-origin: '*'
+            access-control-allow-methods: 'GET,HEAD,PUT,POST,DELETE'
+            cache-control: 'no-store, no-cache'
+            x-content-type-options: nosniff
+            x-download-options: noopen
+            x-xss-protection: '1; mode=block'
+            x-frame-options: DENY
+            x-response-time: 48ms
+        body: '{"status":"success","data":{"_id":"55acdb27b42f77842d745f4c","birthdate":"1987-10-16T00:00:00.000Z","first_name":"Votava","last_name":"Jan","preferred_language":"en","email":"cyner@overflow.cz","unsubscribe_token":"b14ba81b70b567ee9251ebeee3ceb9928a20c68f6d55333c60ad45f8123c0f16","birthdate_verified":false,"email_verified":false,"email_id":"55acdb27b42f77842d745f4d","identities":{}}}'
+-
+    request:
+        method: GET
+        url: 'http://sso.7pass.dev/api/accounts/55acdb27b42f77842d745f4c'
+        headers:
+            Host: sso.7pass.dev
+            Accept-Encoding: null
+            Accept: application/json
+            Authorization: '7Pass-Backoffice eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXUyJ9.eyJzZXJ2aWNlX2lkIjoiNTViMGI4OTY0YTYxNmUxNmI5MzIwMDAwIiwibm9uY2UiOiJcLzlaVUY2cjlPUm1GUmdCdTE1MTJJdSszZWQ0WWU2TlVlNzE1bUdUMWpzUT0iLCJ0aW1lc3RhbXAiOjE0Mzc5OTM5NDksImlhdCI6IjE0Mzc5OTM5NDkifQ.GhJfO5od8jVTtyTfE9Ro5hTLcSDimcAzE90UErwQdIN0moZYCOnRXh_T-8F3yu-DTp5GMumRrj4OFsCkdm81QCxVtfD9yOMFG3augsDNJ-thn6fstJv5o7HIpS6AdgnxVTxVsLEBt0GIbzOqE0IsoIEvzQAVY-HonY8c98PSXUYT0IIhktRHdZr5kh1saO2oJZVX0NuuM1SSWDKsUaV4Fj67JvyiIPBFxL-9lcMPogKiRUqjcscKa5vw1gniuBvM5Kc1fuz9fnS-t9uz7_bumAEfMUTzWKjyitA1t_rYuQWXlK5Z_gLB95ZFHi6Yv_ZZ8x4Qh29YvIXIiHarKQxPR2NPtLs6dWtqRlGEwwTu8FjhYeWtJt2kIP8jRgy9B4xRo0mciDjwozX3mJF4HAAcasB1x5MG1-ckbJD6TJvcUDC2jWF6OlgTOC5bYx8tqEWnjbMtzEonCkyzzxn3hO22hlHFFPpR8djA0frcrJJ1Z2h7Edtf7sewOmP7SjVyQNym7WX4oMe9SUX6ANFcJU0zkqSJQnTPg6j9q-JKgFmlqB3JCkbPDtpJRB-UJuoBkvydk-PwTM2i4fDrCflG6axm-JIHWleC5LZro04Xg0tkoyI_zuozgvr1syjhHwk8M1C7f1G8tl6viQhJrTAelm-QNYMzO8Hy4rVcaadCPxZ1eFg'
+            User-Agent: 'GuzzleHttp/6.0.2 curl/7.37.1 PHP/5.6.11'
+    response:
+        status:
+            http_version: '1.1'
+            code: '200'
+            message: OK
+        headers:
+            server: nginx/1.8.0
+            date: 'Mon, 27 Jul 2015 10:45:51 GMT'
+            content-type: 'application/json; charset=utf-8'
+            content-length: '386'
+            connection: keep-alive
+            x-request-id: 8e76dfa4-9989-4466-a1c2-ac53a7b1ab84
+            access-control-allow-origin: '*'
+            access-control-allow-methods: 'GET,HEAD,PUT,POST,DELETE'
+            cache-control: 'no-store, no-cache'
+            x-content-type-options: nosniff
+            x-download-options: noopen
+            x-xss-protection: '1; mode=block'
+            x-frame-options: DENY
+            x-response-time: 41ms
+        body: '{"status":"success","data":{"_id":"55acdb27b42f77842d745f4c","birthdate":"1987-10-16T00:00:00.000Z","first_name":"Votava","last_name":"Jan","preferred_language":"en","email":"cyner@overflow.cz","unsubscribe_token":"b14ba81b70b567ee9251ebeee3ceb9928a20c68f6d55333c60ad45f8123c0f16","birthdate_verified":false,"email_verified":false,"email_id":"55acdb27b42f77842d745f4d","identities":{}}}'
+-
+    request:
+        method: GET
+        url: 'http://sso.7pass.dev/api/accounts/55acdb27b42f77842d745f4c'
+        headers:
+            Host: sso.7pass.dev
+            Accept-Encoding: null
+            Accept: application/json
+            Authorization: '7Pass-Backoffice eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXUyJ9.eyJzZXJ2aWNlX2lkIjoiNTViMGI4OTY0YTYxNmUxNmI5MzIwMDAwIiwibm9uY2UiOiJxMllWTDNsZ1FQMEgzc05qaVpndXVsZjU4T2N1clRyb3MyZzB6V3JyZVZjPSIsInRpbWVzdGFtcCI6MTQzNzk5Mzk5NSwiaWF0IjoiMTQzNzk5Mzk5NSJ9.TUyM9z8gClihKarUMOjpBHeXeQDE22JmMC946U9Pg4JWp7oM5LKz1uY_VDo_iitbesbHUPijr1NF6K7Lnoo6zJiyyhN0paqhpQS2AWNyjU4yzh7wVFm4aEmH0-5YeXwDBbev53jnJEG-Q2nECYG7-PTXYc4FqNE1sQpRPSISHonpZ6GSsIRm18VbLapg0vChjtO650xdC4eRECUQDWHdndzLX1SANdyejefyDNacxEpQAc5JeGpsAtWhrDgvJJBkxF8KRUbLV4M2AaNz_JMCBqorULf_GIWg-B-zEpfUOm_7DY0H2gGb5d-STNEctplM2RtU-vkwK-M7wFYqtD6nin76dVISRYVYcjSVGGooSMTLmV_1u8EIx4b6FAWGj30oYgoFqoxjQKE6Jt4a8yPiw6-MU-P9eQ1lnDNDlR2MMLu8I2achqqcP-yfM2aIjtiv574iwfDVZv_29c7FP633MzIstoCsuP-eQdPYnOBnmo6sbSW3Wo0TxSJkQLWEf6y_Ec2CGOsPBrJBD7QLD6hgJwynYPW4N5ANdzj6qdVz30AQPclqJl9tE0jrSSaF8XqhUolOqhS8NfSgWd32wZt1rP-dWYv4Lg-mu9J9S8f61bQTag_NErN1SoCZJ8FCwQCObdKWwGRe9dxnlHqjoRWIHhmjnWQEs0WAFc8DI2JKkVY'
+            User-Agent: 'GuzzleHttp/6.0.2 curl/7.37.1 PHP/5.6.11'
+    response:
+        status:
+            http_version: '1.1'
+            code: '200'
+            message: OK
+        headers:
+            server: nginx/1.8.0
+            date: 'Mon, 27 Jul 2015 10:46:38 GMT'
+            content-type: 'application/json; charset=utf-8'
+            content-length: '386'
+            connection: keep-alive
+            x-request-id: 61a764de-b653-423e-9114-b43532fac156
+            access-control-allow-origin: '*'
+            access-control-allow-methods: 'GET,HEAD,PUT,POST,DELETE'
+            cache-control: 'no-store, no-cache'
+            x-content-type-options: nosniff
+            x-download-options: noopen
+            x-xss-protection: '1; mode=block'
+            x-frame-options: DENY
+            x-response-time: 40ms
+        body: '{"status":"success","data":{"_id":"55acdb27b42f77842d745f4c","birthdate":"1987-10-16T00:00:00.000Z","first_name":"Votava","last_name":"Jan","preferred_language":"en","email":"cyner@overflow.cz","unsubscribe_token":"b14ba81b70b567ee9251ebeee3ceb9928a20c68f6d55333c60ad45f8123c0f16","birthdate_verified":false,"email_verified":false,"email_id":"55acdb27b42f77842d745f4d","identities":{}}}'
+-
+    request:
+        method: GET
+        url: 'http://sso.7pass.dev/api/accounts/55acdb27b42f77842d745f4c'
+        headers:
+            Host: sso.7pass.dev
+            Accept-Encoding: null
+            Accept: application/json
+            Authorization: '7Pass-Backoffice eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXUyJ9.eyJzZXJ2aWNlX2lkIjoiNTViMGI4OTY0YTYxNmUxNmI5MzIwMDAwIiwibm9uY2UiOiJGSlNxQytha1NVNUU4cnlKK0k2RUVXQzRcL0FXWEttMEZDbTZHM2g2UlgyUT0iLCJ0aW1lc3RhbXAiOjE0Mzc5OTQyOTgsImlhdCI6IjE0Mzc5OTQyOTgifQ.daARJBBEUMhOfhWpjGFPryl2HgZZaVFNPbBzJX30b6Hk5YiRHHP_fqd_UZD4Fba5GdiQp5gwQ8dUQPnrtyaGG_aBt_ji8bRIBhYYNxZ3YCYVoqpALlAeQ1vP3RpFBuOGwuOdG9LxHX2runNcCRoYjRmpnEIuRC-wt9HoNXtLhM-ZxzRd6hJ_oScgi3PrSMwoO7FEXvxwe56edPCVY7QaHITD2wuGjgGBsD6mlwtJaI8pfNuOCG6-DyuXt3vv0tknIE8Yf_KcMqPMnhmXpKtJ50OlLMeya37QFF7t04iuv3cIbC5XyP5HvrLUa14oEG3DdfqXcAazUzBTWm9Pu-Ij5AHihKwGImBhywR9_8-r4TYPVrKS_VWTYjBtJ1I974yaUYa8XdvdKKMLV_-YoN5mltSrqVrESlEQJ5UY4dKWRjLExtqmAQoSkLPblUy4YPig1Bh_XfxBMaE2wGS6C_D-qk1epV9ilci-Iafdb4I-TDxIP_CjbJSHY-sJ3wA7RJF3zFkrgBesb14uWiTT7KgJxSSPSTRzIWAPgbw71exkeCrWhCyoR6JcjMjUXMwuFlYWw5N03oVO8aFAQ0VtZIa5155UcBMhhhLmoUMSdS9OWOmPlAnbZJIZp-q45wXSS5GONdNPE1kFVgcX88natK3UVokz3-7gtWERKXYwEfUd74M'
+            User-Agent: 'GuzzleHttp/6.0.2 curl/7.37.1 PHP/5.6.11'
+    response:
+        status:
+            http_version: '1.1'
+            code: '200'
+            message: OK
+        headers:
+            server: nginx/1.8.0
+            date: 'Mon, 27 Jul 2015 10:51:38 GMT'
+            content-type: 'application/json; charset=utf-8'
+            content-length: '386'
+            connection: keep-alive
+            x-request-id: 493b1fc9-28c5-4cf2-997e-4f5538869d7f
+            access-control-allow-origin: '*'
+            access-control-allow-methods: 'GET,HEAD,PUT,POST,DELETE'
+            cache-control: 'no-store, no-cache'
+            x-content-type-options: nosniff
+            x-download-options: noopen
+            x-xss-protection: '1; mode=block'
+            x-frame-options: DENY
+            x-response-time: 45ms
+        body: '{"status":"success","data":{"_id":"55acdb27b42f77842d745f4c","birthdate":"1987-10-16T00:00:00.000Z","first_name":"Votava","last_name":"Jan","preferred_language":"en","email":"cyner@overflow.cz","unsubscribe_token":"b14ba81b70b567ee9251ebeee3ceb9928a20c68f6d55333c60ad45f8123c0f16","birthdate_verified":false,"email_verified":false,"email_id":"55acdb27b42f77842d745f4d","identities":{}}}'
+-
+    request:
+        method: GET
+        url: 'http://sso.7pass.dev/api/accounts/55acdb27b42f77842d745f4c'
+        headers:
+            Host: sso.7pass.dev
+            Accept-Encoding: null
+            Accept: application/json
+            Authorization: '7Pass-Backoffice eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXUyJ9.eyJzZXJ2aWNlX2lkIjoiNTViMGI4OTY0YTYxNmUxNmI5MzIwMDAwIiwibm9uY2UiOiIyK2JUdzBBQWxZQ2tDd3dYZER4UFZQbHljSVlcL2ZFNjF0QlJleGhQN3FtVT0iLCJ0aW1lc3RhbXAiOjE0Mzc5OTQzMDYsImlhdCI6IjE0Mzc5OTQzMDYifQ.JW4gj63eW4C97p74KYF1pjt5-o8IbieocvBMmW6FFdy7vyahQAQgfis9rowVfvGrUIZOLGSx0_TycSQo7QdOWtjpacj9h3pZyfU4-V6868WfAVeUv3Rg4gyxUTvEEER-hka-qaysrH5FreGf1iRAuIs3pfRZnGWNjhaXsw2NSlpIOjsc1MGLDT5wEDs0AQROBSH6ALwdjaXCqoP_LSZWxGD3rtAceZ0PeW09CJeajzHUklEoEwtCCJQcNCrp-gTm_6iDNpPgQjXUNaqV6Chc_uOFT5HIQJmoDW7gFoxmEreWN_hnw0lDX9NSWXaAvJmWpolFM2X8odNLc01iKk9PtF-Ur6JX9aZR5rFtY9DCjBz4Y7OeX6ZvW-URRNsdaaQj-CeL0laUJhVusx-Hxf2BkjE_C45K7Lp6YG5EO4Wu7F0yrQRH673QVTMnXPDVMolXlJjVml0337xmG8Mulbdspy8nmio_JVumYGLIeZKhgMNp4JlZo7dx9hqAkuzUyLQV6gVwWqk_V0txTrgUXBig8ibaCvzXTAUqemrEoCr5ogxCDMlX2q2y7qModKuN51u_QuYbhfDSpk-Eo7PWHEMv4rAF6-upISqNDEcOUr-CxXbDGjTsKXHWBt6IdwgEBT1qq7dXQKy4TsoqxZCIsTCTwJLbEjAetGmdwzJTRM0pLaM'
+            User-Agent: 'GuzzleHttp/6.0.2 curl/7.37.1 PHP/5.6.11'
+    response:
+        status:
+            http_version: '1.1'
+            code: '200'
+            message: OK
+        headers:
+            server: nginx/1.8.0
+            date: 'Mon, 27 Jul 2015 10:51:50 GMT'
+            content-type: 'application/json; charset=utf-8'
+            content-length: '386'
+            connection: keep-alive
+            x-request-id: d3c91a75-ad04-4aad-8fac-70778a53af81
+            access-control-allow-origin: '*'
+            access-control-allow-methods: 'GET,HEAD,PUT,POST,DELETE'
+            cache-control: 'no-store, no-cache'
+            x-content-type-options: nosniff
+            x-download-options: noopen
+            x-xss-protection: '1; mode=block'
+            x-frame-options: DENY
+            x-response-time: 46ms
+        body: '{"status":"success","data":{"_id":"55acdb27b42f77842d745f4c","birthdate":"1987-10-16T00:00:00.000Z","first_name":"Votava","last_name":"Jan","preferred_language":"en","email":"cyner@overflow.cz","unsubscribe_token":"b14ba81b70b567ee9251ebeee3ceb9928a20c68f6d55333c60ad45f8123c0f16","birthdate_verified":false,"email_verified":false,"email_id":"55acdb27b42f77842d745f4d","identities":{}}}'
+-
+    request:
+        method: GET
+        url: 'http://sso.7pass.dev/api/accounts/55acdb27b42f77842d745f4c'
+        headers:
+            Host: sso.7pass.dev
+            Accept-Encoding: null
+            Accept: application/json
+            Authorization: '7Pass-Backoffice eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXUyJ9.eyJzZXJ2aWNlX2lkIjoiNTViMGI4OTY0YTYxNmUxNmI5MzIwMDAwIiwibm9uY2UiOiJiNTVCbVVIMHN5T281YlhVcElhTzVMZlNEMkRaXC9wTUxcL3FUeWc1TWFmKzQ9IiwidGltZXN0YW1wIjoxNDM3OTk0MzMzLCJpYXQiOiIxNDM3OTk0MzMzIn0.FdJ9PBmTvua18sZu_f7bG8INeHNWU94FSjKQZGwZxBFZbXUUZ5QV0MryJ8EUS1Rc7IFZFUGvjEPOMT7JHq3UU7VJdexkHTyBA721RyOvmObbsIeNBWIY0KSiohcGmuLUvtph5Bi58iE_GNGYrb9TUI6taen7FA4onWEOPFBAVLid1AjpR6TZpXXF-PaCNmfzpO3IYOkrY_06ZwEmsU_7ux3AYwYktS84rK8fQvo35kRUSkPfwE0zEdWBoFiOKT66pxJZQcycXE8WLxUE3w48y78TGvZLuMqyOwaZGaIDxk-q3Pkm3CULJ9WaffgLot5s6jYzu472Xz2sZ9SUgP1-oi1H6CFUnvqpVarVQtnpkgj34B1qgCMJkjXP_Rqp7GkncttZRZS0mACh136ZZOlOJoMUikIyomwh8NLg1zh6omdjbWKEsHOD6CvJF5Bi73Sw74BTIFG_nNuzPAhWTuIfjedXe0JptuhudU6VWE2srXP2gImYi_5OU60GMoLgwPatr0CveqvrGw8gnRAHgUY1QCJsR1PhOzZUvVQhGxvhCISYMCDH51jQ0X4oYgvRbqbzoJBwTUxqkW9Qm3GtUxyZSJloxcnSBcv0O7Y12I_0eikRMHJh2a1Hkkwtdw2EdtD_B57sPvC4YBM5jvy1Rqj_uMn31qPAw5B2f-j9isQpcqo'
+            User-Agent: 'GuzzleHttp/6.0.2 curl/7.37.1 PHP/5.6.11'
+    response:
+        status:
+            http_version: '1.1'
+            code: '200'
+            message: OK
+        headers:
+            server: nginx/1.8.0
+            date: 'Mon, 27 Jul 2015 10:52:14 GMT'
+            content-type: 'application/json; charset=utf-8'
+            content-length: '386'
+            connection: keep-alive
+            x-request-id: 86d446fd-acd6-4a85-ae44-78eb376a94a5
+            access-control-allow-origin: '*'
+            access-control-allow-methods: 'GET,HEAD,PUT,POST,DELETE'
+            cache-control: 'no-store, no-cache'
+            x-content-type-options: nosniff
+            x-download-options: noopen
+            x-xss-protection: '1; mode=block'
+            x-frame-options: DENY
+            x-response-time: 54ms
+        body: '{"status":"success","data":{"_id":"55acdb27b42f77842d745f4c","birthdate":"1987-10-16T00:00:00.000Z","first_name":"Votava","last_name":"Jan","preferred_language":"en","email":"cyner@overflow.cz","unsubscribe_token":"b14ba81b70b567ee9251ebeee3ceb9928a20c68f6d55333c60ad45f8123c0f16","birthdate_verified":false,"email_verified":false,"email_id":"55acdb27b42f77842d745f4d","identities":{}}}'
