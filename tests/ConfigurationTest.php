@@ -34,4 +34,16 @@ class ConfigurationTest extends PHPUnit_Framework_TestCase
     $this->assertEquals('foo', $config->client_id);
     $this->assertEquals('bar', $config->client_secret);
   }
+
+  public function testSetsUnsetsCorrectly() {
+    $config = new Configuration();
+    $config->foo = 'bar';
+
+    $this->assertEquals(true, isset($config->foo));
+    $this->assertEquals('bar', $config->foo);
+
+    unset($config->foo);
+
+    $this->assertEquals(false, isset($config->foo));
+  }
 }
