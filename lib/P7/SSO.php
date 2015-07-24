@@ -25,8 +25,8 @@ class SSO {
   }
 
   // TODO: implement me!
-  public static function rediscover() {
-  }
+  // public static function rediscover() {
+  // }
 
   public function uri($options) {
     $default_options = [
@@ -66,8 +66,8 @@ class SSO {
       ]
     ]);
   }
-  //
+
   // TODO: implement me!
-  public function backoffice() {
-  }
+  // public function backoffice() {
+  // }
 }
