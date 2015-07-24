@@ -1,0 +1,48 @@
+
+-
+    request:
+        method: GET
+        url: 'http://httpbin.org/post?foo=bar'
+        headers:
+            Host: httpbin.org
+            Accept-Encoding: null
+            Accept: application/json
+            User-Agent: 'GuzzleHttp/6.0.2 curl/7.37.1 PHP/5.6.11'
+    response:
+        status:
+            http_version: '1.1'
+            code: '405'
+            message: 'METHOD NOT ALLOWED'
+        headers:
+            Server: nginx
+            Date: 'Fri, 24 Jul 2015 15:02:44 GMT'
+            Content-Type: text/html
+            Content-Length: '178'
+            Connection: keep-alive
+            Allow: 'POST, OPTIONS'
+            Access-Control-Allow-Origin: '*'
+            Access-Control-Allow-Credentials: 'true'
+        body: "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 3.2 Final//EN\">\n<title>405 Method Not Allowed</title>\n<h1>Method Not Allowed</h1>\n<p>The method is not allowed for the requested URL.</p>\n"
+-
+    request:
+        method: GET
+        url: 'http://httpbin.org/get?foo=bar'
+        headers:
+            Host: httpbin.org
+            Accept-Encoding: null
+            Accept: application/json
+            User-Agent: 'GuzzleHttp/6.0.2 curl/7.37.1 PHP/5.6.11'
+    response:
+        status:
+            http_version: '1.1'
+            code: '200'
+            message: OK
+        headers:
+            Server: nginx
+            Date: 'Fri, 24 Jul 2015 15:03:31 GMT'
+            Content-Type: application/json
+            Content-Length: '255'
+            Connection: keep-alive
+            Access-Control-Allow-Origin: '*'
+            Access-Control-Allow-Credentials: 'true'
+        body: "{\n  \"args\": {\n    \"foo\": \"bar\"\n  }, \n  \"headers\": {\n    \"Accept\": \"application/json\", \n    \"Host\": \"httpbin.org\", \n    \"User-Agent\": \"GuzzleHttp/6.0.2 curl/7.37.1 PHP/5.6.11\"\n  }, \n  \"origin\": \"77.104.252.88\", \n  \"url\": \"http://httpbin.org/get?foo=bar\"\n}\n"
