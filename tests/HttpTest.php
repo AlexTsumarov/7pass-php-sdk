@@ -32,6 +32,39 @@ class HttpTest extends PHPUnit_Framework_TestCase
   }
 
   /**
+  * @vcr http_data_put
+  */
+  public function testPut() {
+    $client = new Http();
+    $response = $client->put('http://httpbin.org/put', ['bar' => 'baz']);
+    $data = $response->data;
+
+    $this->assertEquals('{"bar":"baz"}', $data);
+  }
+
+  /**
+  * @vcr http_data_patch
+  */
+  public function testPatch() {
+    $client = new Http();
+    $response = $client->patch('http://httpbin.org/patch', ['foo' => 'bar']);
+    $decoded = json_decode($response->raw);
+
+    $this->assertEquals('bar', $decoded->args->foo);
+  }
+
+  /**
+  * @vcr http_data_delete
+  */
+  public function testDelete() {
+    $client = new Http();
+    $response = $client->delete('http://httpbin.org/delete', ['foo' => 'bar']);
+    $decoded = json_decode($response->raw);
+
+    $this->assertEquals('bar', $decoded->args->foo);
+  }
+
+  /**
   * @vcr http_base_uri_get
   */
   public function testWorksWithBaseUri() {
