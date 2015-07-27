@@ -19,13 +19,23 @@ class SSOTest extends PHPUnit_Framework_TestCase
   public function testGeneratesUri()
   {
     $sso = $this->validSSO();
+    $authorization = $sso->authorization();
 
-    $uri = $sso->uri([
+    $uri = $authorization->uri([
       'redirect_uri' => self::REDIRECT_URI,
       'nonce' => 'somerandomstring'
     ]);
 
     $this->assertEquals('http://sso.7pass.dev/connect/v1.0/authorize?response_type=code&client_id=55b0b8964a616e16b9320000&scope=openid+profile+email&nonce=somerandomstring&redirect_uri=http%3A%2F%2Flocalhost%3A8000%2Fcallback', $uri);
+  }
+
+  public function testAuthorizationCache()
+  {
+    $sso = $this->validSSO();
+    $authorization1 = $sso->authorization();
+    $authorization2 = $sso->authorization();
+
+    $this->assertSame($authorization1, $authorization2);
   }
 
   /**
@@ -34,8 +44,9 @@ class SSOTest extends PHPUnit_Framework_TestCase
   public function testReturnsAllTokensWithValidCode()
   {
     $sso = $this->validSSO();
+    $authorization = $sso->authorization();
 
-    $response = $sso->callback([
+    $response = $authorization->callback([
       'redirect_uri' => self::REDIRECT_URI,
       'code' => self::CODE
     ]);
@@ -97,8 +108,9 @@ class SSOTest extends PHPUnit_Framework_TestCase
   public function testReturnsErrorWithInvalidCode()
   {
     $sso = $this->validSSO();
+    $authorization = $sso->authorization();
 
-    $response = $sso->callback([
+    $response = $authorization->callback([
       'redirect_uri' => 'http://localhost:8000/callback',
       'code' => 'mesoinvalid'
     ]);

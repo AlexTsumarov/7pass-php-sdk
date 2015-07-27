@@ -17,7 +17,7 @@ $callback_uri = 'http://' . $_SERVER['HTTP_HOST'] . '/callback';
 
 // Redirect to login url
 if($action == 'login') {
-  $uri = $sso->uri([
+  $uri = $sso->authorization()->uri([
     'redirect_uri' => $callback_uri
   ]);
 
@@ -34,7 +34,7 @@ if($action == 'login') {
 if($action == 'callback') {
   $code = $_GET['code'];
 
-  $response = $sso->callback([
+  $response = $sso->authorization()->callback([
     'redirect_uri' => $callback_uri,
     'code' => $code
   ]);
