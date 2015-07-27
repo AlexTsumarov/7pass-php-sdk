@@ -31,17 +31,25 @@ if($action == 'login') {
 
 <pre>
 <?php
+
 if($action == 'callback') {
   $code = $_GET['code'];
 
-  $response = $sso->authorization()->callback([
+  $payload = [
     'redirect_uri' => $callback_uri,
     'code' => $code
-  ]);
+  ];
+
+  $response = $sso->authorization()->callback($payload);
 
   if($response->success) {
     $tokens = $response->data;
-    echo '<h3>Tokens</h3>';
+    echo '<h3>#callback(' . var_export($payload, true) . ')</h3>';
+    print_r($tokens);
+
+    $payload = ['refresh_token' => $tokens->refresh_token];
+    echo '<h3>#refresh(' . var_export($payload, true) . ')</h3>';
+    $tokens = $sso->authorization()->refresh($payload)->data;
     print_r($tokens);
 
     $api = $sso->api($tokens->access_token);

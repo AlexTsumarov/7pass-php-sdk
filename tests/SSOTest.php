@@ -62,6 +62,27 @@ class SSOTest extends PHPUnit_Framework_TestCase
 
   /**
   * @depends testReturnsAllTokensWithValidCode
+  * @vcr refresh_valid_code
+  */
+  public function testReturnsAllTokensWithRefreshToken($tokens) {
+    $sso = $this->validSSO();
+    $authorization = $sso->authorization();
+
+    $response = $authorization->refresh([
+      'refresh_token' => $tokens->refresh_token
+    ]);
+
+    $data = $response->data;
+
+    $this->assertObjectHasAttribute('access_token', $data);
+    $this->assertObjectHasAttribute('refresh_token', $data);
+    $this->assertObjectHasAttribute('id_token', $data);
+
+    return $data;
+  }
+
+  /**
+  * @depends testReturnsAllTokensWithValidCode
   * @vcr api_get_elevated_access
   */
   public function testGetsAccountInfoWithAccessTokenWithElevatedAccess($tokens) {

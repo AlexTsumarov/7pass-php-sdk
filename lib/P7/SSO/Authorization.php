@@ -25,8 +25,8 @@ class Authorization {
     return $this->config->host . '/connect/v1.0/authorize?' . http_build_query($data);
   }
 
-  public function callback($data) {
-    $data['grant_type'] = 'authorization_code';
+  private function getTokens($data, $grant_type) {
+    $data['grant_type'] = $grant_type;
 
     $client = new Http([
       'base_uri' => $this->config->host,
@@ -34,5 +34,13 @@ class Authorization {
     ]);
 
     return $client->post('/connect/v1.0/token', $data);
+  }
+
+  public function callback($data) {
+    return $this->getTokens($data, 'authorization_code');
+  }
+
+  public function refresh($data) {
+    return $this->getTokens($data, 'refresh_token');
   }
 }
