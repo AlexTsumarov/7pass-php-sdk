@@ -94,7 +94,8 @@ class SSOTest extends PHPUnit_Framework_TestCase
   */
   public function testGetsAccountInfoUsingBackoffice() {
     $sso = $this->validSSO();
-    $api = $sso->backoffice();
+    $timestamp = 1438003691;
+    $api = $sso->backoffice(null, ['nonce' => 'foobar', 'timestamp' => $timestamp, 'iat' => $timestamp]);
 
     $data = $api->get('/55acdb27b42f77842d745f4c')->data;
     $this->assertObjectHasAttribute('birthdate', $data);

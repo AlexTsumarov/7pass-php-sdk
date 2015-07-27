@@ -53,16 +53,16 @@ class SSO {
     ]);
   }
 
-  public function backoffice($user_id = null) {
+  public function backoffice($user_id = null, $custom_payload = []) {
     $jws  = new SimpleJWS(array(
         'alg' => 'RS256'
     ));
 
-    $jws->setPayload(array(
+    $jws->setPayload(array_merge([
         'service_id' => $this->config->client_id,
         'nonce' => Nonce::generate(),
         'timestamp' => time()
-    ));
+    ], $custom_payload));
 
     $jws->sign($this->config->backoffice_key);
 
