@@ -22,14 +22,56 @@ use \Namshi\JOSE\SimpleJWS;
 class SSO {
   public $config;
   private $authorization_cache;
+  private static $cachePool;
+
+  public static function cache() {
+    // Cache to APC by default if available, if not - cache to the tmp directory
+    if(!isset(self::$cachePool)) {
+      if(\Stash\Driver\Apc::isAvailable()) {
+        $driver = new \Stash\Driver\Apc();
+      } else {
+        $driver = new \Stash\Driver\FileSystem();
+      }
+
+      $driver->setOptions();
+      self::$cachePool = new \Stash\Pool($driver);
+    }
+
+    return self::$cachePool;
+  }
 
   function __construct($options) {
     $this->config = new Configuration($options);
+
+    if(!isset($this->config->jwks)) {
+      $this->config->jwks = $this->fetchJwks();
+    }
   }
 
-  // TODO: implement me!
-  // public static function rediscover() {
-  // }
+  private function fetchJwks() {
+    $item = self::cache()->getItem(['config', 'jwks', $this->config->environment]);
+
+    $data = $item->get();
+
+    if($item->isMiss()) {
+      $item->lock();
+
+      $client = new Http([
+        'base_uri' => $this->config->host,
+        'http_errors' => true
+      ]);
+
+      $res = $client->get('.well-known/openid-configuration');
+      $jwks_uri = $res->data->jwks_uri;
+
+      $res = $client->get($jwks_uri);
+      $data = $res->data->keys;
+
+      $item->set($data);
+    }
+
+    return $data;
+  }
 
   public function authorization() {
     if($this->authorization_cache) {

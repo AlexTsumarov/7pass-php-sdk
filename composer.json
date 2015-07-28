@@ -4,7 +4,8 @@
     },
     "require": {
         "namshi/jose": "~5.0",
-        "guzzlehttp/guzzle": "~6.0"
+        "guzzlehttp/guzzle": "~6.0",
+        "tedivm/stash": "0.12.*"
     },
     "require-dev": {
         "php-vcr/phpunit-testlistener-vcr": "~1.1"

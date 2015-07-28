@@ -1,6 +1,8 @@
 <?php
 
 use \P7\SSO;
+use \P7\SSO\Http;
+use \GuzzleHttp\Client;
 
 class SSOTest extends PHPUnit_Framework_TestCase
 {
@@ -12,7 +14,8 @@ class SSOTest extends PHPUnit_Framework_TestCase
       'client_id' => '55b0b8964a616e16b9320000',
       'client_secret' => '6b776407825a50b0f72941315194a3d50886b86b81bc40bbcf1714bdf50b3aa4',
       'environment' => 'test',
-      'backoffice_key' => file_get_contents(__DIR__ . '/fixtures/certs/rsa.pem')
+      'backoffice_key' => file_get_contents(__DIR__ . '/fixtures/certs/rsa.pem'),
+      'jwks' => []
     ]);
   }
 
@@ -141,5 +144,36 @@ class SSOTest extends PHPUnit_Framework_TestCase
 
     $this->assertObjectHasAttribute('description', $error);
     $this->assertEquals('Authorization code is invalid', $error->description);
+  }
+
+  /**
+  * @vcr jwks
+  */
+  public function testDiscoversJwks()
+  {
+    $sso = new SSO(['environment' => 'test']);
+    $key = $sso->config->jwks[0];
+
+    $this->assertObjectHasAttribute('n', $key);
+    $this->assertObjectHasAttribute('e', $key);
+  }
+
+  /**
+  * @vcr jwks
+  */
+  public function testRediscoverAfterClear()
+  {
+    $pool = SSO::cache();
+    $item = $pool->getItem('config/jwks/test');
+
+    $item->set([(object)['n' => 'foobar']]);
+
+    $sso = new SSO(['environment' => 'test']);
+    $this->assertEquals('foobar', $sso->config->jwks[0]->n);
+
+    $item->clear();
+
+    $sso = new SSO(['environment' => 'test']);
+    $this->assertNotEquals('foobar', $sso->config->jwks[0]->n);
   }
 }
