@@ -6,7 +6,6 @@ use \GuzzleHttp\Psr7\Request;
 use \P7\SSO\Response;
 
 class Http {
-  private $client;
   private $options;
 
   const DEFAULT_OPTIONS = [
@@ -19,8 +18,6 @@ class Http {
 
   function __construct($options = []) {
     $this->options = array_merge_recursive(self::DEFAULT_OPTIONS, $options);
-
-    $this->client = new Client($this->options);
   }
 
   private function request($method, $url, $data = []) {
@@ -39,7 +36,8 @@ class Http {
       }
     }
 
-    $response = $this->client->send($request, $opts);
+    $client = new Client($this->options);
+    $response = $client->send($request, $opts);
 
     return Response::fromGuzzlehttpResponse($response);
   }
