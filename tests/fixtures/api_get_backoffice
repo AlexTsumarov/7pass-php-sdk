@@ -7,7 +7,7 @@
             Host: sso.7pass.dev
             Accept-Encoding: null
             Accept: application/json
-            Authorization: '7Pass-Backoffice eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXUyJ9.eyJzZXJ2aWNlX2lkIjoiNTViMGI4OTY0YTYxNmUxNmI5MzIwMDAwIiwibm9uY2UiOiJmb29iYXIiLCJ0aW1lc3RhbXAiOjE0MzgwMDM2OTEsImlhdCI6MTQzODAwMzY5MX0.kqG-gDZvKstLCpg3CBRqUEUQ7GdAYXAXBQC4mau2ti17_3_SLseqKTv8P0WUkY02pDd_SMCLMXp4mbgOHwZpayv6CrTDbmi3JubqGdoMXb8_mRou3dP_ZRQ5TsTwTJD9TLzZjQ04TVQATJM8VadsevpYepYM1Q9FLVUt5GLpeZ6MHiowYW_yKYq2OEHpyE7HnSLiWfxMl1_hwB3XO90ZynrhyRSuQCLzgRIDEPvksbJIGollFWipYYTpK5ayLTWkpDMEeVBTuIo2r1pz_bIsAyuMEhIz4FyJdaddM2cnwdBs6WjgEhe2dIUDly7sEN3X9GwkJdEwUoeKucygn63xQUJOyXrSuD9QS2Fra7SW3AQKUT-Oa7ZvrSWC36Esps-7UqromQGsUxe28n8e2RCis_qHjWSuhtbRzso8-ThrPKVxxQVFzSAhPk_nWn6j92zGqz0oOarmyQYxvSYXoH2acHHPa0R3quI1H-dgJykOwbwLRq52t8KTuxjh-nvpsHG2amSNas4lIttVhpZ1TV1Z9jAmXXpWfc6kdwz1P0ON7pYHEmJQqp-0crb5Fa7nKTz939K-n1xDYtB72RW7N9DnyQjT0k_UbTOCDs4UvsC3wK0KIEAMnYUpqUZQO5oUL0dVDSCAgjGLXefL1V2ucDFQgTZFbnAQ2zp1fHvBmDCsEGk'
+            Authorization: '7Pass-Backoffice eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJzZXJ2aWNlX2lkIjoiNTViMGI4OTY0YTYxNmUxNmI5MzIwMDAwIiwibm9uY2UiOiJmb29iYXIiLCJ0aW1lc3RhbXAiOjE0MzgxNzI4MTksImlhdCI6MTQzODE3MjgxOX0.mvNZamBb8wGNGEm37fcLPNaEQCAu1vx9xpsnkpI2m9_hEyOLO3VnxOPqcb3CELQ8SjhcWfq3jU527nHePB3eW5V6EvgPPph9TfNR-eZGfXarQ4NAZpwZ4ZcJPciXr8VJT8ZIkXXdKDL34BqspD-x0tGYP4AXHgi_6xH-W2Y4WsXDrpsZzMiL0gre45EfYukyxdzQHHtOxyBo0S9mHqwA88YOkS6bnC58Vg6bknhfKYMAAi5JGNSItcxJhFDkC9ovVump7IqIg7MXt1D0GUbfAZWlYqNSTNt7-kbQBYij2TMyWiWz79vjjn7bxQ6b-SU5OgI1fhTggOhOGeFudGAWtlbwmB9Zf2xD2E6p_0BS57AoDW2sExI58dF0UoH4WBD_Ulu9DLstVrW3S4T6D_pATinqmQjFO_M9aNBPOl05Y3zgjlAGXeLK5g6CiUvxjNoHaq7iiuU8QPBGFMHdVgYSZdzdOywjaTs3edLjJkhPxx8Sk08kL5FGAlbSYZqdI2-T_T6AjKfwqAUhIgNK_vHWxf5Zl5kaXCfcOJ_0WW21dA06R8KLle38JNiKM7gIr0cGdYm9IhYoPUZAPE-_MxruV_I0e55iUJ3ij7-t5GKwq9aqy33bPbgdx4sT9arhpR155cwBQOLHKDDCZxLi-DHxxFkExtOOqitGbUPuYhA3HSk'
             User-Agent: 'GuzzleHttp/6.0.2 curl/7.37.1 PHP/5.6.11'
     response:
         status:
@@ -16,11 +16,11 @@
             message: OK
         headers:
             server: nginx/1.8.0
-            date: 'Mon, 27 Jul 2015 13:28:31 GMT'
+            date: 'Wed, 29 Jul 2015 12:27:12 GMT'
             content-type: 'application/json; charset=utf-8'
             content-length: '386'
             connection: keep-alive
-            x-request-id: eb438738-e67b-4417-a657-9732fa98b812
+            x-request-id: ac5e2523-acf8-49cb-b3f3-45edf14ac542
             access-control-allow-origin: '*'
             access-control-allow-methods: 'GET,HEAD,PUT,POST,DELETE'
             cache-control: 'no-store, no-cache'
@@ -28,5 +28,5 @@
             x-download-options: noopen
             x-xss-protection: '1; mode=block'
             x-frame-options: DENY
-            x-response-time: 41ms
+            x-response-time: 46ms
         body: '{"status":"success","data":{"_id":"55acdb27b42f77842d745f4c","birthdate":"1987-10-16T00:00:00.000Z","first_name":"Votava","last_name":"Jan","preferred_language":"en","email":"cyner@overflow.cz","unsubscribe_token":"b14ba81b70b567ee9251ebeee3ceb9928a20c68f6d55333c60ad45f8123c0f16","birthdate_verified":false,"email_verified":false,"email_id":"55acdb27b42f77842d745f4d","identities":{}}}'

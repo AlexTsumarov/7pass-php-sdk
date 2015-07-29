@@ -3,9 +3,10 @@
         "psr-4": {"P7\\": "lib/P7/"}
     },
     "require": {
-        "namshi/jose": "~5.0",
         "guzzlehttp/guzzle": "~6.0",
-        "tedivm/stash": "0.12.*"
+        "tedivm/stash": "0.12.*",
+        "phpseclib/phpseclib": "0.3.*",
+        "firebase/php-jwt": "~3.0"
     },
     "require-dev": {
         "php-vcr/phpunit-testlistener-vcr": "~1.1"

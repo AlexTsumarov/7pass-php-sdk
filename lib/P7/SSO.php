@@ -11,7 +11,7 @@ use \P7\SSO\Configuration;
 use \P7\SSO\Http;
 use \P7\SSO\Session;
 use \P7\SSO\Nonce;
-use \Namshi\JOSE\SimpleJWS;
+use \Firebase\JWT\JWT;
 
 /**
  * @property string $client_id
@@ -48,6 +48,10 @@ class SSO {
     }
   }
 
+  private function base64_from_url($base64url) {
+    return strtr($base64url, '-_', '+/');
+  }
+
   private function fetchJwks() {
     $item = self::cache()->getItem(['config', 'jwks', $this->config->environment]);
 
@@ -65,7 +69,21 @@ class SSO {
       $jwks_uri = $res->data->jwks_uri;
 
       $res = $client->get($jwks_uri);
-      $data = $res->data->keys;
+      $keys = $res->data->keys;
+      $data = [];
+
+      $rsa = new \Crypt_RSA();
+
+      foreach($keys as $key) {
+        $public = '<RSAKeyValue>
+                     <Modulus>'.$this->base64_from_url($key->n).'</Modulus>
+                     <Exponent>'.$this->base64_from_url($key->e).'</Exponent>
+                   </RSAKeyValue>';
+        $rsa->loadKey($public, CRYPT_RSA_PUBLIC_FORMAT_XML);
+        $rsa->setPublicKey();
+
+        $data[$key->kid] = $rsa->getPublicKey();
+      }
 
       $item->set($data);
     }
@@ -96,22 +114,19 @@ class SSO {
   }
 
   public function backoffice($user_id = null, $custom_payload = []) {
-    $jws  = new SimpleJWS(array(
-        'alg' => 'RS256'
-    ));
+    $key = $this->config->backoffice_key;
 
-    $jws->setPayload(array_merge([
+    $jwt = JWT::encode(array_merge([
         'service_id' => $this->config->client_id,
         'nonce' => Nonce::generate(),
         'timestamp' => time()
-    ], $custom_payload));
+    ], $custom_payload), $key, 'RS256');
 
-    $jws->sign($this->config->backoffice_key);
 
     return new Http([
       'base_uri' => $this->config->host . '/api/accounts/',
       'headers' => [
-        'Authorization' => '7Pass-Backoffice ' . $jws->getTokenString()
+        'Authorization' => '7Pass-Backoffice ' . $jwt
       ]
     ]);
   }
