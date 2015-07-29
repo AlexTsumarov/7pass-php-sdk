@@ -8,21 +8,21 @@ class SSOTest extends PHPUnit_Framework_TestCase
 {
   const CODE = 'Gwl9EvEyG7tyiUF72j3x0TnNvQe6yiQCRlfg4Yb7bLjlbneSoUi2fme4OFpMdblDmSkUgCzOuENbczpX';
   const REDIRECT_URI = 'http://localhost:8000/callback';
+  const SERVER_KID = '4cee9dc4d2aaf2eb997113d6b76dc6fe';
+  const SERVER_PUBLIC_KEY = "-----BEGIN PUBLIC KEY-----\r\n"
+                            . "MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQCtsObxWfrFIGbxahs3YM4AvCbd\r\n"
+                            . "9gPo8WL6WhHUH+8kgS44TNnzguGK3pPPM87XdF1E3GCyBqhNDt/Y2KogSqeTTnra\r\n"
+                            . "pXfAXip7ZN1VyMkibPZ3VtaAuIED66B71UyU8eW+hCgB+pGMFWtsK7X4A08yCyVP\r\n"
+                            . "lstPE6F7Cg2zgKIRXwIDAQAB\r\n"
+                            . "-----END PUBLIC KEY-----";
 
   private function validSSO() {
-    $key = "-----BEGIN PUBLIC KEY-----\n";
-    $key .= "MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQCtsObxWfrFIGbxahs3YM4AvCbd\n";
-    $key .= "9gPo8WL6WhHUH+8kgS44TNnzguGK3pPPM87XdF1E3GCyBqhNDt/Y2KogSqeTTnra\n";
-    $key .= "pXfAXip7ZN1VyMkibPZ3VtaAuIED66B71UyU8eW+hCgB+pGMFWtsK7X4A08yCyVP\n";
-    $key .= "lstPE6F7Cg2zgKIRXwIDAQAB\n";
-    $key .= '-----END PUBLIC KEY-----';
-
     return new SSO([
       'client_id' => '55b0b8964a616e16b9320000',
       'client_secret' => '6b776407825a50b0f72941315194a3d50886b86b81bc40bbcf1714bdf50b3aa4',
       'environment' => 'test',
       'backoffice_key' => file_get_contents(__DIR__ . '/fixtures/certs/rsa.pem'),
-      'jwks' => ['4cee9dc4d2aaf2eb997113d6b76dc6fe' => $key]
+      'jwks' => ['4cee9dc4d2aaf2eb997113d6b76dc6fe' => self::SERVER_PUBLIC_KEY]
     ]);
   }
 
@@ -158,11 +158,14 @@ class SSOTest extends PHPUnit_Framework_TestCase
   */
   public function testDiscoversJwks()
   {
-    $sso = new SSO(['environment' => 'test']);
-    $key = $sso->config->jwks[0];
+    $pool = SSO::cache();
+    $item = $pool->getItem('config/jwks/test');
+    $item->clear();
 
-    $this->assertObjectHasAttribute('n', $key);
-    $this->assertObjectHasAttribute('e', $key);
+    $sso = new SSO(['environment' => 'test']);
+    $key = $sso->config->jwks[self::SERVER_KID];
+
+    $this->assertEquals(self::SERVER_PUBLIC_KEY, $key);
   }
 
   /**
@@ -173,14 +176,14 @@ class SSOTest extends PHPUnit_Framework_TestCase
     $pool = SSO::cache();
     $item = $pool->getItem('config/jwks/test');
 
-    $item->set([(object)['n' => 'foobar']]);
+    $item->set(['foo' => 'bar']);
 
     $sso = new SSO(['environment' => 'test']);
-    $this->assertEquals('foobar', $sso->config->jwks[0]->n);
+    $this->assertEquals('bar', $sso->config->jwks['foo']);
 
     $item->clear();
 
     $sso = new SSO(['environment' => 'test']);
-    $this->assertNotEquals('foobar', $sso->config->jwks[0]->n);
+    $this->assertEquals(self::SERVER_PUBLIC_KEY, $sso->config->jwks[self::SERVER_KID]);
   }
 }
