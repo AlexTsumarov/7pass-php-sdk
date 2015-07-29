@@ -5,6 +5,8 @@ use \P7\SSO;
 
 $action = ltrim(@$_SERVER['PATH_INFO'], '/');
 
+SSO::cache()->flush();
+
 $sso = new SSO(
   [
     'client_id' => '55b0b8964a616e16b9320000',

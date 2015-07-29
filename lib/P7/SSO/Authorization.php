@@ -3,6 +3,7 @@ namespace P7\SSO;
 
 use \P7\SSO\Nonce;
 use \P7\SSO\Http;
+use \Firebase\JWT\JWT;
 
 class Authorization {
   private $config;
@@ -33,7 +34,19 @@ class Authorization {
       'auth' => [$this->config->client_id, $this->config->client_secret]
     ]);
 
-    return $client->post('/connect/v1.0/token', $data);
+    $res = $client->post('/connect/v1.0/token', $data);
+
+    if($res->success) {
+      // Validates ID token signature
+      $this->decodeIdToken($res->data->id_token);
+    }
+
+    return $res;
+  }
+
+  public function decodeIdToken($token) {
+    var_export($this->config->jwks);
+    return JWT::decode($token, $this->config->jwks, ['RS256']);
   }
 
   public function callback($data) {
