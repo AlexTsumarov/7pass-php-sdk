@@ -3,19 +3,13 @@
 require __DIR__ . '/../vendor/autoload.php';
 use \P7\SSO;
 
+$config = require __DIR__ . '/config.local.php';
+
 $action = ltrim(@$_SERVER['PATH_INFO'], '/');
 
 SSO::cache()->flush();
 
-$sso = new SSO(
-  [
-    'client_id' => '55b0b8964a616e16b9320000',
-    'service_id' => '55b0b8964a616e16b9320000',
-    'client_secret' => '6b776407825a50b0f72941315194a3d50886b86b81bc40bbcf1714bdf50b3aa4',
-    'environment' => 'development',
-    'backoffice_key' =>  openssl_pkey_get_private('file://' . __DIR__ . '/../tests/fixtures/certs/rsa.pem')
-  ]
-);
+$sso = new SSO($config['sso_client']);
 
 $callback_uri = 'http://' . $_SERVER['HTTP_HOST'] . '/callback';
 
@@ -38,7 +32,15 @@ if($action == 'login') {
 <pre>
 <?php
 if($action == 'backoffice') {
-  echo($sso->authorization()->backoffice('55d34fb38496a45a1006a09e')->raw);
+  $response = $sso->authorization()->backoffice($config['account_id']);
+  if($response->success) {
+    echo '<h3>Success</h3>';
+    print_r($response->data);
+  }
+  else {
+    echo '<h3>Error</h3>';
+    print_r($response->error);
+  }
 }
 ?>
 <?php
@@ -71,6 +73,7 @@ if($action == 'callback') {
     echo '<h3>GET /me/emails</h3>';
     print_r($api->get('/me/emails')->data);
   } else {
-    echo 'Invalid or already used token.';
+    echo '<h3>Error</h3>';
+    print_r($response->error);
   }
 }

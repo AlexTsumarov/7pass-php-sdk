@@ -1,0 +1,11 @@
+<?php
+return [
+  'sso_client' => [
+    'client_id' => '55b0b8964a616e16b9320000',
+    'service_id' => '55b0b8964a616e16b9320000',
+    'client_secret' => '6b776407825a50b0f72941315194a3d50886b86b81bc40bbcf1714bdf50b3aa4',
+    'environment' => 'development',
+    'backoffice_key' =>  openssl_pkey_get_private('file://' . __DIR__ . '/../tests/fixtures/certs/rsa.pem')
+  ],
+  'account_id' => '55d34fb38496a45a1006a09e'
+];

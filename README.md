@@ -1,11 +1,22 @@
 # 7pass-php-sdk
 7pass PHP SDK
 
+## Installation
+
+```
+composer install
+```
+
+Create/edit Authorization Client under one of your services in [7pass Admin](http://admin.7pass.dev/services/) and set the following:
+
+ - URIs > Redirect URIs: add `http://localhost:8000/callback`
+ - OpenID > Token grant types: add `backoffice_code`
+
+Copy `public_html/config.local.php.example` to `public_html/config.local.php` and edit according your settings.
+
+
 ## Running Example
 
-Create client with `redirect_uri` set to `http://localhost:8000`, edit
-`client_id` and `secret` in the `public_html/index.php` file, then run:
-     
     $ cd public_html
     $ php -S localhost:8000
 
