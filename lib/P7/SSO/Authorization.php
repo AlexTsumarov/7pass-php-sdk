@@ -45,7 +45,6 @@ class Authorization {
   }
 
   public function decodeIdToken($token) {
-    var_export($this->config->jwks);
     return JWT::decode($token, $this->config->jwks, ['RS256']);
   }
 
