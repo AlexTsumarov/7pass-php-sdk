@@ -55,4 +55,20 @@ class Authorization {
   public function refresh($data) {
     return $this->getTokens($data, 'refresh_token');
   }
+
+  public function backoffice($account_id, $custom_payload = []) {
+    $jwt = JWT::encode(array_merge([
+        'service_id' => $this->config->service_id,
+        'account_id' => $account_id,
+        'nonce' => Nonce::generate(),
+        'timestamp' => time()
+    ], $custom_payload), $this->config->backoffice_key, 'RS256');
+
+    $data = [
+      'code' => $jwt,
+      'scope' => 'openid'
+    ];
+
+    return $this->getTokens($data, 'backoffice_code');
+  }
 }

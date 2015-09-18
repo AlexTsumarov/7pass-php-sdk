@@ -10,12 +10,15 @@ SSO::cache()->flush();
 $sso = new SSO(
   [
     'client_id' => '55b0b8964a616e16b9320000',
+    'service_id' => '55b0b8964a616e16b9320000',
     'client_secret' => '6b776407825a50b0f72941315194a3d50886b86b81bc40bbcf1714bdf50b3aa4',
-    'environment' => 'development'
+    'environment' => 'development',
+    'backoffice_key' =>  openssl_pkey_get_private('file://' . __DIR__ . '/../tests/fixtures/certs/rsa.pem')
   ]
 );
 
 $callback_uri = 'http://' . $_SERVER['HTTP_HOST'] . '/callback';
+
 
 // Redirect to login url
 if($action == 'login') {
@@ -29,9 +32,15 @@ if($action == 'login') {
 
 <ul>
   <li><a href='/login'>Login</a></li>
+  <li><a href='/backoffice'>Backoffice</a></li>
 </ul>
 
 <pre>
+<?php
+if($action == 'backoffice') {
+  echo($sso->authorization()->backoffice('55d34fb38496a45a1006a09e')->raw);
+}
+?>
 <?php
 
 if($action == 'callback') {

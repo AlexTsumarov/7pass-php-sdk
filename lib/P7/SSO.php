@@ -112,22 +112,4 @@ class SSO {
       ]
     ]);
   }
-
-  public function backoffice($user_id = null, $custom_payload = []) {
-    $key = $this->config->backoffice_key;
-
-    $jwt = JWT::encode(array_merge([
-        'service_id' => $this->config->client_id,
-        'nonce' => Nonce::generate(),
-        'timestamp' => time()
-    ], $custom_payload), $key, 'RS256');
-
-
-    return new Http([
-      'base_uri' => $this->config->host . '/api/accounts/',
-      'headers' => [
-        'Authorization' => '7Pass-Backoffice ' . $jwt
-      ]
-    ]);
-  }
 }
