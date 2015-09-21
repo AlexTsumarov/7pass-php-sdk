@@ -1,0 +1,35 @@
+
+-
+    request:
+        method: POST
+        url: 'http://sso.7pass.dev/connect/v1.0/token'
+        headers:
+            Host: sso.7pass.dev
+            Expect: null
+            Accept-Encoding: null
+            Accept: application/json
+            User-Agent: 'GuzzleHttp/6.0.2 curl/7.37.1 PHP/5.6.11'
+            Content-Type: application/json
+            Authorization: 'Basic NTViMGI4OTY0YTYxNmUxNmI5MzIwMDAwOjZiNzc2NDA3ODI1YTUwYjBmNzI5NDEzMTUxOTRhM2Q1MDg4NmI4NmI4MWJjNDBiYmNmMTcxNGJkZjUwYjNhYTQ='
+        body: '{"redirect_uri":"http:\/\/localhost:8000\/callback","code":"Gwl9EvEyG7tyiUF72j3x0TnNvQe6yiQCRlfg4Yb7bLjlbneSoUi2fme4OFpMdblDmSkUgCzOuENbczpX","grant_type":"authorization_code"}'
+    response:
+        status:
+            http_version: '1.1'
+            code: '200'
+            message: OK
+        headers:
+            server: nginx/1.8.0
+            date: 'Fri, 24 Jul 2015 15:41:12 GMT'
+            content-type: 'application/json; charset=utf-8'
+            content-length: '1482'
+            connection: keep-alive
+            x-request-id: 1edbc9fc-a829-4acb-8311-25703bf6e0f9
+            access-control-allow-origin: '*'
+            access-control-allow-methods: 'GET,HEAD,PUT,POST,DELETE'
+            cache-control: 'no-store, no-cache'
+            x-content-type-options: nosniff
+            x-download-options: noopen
+            x-xss-protection: '1; mode=block'
+            x-frame-options: DENY
+            x-response-time: 49ms
+        body: '{"access_token":"V6THoN1Xu2nrW9vEzTCpWOlCdFcEZlanfRmYYbelMaPmVdBkjJpXDgH5PyRp2Si2yliN3RANPHNFq9B1xlmm2eHp9s","token_type":"Bearer","refresh_token":"Ea6d0FclvOnpcRsWBC0chc2ArHOiAytcjoiqyvD1azaweJTvlJuDM996CGhuHBq5qQTE4HzYW4eD6msu4l6U1I3NMB3YjQarJVC3Pp0IiXkzuLFD4j35ayAq","expires_in":7200,"id_token":"eyJraWQiOiI0Y2VlOWRjNGQyYWFmMmViOTk3MTEzZDZiNzZkYzZmZSIsInR5cCI6IkpXVCIsImFsZyI6IlJTMjU2In0.eyJzdWIiOiI1NWFjZGIyN2I0MmY3Nzg0MmQ3NDVmNGMiLCJhdWQiOlsiNTViMGI4OTY0YTYxNmUxNmI5MzIwMDAwIl0sImF1dGhfdGltZSI6MTQzNzU2NDE1Miwibm9uY2UiOiJMUksvK3BqUUN4NUdkVUUvL2RBaXFCYmpGQW1YdC9rTVJqcHVacTlSK2k4PSIsInVpZCI6IjU1YWNkYjI3YjQyZjc3ODQyZDc0NWY0YyIsIm1pZ3JhdGVkX2lkcyI6e30sImJpcnRoZGF0ZSI6IjE5ODctMTAtMTZUMDA6MDA6MDAuMDAwWiIsImJpcnRoZGF0ZV92ZXJpZmllZCI6ZmFsc2UsImZpcnN0X25hbWUiOiJWb3RhdmEiLCJsYXN0X25hbWUiOiJKYW4iLCJ1bnN1YnNjcmliZV90b2tlbiI6ImIxNGJhODFiNzBiNTY3ZWU5MjUxZWJlZWUzY2ViOTkyOGEyMGM2OGY2ZDU1MzMzYzYwYWQ0NWY4MTIzYzBmMTYiLCJpZGVudGl0aWVzIjp7fSwiaGFzUGFzc3dvcmQiOnRydWUsImVtYWlsIjoiY3luZXJAb3ZlcmZsb3cuY3oiLCJlbWFpbF9pZCI6IjU1YWNkYjI3YjQyZjc3ODQyZDc0NWY0ZCIsImVtYWlsX3ZlcmlmaWVkIjpmYWxzZSwiZW1haWxzIjpbeyJfaWQiOiI1NWFjZGIyN2I0MmY3Nzg0MmQ3NDVmNGQiLCJlbWFpbCI6ImN5bmVyQG92ZXJmbG93LmN6In1dLCJhdF9oYXNoIjoidzZhbW5KNl9nblJYMXpjX0xwWjVUdyIsImlhdCI6MTQzNzc1MjQ3MiwiZXhwIjoxNDM3NzU5NjcyLCJpc3MiOiJodHRwOi8vc3NvLjdwYXNzLmRldiJ9.eZ7yKBEWgKNEIEW424dPPZyrhl8l-dmq5jL_BcYK8O0bCKYCxy6XjywcpHRfL_fjlvhiY3M4W9BAtE6HeaRtUBUDVRQ_1MM6OonDkxwImgHy-aoOQvUOd-VnnxXGbARzFpLctqW1yeWbMSmkfQmjHwmSNg7PGeCEUw81aX3SYig"}'

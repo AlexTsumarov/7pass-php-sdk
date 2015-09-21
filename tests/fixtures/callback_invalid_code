@@ -1,0 +1,35 @@
+
+-
+    request:
+        method: POST
+        url: 'http://sso.7pass.dev/connect/v1.0/token'
+        headers:
+            Host: sso.7pass.dev
+            Expect: null
+            Accept-Encoding: null
+            Accept: application/json
+            User-Agent: 'GuzzleHttp/6.0.2 curl/7.37.1 PHP/5.6.11'
+            Content-Type: application/json
+            Authorization: 'Basic NTViMGI4OTY0YTYxNmUxNmI5MzIwMDAwOjZiNzc2NDA3ODI1YTUwYjBmNzI5NDEzMTUxOTRhM2Q1MDg4NmI4NmI4MWJjNDBiYmNmMTcxNGJkZjUwYjNhYTQ='
+        body: '{"redirect_uri":"http:\/\/localhost:8000\/callback","code":"mesoinvalid","grant_type":"authorization_code"}'
+    response:
+        status:
+            http_version: '1.1'
+            code: '400'
+            message: 'Bad Request'
+        headers:
+            server: nginx/1.8.0
+            date: 'Fri, 24 Jul 2015 15:41:12 GMT'
+            content-type: 'application/json; charset=utf-8'
+            content-length: '77'
+            connection: keep-alive
+            x-request-id: 21b251a8-d3b8-4958-86e3-876bb8e5c047
+            access-control-allow-origin: '*'
+            access-control-allow-methods: 'GET,HEAD,PUT,POST,DELETE'
+            cache-control: 'no-store, no-cache'
+            x-content-type-options: nosniff
+            x-download-options: noopen
+            x-xss-protection: '1; mode=block'
+            x-frame-options: DENY
+            x-response-time: 4ms
+        body: '{"error":"invalid_grant","error_description":"Authorization code is invalid"}'

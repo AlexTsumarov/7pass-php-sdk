@@ -1,0 +1,54 @@
+
+-
+    request:
+        method: POST
+        url: 'http://httpbin.org/put'
+        headers:
+            Host: httpbin.org
+            Expect: null
+            Accept-Encoding: null
+            Accept: application/json
+            User-Agent: 'GuzzleHttp/6.0.2 curl/7.37.1 PHP/5.6.11'
+            Content-Type: application/json
+        body: '{"bar":"baz"}'
+    response:
+        status:
+            http_version: '1.1'
+            code: '405'
+            message: 'METHOD NOT ALLOWED'
+        headers:
+            Server: nginx
+            Date: 'Fri, 24 Jul 2015 15:57:55 GMT'
+            Content-Type: text/html
+            Content-Length: '178'
+            Connection: keep-alive
+            Allow: 'PUT, OPTIONS'
+            Access-Control-Allow-Origin: '*'
+            Access-Control-Allow-Credentials: 'true'
+        body: "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 3.2 Final//EN\">\n<title>405 Method Not Allowed</title>\n<h1>Method Not Allowed</h1>\n<p>The method is not allowed for the requested URL.</p>\n"
+-
+    request:
+        method: PUT
+        url: 'http://httpbin.org/put'
+        headers:
+            Host: httpbin.org
+            Expect: null
+            Accept-Encoding: null
+            Accept: application/json
+            User-Agent: 'GuzzleHttp/6.0.2 curl/7.37.1 PHP/5.6.11'
+            Content-Type: application/json
+        body: '{"bar":"baz"}'
+    response:
+        status:
+            http_version: '1.1'
+            code: '200'
+            message: OK
+        headers:
+            Server: nginx
+            Date: 'Fri, 24 Jul 2015 15:58:09 GMT'
+            Content-Type: application/json
+            Content-Length: '395'
+            Connection: keep-alive
+            Access-Control-Allow-Origin: '*'
+            Access-Control-Allow-Credentials: 'true'
+        body: "{\n  \"args\": {}, \n  \"data\": \"{\\\"bar\\\":\\\"baz\\\"}\", \n  \"files\": {}, \n  \"form\": {}, \n  \"headers\": {\n    \"Accept\": \"application/json\", \n    \"Content-Length\": \"13\", \n    \"Content-Type\": \"application/json\", \n    \"Host\": \"httpbin.org\", \n    \"User-Agent\": \"GuzzleHttp/6.0.2 curl/7.37.1 PHP/5.6.11\"\n  }, \n  \"json\": {\n    \"bar\": \"baz\"\n  }, \n  \"origin\": \"77.104.252.88\", \n  \"url\": \"http://httpbin.org/put\"\n}\n"
