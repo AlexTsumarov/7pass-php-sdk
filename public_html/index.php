@@ -22,20 +22,6 @@ $ssoConfig->setCachePool(new Stash\Pool($cacheDriver));
 //creates SSO object
 $sso = new P7\SSO($ssoConfig);
 
-
-
-//## Backoffice requests
-$tokens = $sso->authorization()->backoffice([
-  'account_id' => $accountId
-]);
-
-$apiClient = $sso->api($tokens->access_token);
-$response = $apiClient->get('/me');
-
-$tokens = $sso->authorization()->backoffice([
-  'account_id' => $accountId
-]);
-
 $callback_uri = 'http://' . $_SERVER['HTTP_HOST'] . '/callback';
 
 // Redirect to login url
