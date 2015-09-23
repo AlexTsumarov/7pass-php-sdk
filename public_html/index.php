@@ -3,10 +3,7 @@ require __DIR__ . '/../vendor/autoload.php';
 
 $configOptions = require __DIR__ . '/config.php';
 
-$action = ltrim(@$_SERVER['PATH_INFO'], '/');
-
-echo __FILE__ . ' Line: ' . __LINE__; var_dump($action);
-echo __FILE__ . ' Line: ' . __LINE__; var_dump($_SERVER); exit; //XXX
+$action = $_GET['action'] ? $_GET['action'] : 'index';
 
 set_exception_handler(function($e) {
   echo '<h3>Error</h3>';
@@ -25,7 +22,7 @@ $ssoConfig->setCachePool(new Stash\Pool($cacheDriver));
 //creates SSO object
 $sso = new P7\SSO($ssoConfig);
 
-$callback_uri = 'http://' . $_SERVER['HTTP_HOST'] . '/callback';
+$callback_uri = 'http://' . $_SERVER['HTTP_HOST'] . '/?action=callback';
 
 // Redirect to login url
 if($action == 'login') {
@@ -38,8 +35,8 @@ if($action == 'login') {
 ?>
 
 <ul>
-  <li><a href='/login'>Login</a></li>
-  <li><a href='/backoffice'>Backoffice</a></li>
+  <li><a href='/?action=login'>Login</a></li>
+  <li><a href='/?action=backoffice'>Backoffice</a></li>
 </ul>
 
 <pre>
