@@ -90,8 +90,10 @@ class Authorization {
 
     $data = $res->data;
 
-    // Validates ID token signature
-    $data->id_token_decoded = $this->decodeIdToken($data->id_token);
+    // Validates ID token signature if token available
+    if($data->id_token) {
+      $data->id_token_decoded = $this->decodeIdToken($data->id_token);
+    }
 
     return $data;
   }
