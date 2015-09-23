@@ -1,7 +1,7 @@
 <?php
 require __DIR__ . '/../vendor/autoload.php';
 
-$configOptions = require __DIR__ . '/config.local.php';
+$configOptions = require __DIR__ . '/config.php';
 
 $action = ltrim(@$_SERVER['PATH_INFO'], '/');
 
@@ -11,10 +11,9 @@ set_exception_handler(function($e) {
 });
 
 $accountId = $configOptions['account_id'];
-$config = $configOptions['sso_client'];
 
 //creates configuration
-$ssoConfig = new P7\SSO\Configuration($config);
+$ssoConfig = new P7\SSO\Configuration($configOptions);
 
 //set custom cache driver
 $cacheDriver = new Stash\Driver\FileSystem();
