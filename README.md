@@ -2,17 +2,29 @@
 
 ## Installation
 
-TODO
-
 ```
 composer install 7pass-php-sdk
 ```
 
-##Usage
+__Minimum requirements__
 
+- php: >=5.5.0
+
+
+## Running an example app
 
 ```
-$sso = new SSO(new SSO\Configuration($config));
+cd public_html
+php -S localhost:8000
+```
+
+Sample page should be now available at http://localhost:8000.
+
+
+##Usage
+
+```
+$sso = new P7\SSO(new P7\SSO\Configuration($config));
 ```
 
 Configuration options:
@@ -74,7 +86,7 @@ $tokens = $sso->authorization()->callback([
 
 Example response:
 ```
-(
+stdClass(
     [access_token] => ACCESS_TOKEN
     [token_type] => 'Bearer'
     [refresh_token] => REFRESH_TOKEN
@@ -102,11 +114,11 @@ Using a refresh token:
 
 ```
 $tokens = $sso->authorization()->refresh([
-    'refresh_token' => $refreshToken
-])
+    'refresh_token' => $tokens->refresh_token
+]);
 ```
 
-`$tokens` contains same token values as `$sso->authorization()->callback()` returns.
+`$tokens` contains same token set as `$sso->authorization()->callback()` returns.
 
 
 ### 5. Calling our API endpoints
@@ -114,18 +126,53 @@ $tokens = $sso->authorization()->refresh([
 
 
 ```
-$api->get('/me')
+$apiClient = $sso->api($tokens->access_token);
+$response = $apiClient->get('/me');
 ```
 
 
-##Calling our API
+## Backoffice requests
 
-Now when
+Backoffice requests are used to make an API calls on behalf of other users. To get access token for these requests
+you need to use special grant type 'backoffice_code' providing an account_id.
+Upon successful authentication you get a same token set as using standard flow described above.
+
+```
+$tokens = $sso->authorization()->backoffice([
+    'account_id' => $accountId
+]);
+
+$apiClient = $sso->api($tokens->access_token);
+$response = $apiClient->get('/me');
+```
 
 
-## Running Example
+## Caching
 
-    $ cd public_html
-    $ php -S localhost:8000
+SDK caches OpenID configuration and public keys. SDK make use of [Stash Caching Library](https://github.com/tedious/stash/).
+By default it tries to use [Apc](http://www.stashphp.com/Drivers.html#apc) if available,
+otherwise it uses [Filesystem driver](http://www.stashphp.com/Drivers.html#filesystem) with default settings.
 
-Sample page should be now available at http://localhost:8000.
+You can set and configure your own cache storage as below:
+
+```
+$ssoConfig = new P7\SSO\Configuration($config);
+
+$driver = new Stash\Driver\Memcache();
+$driver->setOptions(array('servers' => array('127.0.0.1', '11211')));
+
+$ssoConfig->setCachePool(new Stash\Pool($driver));
+
+$sso = new P7\SSO($ssoConfig);
+```
+
+
+To get updated OpenID Configuration you can either invalidate a cache by calling Stash\Pool::flush() method or refresh the config immediately.
+
+```
+//invalidates the cache - OpenID configuration is reloaded next time it's needed
+$sso->getConfig()->rediscover();
+
+//forces to load and overwrite existing cached configuration immediately.
+$sso->getConfig()->rediscover(true)
+```

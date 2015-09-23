@@ -42,4 +42,9 @@ class SSO {
       ]
     ]);
   }
+
+  public function getConfig() {
+    return $this->config;
+  }
+
 }

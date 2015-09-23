@@ -1,9 +1,8 @@
 <?php
 
 require __DIR__ . '/../vendor/autoload.php';
-use \P7\SSO;
 
-$config = require __DIR__ . '/config.local.php';
+$configOptions = require __DIR__ . '/config.local.php';
 
 $action = ltrim(@$_SERVER['PATH_INFO'], '/');
 
@@ -12,16 +11,49 @@ set_exception_handler(function($e) {
 });
 
 //SSO::cache()->flush();
+$accountId = $configOptions['account_id'];
+$config = $configOptions['sso_client'];
 
-$ssoConfig = new SSO\Configuration($config['sso_client']);
-$ssoConfig->getCachePool()->flush();
 
-$sso = new SSO($ssoConfig);
+//## Usage
+$ssoConfig = new P7\SSO\Configuration($config);
 
-$sso->authorization()->password([
-  'login' => 'matus@sensible.com',
-  'password' => 'matus@sensible.com'
+$driver = new Stash\Driver\Memcache();
+$driver->setOptions(array('servers' => array('127.0.0.1', '11211')));
+
+$ssoConfig->setCachePool(new Stash\Pool($driver));
+
+$sso = new P7\SSO($ssoConfig);
+
+
+
+//## Backoffice requests
+$tokens = $sso->authorization()->backoffice([
+  'account_id' => $accountId
 ]);
+
+$apiClient = $sso->api($tokens->access_token);
+$response = $apiClient->get('/me');
+
+echo __FILE__ . ' Line: ' . __LINE__; var_dump($response->data); exit; //XXX
+
+echo __FILE__ . ' Line: ' . __LINE__; var_dump($response); exit; //XXX
+
+//$va = $sso->authorization()->password([
+//  'login' => 'matus@sensible.com',
+//  'password' => 'matus@sensible.com'
+//]);
+
+return;
+
+$tokens = $sso->authorization()->backoffice([
+  'account_id' => $accountId
+]);
+
+$apiClient = $sso->api($tokens->access_token);
+$apiClient->get('/me');
+
+echo __FILE__ . ' Line: ' . __LINE__; var_dump($va); exit; //XXX
 
 return;
 

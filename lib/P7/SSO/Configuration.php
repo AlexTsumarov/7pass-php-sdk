@@ -5,11 +5,11 @@ use P7\SSO\Exception\HttpException;
 use P7\SSO\Exception\OpenIdConfigurationException;
 
 class Configuration {
-  const DEFAULTS = [
+  public static $DEFAULTS = [
     'environment' => 'production'
   ];
 
-  const ENVIRONMENT_DEFAULTS = [
+  public static $ENVIRONMENT_DEFAULTS = [
     'production' => [
       'host' => 'https://sso.7pass.de'
     ], 'qa' => [
@@ -22,7 +22,7 @@ class Configuration {
   ];
 
   protected $cachePool;
-  private $data;
+  protected $data;
 
   function __construct($options = []) {
 
@@ -38,8 +38,17 @@ class Configuration {
       }
     }
 
-    $this->data = array_merge(self::DEFAULTS, $options);
-    $this->data = array_merge($this->data, self::ENVIRONMENT_DEFAULTS[$this->environment], $options);
+    $this->data = array_merge(self::$DEFAULTS, $options);
+    $this->data = array_merge($this->data, self::$ENVIRONMENT_DEFAULTS[$this->environment], $options);
+  }
+
+  public function rediscover($now = false) {
+    if($now) {
+      $this->getOpenIdConfiguration(true);
+      return;
+    }
+
+    $this->getCachePool()->flush();
   }
 
   public function getOpenIdConfiguration($refresh = false) {

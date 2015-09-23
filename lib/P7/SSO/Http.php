@@ -9,19 +9,19 @@ use P7\SSO;
 class Http {
   private $options;
 
-  const DEFAULT_OPTIONS = [
-    'http_errors' => false,
-    'headers' => [
-      'User-Agent' => '7P-SDK-PHP/' . SSO::VERSION . ' (' . PHP_OS . ')',
-      'Accept' => 'application/json'
-    ],
-    'data' => []
-  ];
+  public static $JSON_PAYLOAD_METHODS = ['POST', 'PUT'];
 
-  const JSON_PAYLOAD_METHODS = ['POST', 'PUT'];
+  function __construct(array $options = []) {
 
-  function __construct($options = []) {
-    $this->options = array_merge_recursive(self::DEFAULT_OPTIONS, $options);
+    $this->options = array_merge_recursive([
+      'http_errors' => false,
+      'headers' => [
+        'User-Agent' => '7P-SDK-PHP/' . SSO::VERSION . ' (' . PHP_OS . ')',
+        'Accept' => 'application/json'
+      ],
+      'data' => []
+    ], $options);
+
   }
 
   private function request($method, $url, $data = []) {
@@ -33,7 +33,7 @@ class Http {
     $opts = [];
 
     if(!empty($data_merged)) {
-      if(in_array($method, self::JSON_PAYLOAD_METHODS)) {
+      if(in_array($method, self::$JSON_PAYLOAD_METHODS)) {
         $opts['json'] = $data_merged;
       } else {
         $opts['query'] = $data_merged;
