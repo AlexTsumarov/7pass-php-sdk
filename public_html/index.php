@@ -1,5 +1,4 @@
 <?php
-
 require __DIR__ . '/../vendor/autoload.php';
 
 $configOptions = require __DIR__ . '/config.local.php';
