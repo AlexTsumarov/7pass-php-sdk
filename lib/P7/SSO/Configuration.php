@@ -3,6 +3,7 @@ namespace P7\SSO;
 
 use P7\SSO\Exception\HttpException;
 use P7\SSO\Exception\OpenIdConfigurationException;
+use Stash\Interfaces\PoolInterface;
 
 class Configuration {
   public static $DEFAULTS = [
