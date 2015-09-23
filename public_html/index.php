@@ -5,6 +5,9 @@ $configOptions = require __DIR__ . '/config.php';
 
 $action = ltrim(@$_SERVER['PATH_INFO'], '/');
 
+echo __FILE__ . ' Line: ' . __LINE__; var_dump($action);
+echo __FILE__ . ' Line: ' . __LINE__; var_dump($_SERVER); exit; //XXX
+
 set_exception_handler(function($e) {
   echo '<h3>Error</h3>';
   print_r($e);
