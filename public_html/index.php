@@ -7,9 +7,23 @@ $config = require __DIR__ . '/config.local.php';
 
 $action = ltrim(@$_SERVER['PATH_INFO'], '/');
 
-SSO::cache()->flush();
+set_exception_handler(function($e) {
+  echo __FILE__ . ' Line: ' . __LINE__; var_dump($e); exit; //XXX
+});
 
-$sso = new SSO($config['sso_client']);
+//SSO::cache()->flush();
+
+$ssoConfig = new SSO\Configuration($config['sso_client']);
+$ssoConfig->getCachePool()->flush();
+
+$sso = new SSO($ssoConfig);
+
+$sso->authorization()->password([
+  'login' => 'matus@sensible.com',
+  'password' => 'matus@sensible.com'
+]);
+
+return;
 
 $callback_uri = 'http://' . $_SERVER['HTTP_HOST'] . '/callback';
 
@@ -32,14 +46,15 @@ if($action == 'login') {
 <pre>
 <?php
 if($action == 'backoffice') {
-  $response = $sso->authorization()->backoffice($config['account_id']);
-  if($response->success) {
+
+  try {
+    $tokens = $sso->authorization()->backoffice($config['account_id']);
     echo '<h3>Success</h3>';
-    print_r($response->data);
-  }
-  else {
+    print_r($tokens);
+
+  } catch(Exception $e) {
     echo '<h3>Error</h3>';
-    print_r($response->error);
+    print_r($e);
   }
 }
 ?>
@@ -53,16 +68,15 @@ if($action == 'callback') {
     'code' => $code
   ];
 
-  $response = $sso->authorization()->callback($payload);
+  try {
+    $tokens = $sso->authorization()->callback($payload);
 
-  if($response->success) {
-    $tokens = $response->data;
     echo '<h3>#callback(' . var_export($payload, true) . ')</h3>';
     print_r($tokens);
 
     $payload = ['refresh_token' => $tokens->refresh_token];
     echo '<h3>#refresh(' . var_export($payload, true) . ')</h3>';
-    $tokens = $sso->authorization()->refresh($payload)->data;
+    $tokens = $sso->authorization()->refresh($payload);
     print_r($tokens);
 
     $api = $sso->api($tokens->access_token);
@@ -72,8 +86,8 @@ if($action == 'callback') {
 
     echo '<h3>GET /me/emails</h3>';
     print_r($api->get('/me/emails')->data);
-  } else {
+  } catch(Exception $e) {
     echo '<h3>Error</h3>';
-    print_r($response->error);
+    print_r($e->getMessage());
   }
 }

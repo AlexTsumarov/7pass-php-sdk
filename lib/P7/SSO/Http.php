@@ -1,16 +1,20 @@
 <?php
 namespace P7\SSO;
 
-use \GuzzleHttp\Client;
-use \GuzzleHttp\Psr7\Request;
-use \P7\SSO\Response;
+use GuzzleHttp\Client;
+use GuzzleHttp\Exception\RequestException;
+use GuzzleHttp\Psr7\Request;
+use P7\SSO;
 
 class Http {
   private $options;
 
   const DEFAULT_OPTIONS = [
     'http_errors' => false,
-    'headers' => ['Accept' => 'application/json'],
+    'headers' => [
+      'User-Agent' => '7P-SDK-PHP/' . SSO::VERSION . ' (' . PHP_OS . ')',
+      'Accept' => 'application/json'
+    ],
     'data' => []
   ];
 
@@ -36,10 +40,16 @@ class Http {
       }
     }
 
-    $client = new Client($this->options);
-    $response = $client->send($request, $opts);
+    try {
 
-    return Response::fromGuzzlehttpResponse($response);
+      $client = new Client($this->options);
+      $response = $client->send($request, $opts);
+
+      return Response::fromGuzzlehttpResponse($response);
+
+    } catch(RequestException $e) {
+      throw new SSO\Exception\HttpException($e->getMessage(), $e->getCode(), $e);
+    }
   }
 
   public function get($url, $data = []) {
