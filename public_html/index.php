@@ -5,8 +5,7 @@ $configOptions = require __DIR__ . '/config.php';
 
 //$action = $_GET['action'] ? $_GET['action'] : 'index';
 
-echo __FILE__ . ' Line: ' . __LINE__; var_dump($_SERVER);
-$action = ltrim(@$_SERVER['PATH_INFO'], '/');
+$action = ltrim(@$_SERVER['REQUEST_URI'], '/');
 
 set_exception_handler(function($e) {
   echo '<h3>Error</h3>';
