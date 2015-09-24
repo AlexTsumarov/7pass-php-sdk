@@ -167,12 +167,10 @@ $sso = new P7\SSO($ssoConfig);
 ```
 
 
-To get updated OpenID Configuration you can either invalidate a cache by calling Stash\Pool::flush() method or refresh the config immediately.
+Use `rediscover()` to update cached OpenID Configuration.
 
 ```
-//invalidates the cache - OpenID configuration is reloaded next time it's needed
 $sso->getConfig()->rediscover();
 
-//forces to load and overwrite existing cached configuration immediately.
-$sso->getConfig()->rediscover(true)
+$ssc->getConfig()->getOpenIdConfig(); //returns updated config now
 ```

@@ -20,10 +20,13 @@ class Authorization {
       'response_type' => 'code',
       'client_id' => $this->config->client_id,
       'scope' => 'openid profile email',
-      'nonce' => Nonce::generate()
     ], $data);
 
-    return $this->config->host . '/connect/v1.0/authorize?' . http_build_query($data);
+    if(empty($data['nonce']) && strpos($data['response_type'], 'id_token') !== false) {
+      $data['nonce'] = Nonce::generate();
+    }
+
+    return $this->config->getOpenIdConfig()->authorization_endpoint . '?' . http_build_query($data);
   }
 
   public function callback($data) {
@@ -52,16 +55,20 @@ class Authorization {
   public function backoffice($data) {
     $this->validateParams($data, ['account_id']);
 
-    $jwt = JWT::encode(array_merge([
+    $jwt = JWT::encode([
         'service_id' => $this->config->service_id,
+        'account_id' => $data['account_id'],
         'nonce' => Nonce::generate(),
         'timestamp' => time()
-    ], $data), $this->config->backoffice_key, 'RS256');
+    ], $this->config->backoffice_key, 'RS256');
 
-    $data = [
+    unset($data['account_id']);
+
+    //defaults
+    $data = array_merge([
       'code' => $jwt,
       'scope' => 'openid'
-    ];
+    ], $data);
 
     return $this->getTokens($data, 'backoffice_code');
   }
@@ -78,11 +85,10 @@ class Authorization {
     $params['grant_type'] = $grant_type;
 
     $client = new Http([
-      'base_uri' => $this->config->host,
       'auth' => [$this->config->client_id, $this->config->client_secret]
     ]);
 
-    $res = $client->post('/connect/v1.0/token', $params);
+    $res = $client->post($this->config->getOpenIdConfig()->token_endpoint, $params);
 
     if(!$res->success) {
       throw new BadRequestException($res->error->message . ' - ' . $res->error->description);

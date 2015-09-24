@@ -25,7 +25,7 @@ class Configuration {
   protected $cachePool;
   protected $data;
 
-  function __construct($options = []) {
+  function __construct(array $options) {
 
     $mandatoryOptions = ['client_id', 'client_secret'];
 
@@ -43,16 +43,11 @@ class Configuration {
     $this->data = array_merge($this->data, self::$ENVIRONMENT_DEFAULTS[$this->environment], $options);
   }
 
-  public function rediscover($now = false) {
-    if($now) {
-      $this->getOpenIdConfiguration(true);
-      return;
-    }
-
-    $this->getCachePool()->flush();
+  public function rediscover() {
+    return $this->getOpenIdConfig(true);
   }
 
-  public function getOpenIdConfiguration($refresh = false) {
+  public function getOpenIdConfig($refresh = false) {
     $item = $this->getCachePool()->getItem(['config', 'openid', $this->environment]);
 
     $config = $item->get();
@@ -60,7 +55,7 @@ class Configuration {
     if($refresh || $item->isMiss()) {
       $item->lock();
 
-      $config = $this->fetchOpenIdConfiguration();
+      $config = $this->fetchOpenIdConfig();
 
       $item->set($config);
     }
@@ -69,7 +64,7 @@ class Configuration {
   }
 
   public function getKeys() {
-    return $this->getOpenIdConfiguration()->keys;
+    return $this->getOpenIdConfig()->keys;
   }
 
   public function getCachePool() {
@@ -96,7 +91,7 @@ class Configuration {
     return strtr($base64url, '-_', '+/');
   }
 
-  protected function fetchOpenIdConfiguration() {
+  protected function fetchOpenIdConfig() {
 
     try {
       $client = new Http([
@@ -155,18 +150,9 @@ class Configuration {
     return $this->data[$name];
   }
 
-  public function __set($name, $value)
-  {
-    $this->data[$name] = $value;
-  }
-
   public function __isset($name)
   {
     return isset($this->data[$name]);
   }
 
-  public function __unset($name)
-  {
-    unset($this->data[$name]);
-  }
 }

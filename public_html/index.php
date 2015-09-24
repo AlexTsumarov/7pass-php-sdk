@@ -22,12 +22,12 @@ $ssoConfig->setCachePool(new Stash\Pool($cacheDriver));
 //creates SSO object
 $sso = new P7\SSO($ssoConfig);
 
-$callback_uri = 'http://' . $_SERVER['HTTP_HOST'] + '/';
+$callbackUri = 'http://' . $_SERVER['HTTP_HOST'] . '/';
 
 // Redirect to login url
 if($action == 'login') {
   $uri = $sso->authorization()->uri([
-    'redirect_uri' => $callback_uri
+    'redirect_uri' => $callbackUri
   ]);
 
   header('Location: ' . $uri);
@@ -56,7 +56,7 @@ if(!empty($_GET['code'])):
   $code = $_GET['code'];
 
   $payload = [
-    'redirect_uri' => $callback_uri,
+    'redirect_uri' => $callbackUri,
     'code' => $code
   ];
 
