@@ -37,8 +37,8 @@ if($action == 'login') {
 ?>
 
 <ul>
-  <li><a href='/?action=login'>Login</a></li>
-  <li><a href='/?action=backoffice'>Backoffice</a></li>
+  <li><a href='/login'>Login</a></li>
+  <li><a href='/backoffice'>Backoffice</a></li>
 </ul>
 
 <pre>
