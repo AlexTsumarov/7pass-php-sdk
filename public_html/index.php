@@ -3,7 +3,8 @@ require __DIR__ . '/../vendor/autoload.php';
 
 $configOptions = require __DIR__ . '/config.php';
 
-$action = $_GET['action'] ? $_GET['action'] : 'index';
+//$action = $_GET['action'] ? $_GET['action'] : 'index';
+$action = ltrim(@$_SERVER['PATH_INFO'], '/');
 
 set_exception_handler(function($e) {
   echo '<h3>Error</h3>';
@@ -22,7 +23,7 @@ $ssoConfig->setCachePool(new Stash\Pool($cacheDriver));
 //creates SSO object
 $sso = new P7\SSO($ssoConfig);
 
-$callbackUri = 'http://' . $_SERVER['HTTP_HOST'] . '/';
+$callbackUri = 'http://' . $_SERVER['HTTP_HOST'] . '/callback';
 
 // Redirect to login url
 if($action == 'login') {
@@ -71,6 +72,8 @@ if(!empty($_GET['code'])):
   print_r($tokens);
 
   $api = $sso->api($tokens->access_token);
+
+  $api->delete('/test', ['buub' => 'eeee']);
 
   echo '<h3>GET /me</h3>';
   print_r($api->get('/me')->data);
