@@ -3,6 +3,8 @@ require __DIR__ . '/../vendor/autoload.php';
 
 $configOptions = require __DIR__ . '/config.php';
 
+echo __FILE__ . ' Line: ' . __LINE__; var_dump('XXXXXXXXX'); exit; //XXX
+
 //$action = $_GET['action'] ? $_GET['action'] : 'index';
 $action = ltrim(@$_SERVER['PATH_INFO'], '/');
 

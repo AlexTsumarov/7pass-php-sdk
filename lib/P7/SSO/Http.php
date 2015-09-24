@@ -45,6 +45,10 @@ class Http {
       $client = new Client($this->options);
       $response = $client->send($request, $opts);
 
+      echo var_dump($url);
+      echo var_dump($opts);
+      echo var_dump($response->getStatusCode());
+
       return Response::fromGuzzlehttpResponse($response);
 
     } catch(RequestException $e) {
