@@ -22,7 +22,7 @@ $ssoConfig->setCachePool(new Stash\Pool($cacheDriver));
 //creates SSO object
 $sso = new P7\SSO($ssoConfig);
 
-$callback_uri = 'http://' . $_SERVER['HTTP_HOST'] . '/?action=callback';
+$callback_uri = 'http://' . $_SERVER['HTTP_HOST'] + '/';
 
 // Redirect to login url
 if($action == 'login') {
@@ -51,7 +51,7 @@ if($action == 'backoffice'):
 
 endif;
 
-if($action == 'callback'):
+if(!empty($_GET['code'])):
 
   $code = $_GET['code'];
 
