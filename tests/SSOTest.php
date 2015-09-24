@@ -6,7 +6,7 @@ use \GuzzleHttp\Client;
 
 class SSOTest extends PHPUnit_Framework_TestCase
 {
-  const CODE = 'Gwl9EvEyG7tyiUF72j3x0TnNvQe6yiQCRlfg4Yb7bLjlbneSoUi2fme4OFpMdblDmSkUgCzOuENbczpX';
+  const CODE = '4s30A27LuWypNLIHlqfuJDu4aeWGzqnPXf4q0AdrL6JA5DHi1ppR1arbx0me3vTfTeWCt5CBB6lN7Msg';
   const REDIRECT_URI = 'http://localhost:8000/callback';
   const SERVER_KID = '4cee9dc4d2aaf2eb997113d6b76dc6fe';
   const SERVER_PUBLIC_KEY = "-----BEGIN PUBLIC KEY-----\r\n"
@@ -31,6 +31,9 @@ class SSOTest extends PHPUnit_Framework_TestCase
     return new SSO(new SSO\Configuration($this->defaultConfig));
   }
 
+  /**
+   * @vcr valid_discovery
+   */
   public function testGeneratesUri()
   {
     $sso = $this->validSSO();

@@ -3,8 +3,6 @@ require __DIR__ . '/../vendor/autoload.php';
 
 $configOptions = require __DIR__ . '/config.php';
 
-//$action = $_GET['action'] ? $_GET['action'] : 'index';
-
 $action = ltrim(@$_SERVER['REQUEST_URI'], '/');
 
 set_exception_handler(function($e) {
@@ -44,6 +42,9 @@ if($action == 'login') {
 <pre>
 <?php
 if($action == 'backoffice'):
+
+  echo __FILE__ . ' Line: ' . __LINE__; var_dump($_ENV); exit; //XXX
+
 
   $tokens = $sso->authorization()->backoffice([
     'account_id' => $accountId

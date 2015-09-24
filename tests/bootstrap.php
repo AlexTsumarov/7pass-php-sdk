@@ -7,5 +7,5 @@ $configure = \VCR\VCR::configure();
 
 //$configure->enableRequestMatchers(array('method', 'url', 'host', 'query_string', 'body', 'post_fields'));
 //$configure->setMode('once');
-//$configure->setMode('new_episodes');
-$configure->setMode('once');
+$configure->setMode('new_episodes');
+//$configure->setMode('once');
