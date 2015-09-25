@@ -29,7 +29,7 @@ class SSO {
     }
   }
 
-  public function api($accessToken) {
+  public function accountClient($accessToken) {
     $appsecret = ($this->config->client_secret ? hash_hmac('sha256', $accessToken, $this->config->client_secret) : null);
 
     return new Http([
@@ -43,7 +43,7 @@ class SSO {
     ]);
   }
 
-  public function backoffice($customPayload = []) {
+  public function backofficeClient(array $customPayload = []) {
     $key = $this->config->backoffice_key;
 
     $jwt = JWT::encode(array_merge([

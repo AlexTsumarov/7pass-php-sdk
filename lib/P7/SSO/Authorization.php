@@ -13,7 +13,7 @@ class Authorization {
     $this->config = $config;
   }
 
-  public function uri(array $data) {
+  public function authorizeUri(array $data) {
     $this->validateParams($data, ['redirect_uri']);
 
     $data = array_merge([
@@ -27,6 +27,12 @@ class Authorization {
     }
 
     return $this->config->getOpenIdConfig()->authorization_endpoint . '?' . http_build_query($data);
+  }
+
+  public function logoutUri(array $data) {
+    $this->validateParams($data, ['id_token_hint', 'post_logout_redirect_uri']);
+
+    return $this->config->getOpenIdConfig()->end_session_endpoint . '?' . http_build_query($data);
   }
 
   public function callback($data) {
