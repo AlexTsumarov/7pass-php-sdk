@@ -26,7 +26,7 @@
       Redirection URL will also contain a query parameter 'code' which is then used to obtain access token.
     </p>
 
-<pre>
+<pre class="prettyprint">
 $uri = $sso->authorization()->authorizeUri([
   'redirect_uri' => $callbackUri
 ]);
@@ -44,7 +44,7 @@ exit;
   </div>
   <div class="panel-body">
 
-<pre>
+<pre class="prettyprint">
 <?php print_r($callbackUri)?>
 </pre>
 
@@ -57,7 +57,7 @@ exit;
   </div>
   <div class="panel-body">
 
-<pre>
+<pre class="prettyprint">
 <?php print_r($uri)?>
 </pre>
 

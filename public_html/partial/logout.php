@@ -21,7 +21,7 @@
       'id_token_hint' can be either 'id_token' string itself or TokenSet object as example below shows.
     </p>
 
-<pre>
+<pre class="prettyprint">
 //remove an authentication data from user's session storage
 $tokens = new \7P\SSO\TokenSet($_SESSION['tokens']);
 
@@ -42,7 +42,7 @@ $logoutUri = $sso->authorization()->logoutUri([
   </div>
   <div class="panel-body">
 
-<pre>
+<pre class="prettyprint">
 <?php print_r($logoutUri)?>
 </pre>
 
@@ -55,7 +55,7 @@ $logoutUri = $sso->authorization()->logoutUri([
   </div>
   <div class="panel-body">
 
-<pre>
+<pre class="prettyprint">
 <?php print_r($config['post_logout_redirect_uri'])?>
 </pre>
 
@@ -68,7 +68,7 @@ $logoutUri = $sso->authorization()->logoutUri([
   </div>
   <div class="panel-body">
 
-<pre>
+<pre class="prettyprint">
 <?php print_r($tokens)?>
 </pre>
 

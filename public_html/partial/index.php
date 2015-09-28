@@ -41,7 +41,7 @@
       'qa' environment is available for you for an intergration and testing purposes. Once you feel everything works as expected and
       you are ready to live with your site, you just need to switch to 'production' environment providing production 'client_id' and 'client_secret'.
     </p>
-<pre>
+<pre class="prettyprint">
 $config = [
   'client_id' => 'YOUR_CLIENT_ID',
   'client_secret' => 'YOUR_CLIENT_SECRET',

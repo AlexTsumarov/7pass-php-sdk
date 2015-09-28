@@ -18,7 +18,7 @@
 
     </p>
 
-<pre>
+<pre class="prettyprint">
 $tokensArray = $_SESSION['tokens'];
 $tokens = new \7P\SSO\TokenSet($tokensArray);
 
@@ -47,7 +47,7 @@ $emails = $accountClient->get('/me/emails')->data;
     $accountClient->get('/me')
   </div>
   <div class="panel-body">
-    <pre>
+    <pre class="prettyprint">
       <?php print_r($me)?>
     </pre>
   </div>
@@ -61,7 +61,7 @@ $emails = $accountClient->get('/me/emails')->data;
     $accountClient->get('/me/emails')
   </div>
   <div class="panel-body">
-  <pre>
+  <pre class="prettyprint">
     <?php print_r($emails)?>
   </pre>
   </div>

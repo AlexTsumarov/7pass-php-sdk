@@ -35,7 +35,7 @@
       as doing so might cause issues during PHP session unserialization.
       </i>
     </p>
-<pre>
+<pre class="prettyprint">
 if(!empty($_GET['error'])) {
   $error = $_GET['error'];
   $errorDescription = $_GET['error_description'];
@@ -69,9 +69,9 @@ $_SESSION['tokens'] = $tokenSet->getArrayCopy();
     </div>
     <div class="panel-body">
 
-<pre>
+<pre class="prettyprint">
 Error: <?php print_r($error)?>
-<br>
+
 Description: <?php print_r($errorDescription)?>
 </pre>
 
@@ -89,7 +89,7 @@ endif
   </div>
   <div class="panel-body">
 
-<pre>
+<pre class="prettyprint">
 <?php print_r($tokens)?>
 </pre>
 
