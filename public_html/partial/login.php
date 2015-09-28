@@ -22,6 +22,8 @@
     </p>
     <p>
       Only required parameter is 'redirect_uri' which should be set to authorize flow callback endpoint of your application.
+      It's the URL where an user is redirected after they authenticate on 7Pass OP.
+      Redirection URL will also contain a query parameter 'code' which is then used to obtain access token.
     </p>
 
 <pre>

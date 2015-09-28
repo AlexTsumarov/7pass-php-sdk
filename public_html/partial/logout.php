@@ -23,7 +23,7 @@
 
 <pre>
 //remove an authentication data from user's session storage
-$tokens = new TokenSet($_SESSION['tokens']);
+$tokens = new \7P\SSO\TokenSet($_SESSION['tokens']);
 
 unset($_SESSION['tokens']);
 
