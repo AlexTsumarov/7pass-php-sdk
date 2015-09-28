@@ -14,6 +14,18 @@
   </div>
   <div class="panel-body">
 
+    <p>
+      An user is redirect back to your server now. They either authenticated successfully, cancelled an authentication, or there might be an unexpected server error.
+    </p>
+    <p>
+      In case of an error, error type and description is sent as 'error' and 'error_description' query parameters which can be used to render appropriate error message to the user.
+    </p>
+    <p>
+      In order to get an access token, your server should call 7Pass token endpoint - this can be achieved using `$sso->authorization()->callback()` method as shown below.
+      Returned tokens should be securely stored as they will be used later for API access and 'refresh_token' to obtain renewed 'access_token'.
+      In our example, we used PHP session, but SDK doesn't force you to use any particular caching mechanism.
+    </p>
+
 <pre>
 if(!empty($_GET['error'])) {
   $error = $_GET['error'];

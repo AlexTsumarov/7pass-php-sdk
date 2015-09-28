@@ -14,6 +14,11 @@
   </div>
   <div class="panel-body">
 
+    <p>
+      In order to authenticate an user on your site using 7Pass SSO provider, you need to get an URL of 7Pass authorize endpoint specific to your application.
+      Using an '$sso->authorization()' helper this URL is automatically generated for you using configuration values provided (e.g. 'client_id' or an 'environment').
+    </p>
+
 <pre>
 $uri = $sso->authorization()->authorizeUri([
   'redirect_uri' => $callbackUri

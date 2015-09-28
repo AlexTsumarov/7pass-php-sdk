@@ -9,6 +9,7 @@ composer install 7pass-php-sdk
 __Minimum requirements__
 
 - php: >=5.5.0
+- curl
 
 
 ## Running an example app
@@ -18,7 +19,7 @@ cd public_html
 php -S localhost:8000
 ```
 
-Sample page should be now available at http://localhost:8000.
+Example application should be now available at http://localhost:8000.
 
 
 ##Usage
@@ -60,16 +61,16 @@ _Note: client_id and nonce parameters are set automatically._
 
 ### 2. Redirect an user
 
-Redirect an user to generated URL `$redirectUrl`
+Redirect an user to generated 7Pass server `$redirectUrl` server where they authenticate.
 
 
-### 3. Handling 7pass SSO callback
+### 3. Handling 7Pass callback
 
-User authenticates successfully, they reject an authentication, or they might be an unexpected server error.
+An user is redirect back to your server now. They either authenticated successfully, cancelled an authentication, or there might be an unexpected server error.
 
-In case of an error, error type and description is sent as 'error' and 'error_description' parameter which can be used to render appropriate error message to the user.
+In case of an error, error type and description is sent as 'error' and 'error_description' query parameters which can be used to render appropriate error message to the user.
 
-In order to get an access token, your server should call 7pass token endpoint - this can be achieved using `$sso->authorization()->callback()` method.
+In order to get an access token, your server should call 7Pass token endpoint - this can be achieved using `$sso->authorization()->callback()` method as shown below.
 
 ```
 $queryParams = $_GET;
@@ -108,7 +109,7 @@ Exceptions:
 
 Access token is valid for certain amount of time specified in seconds in `expires_in`.
 You should cache and reuse this access token for this period on every request. Once token is near to expire you can use `refresh_token`
-to obtain new access with extended expiration time without an user's consent.
+to obtain new access with extended expiration time even without user's consent.
 
 Using a refresh token:
 
@@ -126,8 +127,8 @@ $tokens = $sso->authorization()->refresh([
 
 
 ```
-$apiClient = $sso->api($tokens->access_token);
-$response = $apiClient->get('/me');
+$accountClient = $sso->accountClient($tokens->access_token);
+$response = $accountClient->get('/me');
 ```
 
 
@@ -142,8 +143,8 @@ $tokens = $sso->authorization()->backoffice([
     'account_id' => $accountId
 ]);
 
-$apiClient = $sso->api($tokens->access_token);
-$response = $apiClient->get('/me');
+$backofficeClient = $sso->backofficeClient($tokens->access_token);
+$response = $backofficeClient->get('/me');
 ```
 
 
@@ -171,6 +172,4 @@ Use `rediscover()` to update cached OpenID Configuration.
 
 ```
 $sso->getConfig()->rediscover();
-
-$ssc->getConfig()->getOpenIdConfig(); //returns updated config now
 ```

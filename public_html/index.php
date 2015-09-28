@@ -13,14 +13,8 @@ set_exception_handler(function($e) {
   require('partial/exception.php');
 });
 
-$accountId = $config['account_id'];
-
 //creates configuration
 $ssoConfig = new P7\SSO\Configuration($config);
-
-//set custom cache driver
-$cacheDriver = new Stash\Driver\FileSystem();
-$ssoConfig->setCachePool(new Stash\Pool($cacheDriver));
 
 //creates SSO object
 $sso = new P7\SSO($ssoConfig);
@@ -89,6 +83,9 @@ switch($action) {
 
     $tokens = getSessionTokens(true);
 
+    $loggedIn = false;
+    unset($_SESSION['tokens']);
+
     $logoutUri = $sso->authorization()->logoutUri([
       'id_token_hint' => $tokens->id_token,
       'post_logout_redirect_uri' => $config['post_logout_redirect_uri']
@@ -99,9 +96,6 @@ switch($action) {
     break;
 
   case 'logout-callback':
-
-    $loggedIn = false;
-    unset($_SESSION['tokens']);
 
     require('partial/logout-callback.php');
 

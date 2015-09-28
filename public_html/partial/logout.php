@@ -15,6 +15,10 @@
   <div class="panel-body">
 
 <pre>
+//remove your authentication data from the session
+unset($_SESSION['tokens']);
+
+//and redirect user
 $logoutUri = $sso->authorization()->logoutUri([
   'id_token_hint' => $_SESSION['tokens'],
   'post_logout_redirect_uri' => $logoutRedirectUri

@@ -13,13 +13,16 @@
   </div>
   <div class="panel-body">
 
+
 <pre>
+$config = [
+  'client_id' => 'YOUR_CLIENT_ID',
+  'client_secret' => 'YOUR_CLIENT_SECRET',
+  'environment' => 'qa' //default: 'production'
+];
+
 //creates configuration
 $ssoConfig = new P7\SSO\Configuration($config);
-
-//if you need you can set a custom cache driver
-$cacheDriver = new Stash\Driver\FileSystem();
-$ssoConfig->setCachePool(new Stash\Pool($cacheDriver));
 
 //creates SSO object
 $sso = new P7\SSO($ssoConfig);

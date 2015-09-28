@@ -3,7 +3,6 @@
   <h2>
     OpenID Connect - Logout Callback
     <div class="btn-group  pull-right" role="group">
-      <a class="btn btn-default" href="http://guide.docs.7pass.ctf.prosiebensat1.com/api/index.html#api-OpenID_Connect-OpenIDAuthorize" target="_blank" role="button">Documentation</a>
       <a class="btn btn-success" href="/" role="button">Continue</a>
     </div>
   </h2>
@@ -14,10 +13,7 @@
     </div>
     <div class="panel-body">
 
-<pre>
-//remove your authentication data from the session
-unset($_SESSION['tokens']);
-</pre>
+      At this point, an user is successfully logged out.
 
     </div>
   </div>

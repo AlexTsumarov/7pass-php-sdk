@@ -23,11 +23,11 @@
         <a class="navbar-brand" href="/">7Pass PHP SDK</a>
       </div>
       <div id="navbar" class="navbar-collapse collapse">
-        <ul class="nav navbar-nav">
-          <?php if(!$loggedIn):?><li><a href="/login">Login</a></li><?php endif?>
-          <?php if($loggedIn):?><li><a href="/account">Account APIs</a></li><?php endif?>
-          <?php if($loggedIn):?><li><a href="/logout">Logout</a></li><?php endif?>
-        </ul>
+        <div class="navbar-right">
+          <?php if(!$loggedIn):?><a href="/login" class="btn btn-success navbar-btn">Login</a></li><?php endif?>
+          <?php if($loggedIn):?><a href="/account" class="btn btn-default navbar-btn">Account APIs</a><?php endif?>
+          <?php if($loggedIn):?><a href="/logout" class="btn btn-danger navbar-btn">Logout</a><?php endif?>
+        </div>
       </div>
     </div>
   </nav>
