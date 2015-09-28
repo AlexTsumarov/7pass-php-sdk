@@ -108,9 +108,6 @@ switch($action) {
 
     if($tokens->isAccessTokenExpired()) {
       $tokens = $sso->authorization()->refresh($tokens);
-
-      echo __FILE__ . ' Line: ' . __LINE__; var_dump($tokens); exit; //XXX
-
       $_SESSION['tokens'] = $tokens->getArrayCopy();
     }
 

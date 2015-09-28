@@ -15,7 +15,7 @@
   <div class="panel-body">
 
     <p>
-      An user is redirect back to your server now.
+      An user is redirected back to your server now.
       They are either authenticated successfully, cancelled an authentication, or there might be an unexpected server error.
     </p>
     <p>
