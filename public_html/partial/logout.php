@@ -14,13 +14,22 @@
   </div>
   <div class="panel-body">
 
+    <p>
+      After you log user out from your site, you might choose to log them out on 7Pass OP as well.
+      In this case, you can use '$sso->authorization()->logoutUri()' method to generate redirect URL for you.<br>
+      Both 'id_token_hint' and 'post_logout_redirect_uri' parameters are required.
+      'id_token_hint' can be either 'id_token' string itself or TokenSet object as example below shows.
+    </p>
+
 <pre>
-//remove your authentication data from the session
+//remove an authentication data from user's session storage
+$tokens = new TokenSet($_SESSION['tokens']);
+
 unset($_SESSION['tokens']);
 
-//and redirect user
+//and redirect user to 7Pass
 $logoutUri = $sso->authorization()->logoutUri([
-  'id_token_hint' => $_SESSION['tokens'],
+  'id_token_hint' => $tokens,
   'post_logout_redirect_uri' => $logoutRedirectUri
 ]);
 </pre>

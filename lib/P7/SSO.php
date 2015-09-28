@@ -6,6 +6,7 @@ require __DIR__ . '/../../vendor/autoload.php';
 
 use P7\SSO\Authorization;
 use P7\SSO\Configuration;
+use P7\SSO\TokenSet;
 use Requests;
 use Requests_Auth_Basic;
 use P7\SSO\Http;
@@ -30,6 +31,10 @@ class SSO {
   }
 
   public function accountClient($accessToken) {
+    if($accessToken instanceof TokenSet) {
+      $accessToken = $accessToken->access_token;
+    }
+
     $appsecret = ($this->config->client_secret ? hash_hmac('sha256', $accessToken, $this->config->client_secret) : null);
 
     return new Http([

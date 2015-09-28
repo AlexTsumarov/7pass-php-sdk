@@ -1,4 +1,4 @@
-# 7pass PHP SDK
+# 7Pass PHP SDK
 
 ## Installation
 
@@ -33,7 +33,6 @@ Configuration options:
 - client_id (required)
 - client_secret (required)
 - environment - default: production; Available options: 'production' (https://sso.7pass.de), 'staging' (https://sso.qa.7pass.ctf.prosiebensat1.com)
-- redirect_uri -
 
 If you are authorized to backoffice requests you can also configure:
 

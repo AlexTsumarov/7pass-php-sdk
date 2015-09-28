@@ -32,6 +32,10 @@ class Authorization {
   public function logoutUri(array $data) {
     $this->validateParams($data, ['id_token_hint', 'post_logout_redirect_uri']);
 
+    if($data['id_token_hint'] instanceof TokenSet) {
+      $data['id_token_hint'] = $data['id_token_hint']->id_token;
+    }
+
     return $this->config->getOpenIdConfig()->end_session_endpoint . '?' . http_build_query($data);
   }
 
@@ -41,7 +45,13 @@ class Authorization {
     return $this->getTokens($data, 'authorization_code');
   }
 
-  public function refresh(array $data) {
+  public function refresh($data) {
+    if($data instanceof TokenSet) {
+      $data = [
+        'refresh_token' => $data->refresh_token
+      ];
+    }
+
     $this->validateParams($data, ['refresh_token']);
 
     return $this->getTokens($data, 'refresh_token');
@@ -107,7 +117,7 @@ class Authorization {
       $data->id_token_decoded = $this->decodeIdToken($data->id_token);
     }
 
-    return $data;
+    return TokenSet::receiveTokens($data);
   }
 
   protected function validateParams(array $data, array $params) {

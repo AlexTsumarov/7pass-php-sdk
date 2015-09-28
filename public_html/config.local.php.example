@@ -3,7 +3,8 @@ return [
   'environment' => 'qa',
   'client_id' => 'YOUR_CLIENT_ID',
   'client_secret' => 'YOUR_CLIENT_SECRET',
-  'post_logout_redirect_uri' => 'http://localhost:8000/logout-callback'
+  'post_logout_redirect_uri' => 'http://localhost:8000/logout-callback',
+  'redirect_uri' => 'http://localhost:8000/callback'
   //'backoffice_key' =>  'YOUR_PRIVATE_KEY', //backoffice only
   //'service_id' =>  'YOUR_SERVICE_ID' //backoffice only
 ];

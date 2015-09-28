@@ -26,7 +26,7 @@ function getSessionTokens($throws = false) {
     throw new \Exception("No session tokens");
   }
 
-  return $_SESSION['tokens'];
+  return empty($_SESSION['tokens']) ? null : new \P7\SSO\TokenSet($_SESSION['tokens']);
 }
 
 $loggedIn = getSessionTokens() ? true : false;
@@ -106,12 +106,15 @@ switch($action) {
 
     $tokens = getSessionTokens(true);
 
-//    $payload = ['refresh_token' => $tokens->refresh_token];
-//    echo '<h3>#refresh(' . var_export($payload, true) . ')</h3>';
-//    $tokens = $sso->authorization()->refresh($payload);
-//    print_r($tokens);
+    if($tokens->isAccessTokenExpired()) {
+      $tokens = $sso->authorization()->refresh($tokens);
 
-    $accountClient = $sso->accountClient($tokens->access_token);
+      echo __FILE__ . ' Line: ' . __LINE__; var_dump($tokens); exit; //XXX
+
+      $_SESSION['tokens'] = $tokens->getArrayCopy();
+    }
+
+    $accountClient = $sso->accountClient($tokens);
 
     $me = $accountClient->get('/me')->data;
 

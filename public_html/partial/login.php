@@ -1,7 +1,7 @@
 <?php require('partial/header.php')?>
 
 <h2>
-  OpenID Connect - Authorize
+  Initialization of OpenID Connect Authorize flow
   <div class="btn-group  pull-right" role="group">
     <a class="btn btn-default" href="http://guide.docs.7pass.ctf.prosiebensat1.com/api/index.html#api-OpenID_Connect-OpenIDAuthorize" target="_blank" role="button">Documentation</a>
     <a class="btn btn-success" href="<?=$uri?>" role="button">Continue</a>
@@ -15,8 +15,13 @@
   <div class="panel-body">
 
     <p>
-      In order to authenticate an user on your site using 7Pass SSO provider, you need to get an URL of 7Pass authorize endpoint specific to your application.
-      Using an '$sso->authorization()' helper this URL is automatically generated for you using configuration values provided (e.g. 'client_id' or an 'environment').
+      In order to authenticate an user on your site using 7Pass SSO provider,
+      you need to get an URL of 7Pass authorize endpoint specific to your application.
+      Using an '$sso->authorization()' helper this URL is automatically generated for you.
+      An URL returned depends on your application configuration (e.g. 'client_id', 'environment').
+    </p>
+    <p>
+      Only required parameter is 'redirect_uri' which should be set to authorize flow callback endpoint of your application.
     </p>
 
 <pre>
@@ -25,6 +30,8 @@ $uri = $sso->authorization()->authorizeUri([
 ]);
 
 //redirect an user to $uri
+header('Location: ' . $uri);
+exit;
 </pre>
   </div>
 </div>
