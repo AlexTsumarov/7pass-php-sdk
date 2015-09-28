@@ -13,7 +13,7 @@
 </p>
 
 <div class="well">
-  To obtain your 'client_id' and 'client_secret' keys please contact our 7Pass SSO team or Filip Skokan at <a href="maito:filip.skokan@prosiebensat1.com">filip.skokan@prosiebensat1.com</a>.
+  To obtain your 'client_id' and 'client_secret' keys please contact our 7Pass SSO team or Filip Skokan at <a href="mailto:filip.skokan@prosiebensat1.com?subject=7Pass Dev Account" target="_blank">filip.skokan@prosiebensat1.com</a>.
 </div>
 
 <?php if(!$loggedIn):?>
