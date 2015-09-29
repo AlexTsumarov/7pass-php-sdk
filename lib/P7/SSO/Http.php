@@ -26,7 +26,7 @@ class Http {
   }
 
   private function request($method, $url, $data = []) {
-    $url = $this->prefixUrl($url);
+    $url = ltrim($url, '/');
 
     $request = new Request($method, $url);
 
@@ -97,16 +97,6 @@ class Http {
 
   public function delete($url, $data = []) {
     return $this->request('DELETE', $url, $data);
-  }
-
-  protected function prefixUrl($url) {
-    $url = ltrim($url, '/');
-
-    if(empty($this->options['base_uri'])) {
-      return $url;
-    }
-
-    return $this->options['base_uri'] . $url;
   }
 
 }
