@@ -11,7 +11,7 @@ class AuthorizationTest extends PHPUnit_Framework_TestCase
     $authorization = new Authorization($config);
 
     $this->assertEquals('http://sso.7pass.dev/connect/v1.0/authorize?response_type=code&client_id=barbaz&scope=openid+profile+email&redirect_uri=REDIRECT&nonce=foobar',
-      $authorization->uri([
+      $authorization->authorizeUri([
         'redirect_uri' => 'REDIRECT',
         'nonce' => 'foobar'
       ]));

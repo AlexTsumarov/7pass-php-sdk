@@ -6,7 +6,7 @@ use \GuzzleHttp\Client;
 
 class SSOTest extends PHPUnit_Framework_TestCase
 {
-  const CODE = '4s30A27LuWypNLIHlqfuJDu4aeWGzqnPXf4q0AdrL6JA5DHi1ppR1arbx0me3vTfTeWCt5CBB6lN7Msg';
+  const CODE = 'RnbV8u1CWoljG2yV2k3VTdLZ2lxcckUGV9NOAL9xOd7bPAuoAn07UTEv3qfD0YUXQfxfzyv2xsSAl0nO';
   const REDIRECT_URI = 'http://localhost:8000/callback';
   const SERVER_KID = '4cee9dc4d2aaf2eb997113d6b76dc6fe';
   const SERVER_PUBLIC_KEY = "-----BEGIN PUBLIC KEY-----\r\n"
@@ -28,7 +28,9 @@ class SSOTest extends PHPUnit_Framework_TestCase
   }
 
   private function validSSO() {
-    return new SSO(new SSO\Configuration($this->defaultConfig));
+    $config = new SSO\Configuration($this->defaultConfig);
+    $config->setCachePool(new Stash\Pool(new Stash\Driver\Ephemeral()));
+    return new SSO($config);
   }
 
   /**
@@ -39,12 +41,11 @@ class SSOTest extends PHPUnit_Framework_TestCase
     $sso = $this->validSSO();
     $authorization = $sso->authorization();
 
-    $uri = $authorization->uri([
-      'redirect_uri' => self::REDIRECT_URI,
-      'nonce' => 'somerandomstring'
+    $uri = $authorization->authorizeUri([
+      'redirect_uri' => self::REDIRECT_URI
     ]);
 
-    $this->assertEquals('http://sso.7pass.dev/connect/v1.0/authorize?response_type=code&client_id=54523ed2d3d7a3b4333a9426&scope=openid+profile+email&redirect_uri=http%3A%2F%2Flocalhost%3A8000%2Fcallback&nonce=somerandomstring', $uri);
+    $this->assertEquals('http://sso.7pass.dev/connect/v1.0/authorize?response_type=code&client_id=54523ed2d3d7a3b4333a9426&scope=openid+profile+email&redirect_uri=http%3A%2F%2Flocalhost%3A8000%2Fcallback', $uri);
   }
 
   public function testAuthorizationCache()
@@ -110,7 +111,7 @@ class SSOTest extends PHPUnit_Framework_TestCase
    */
   public function testGetsAccountInfoWithAccessTokenWithElevatedAccess($tokens) {
     $sso = $this->validSSO();
-    $api = $sso->api($tokens->access_token);
+    $api = $sso->accountClient($tokens->access_token);
 
     $data = $api->get('/me')->data;
     $this->assertObjectHasAttribute('birthdate', $data);
@@ -125,7 +126,7 @@ class SSOTest extends PHPUnit_Framework_TestCase
   public function testGetsAccountInfoWithAccessTokenWithoutClientSecret($tokens) {
     $sso = $this->validSSO();
     $sso->getConfig()->client_secret = null;
-    $api = $sso->api($tokens->access_token);
+    $api = $sso->accountClient($tokens->access_token);
 
     $data = $api->get('/me')->data;
     $this->assertObjectHasAttribute('birthdate', $data);
