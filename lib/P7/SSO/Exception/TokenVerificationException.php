@@ -3,6 +3,6 @@
 namespace P7\SSO\Exception;
 
 
-class TokenVerificationException extends \RuntimeException implements SOOException {
+class TokenVerificationException extends \RuntimeException implements SSOException {
 
 } 
