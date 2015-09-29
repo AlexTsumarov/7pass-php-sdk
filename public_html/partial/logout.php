@@ -64,7 +64,7 @@ $logoutUri = $sso->authorization()->logoutUri([
 
 <div class="panel panel-default">
   <div class="panel-heading">
-    $_SESSION['tokens']
+    $tokens
   </div>
   <div class="panel-body">
 
