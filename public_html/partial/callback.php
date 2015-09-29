@@ -30,8 +30,8 @@
       In our example, we used PHP session, but SDK doesn't force you to use any particular token set storage.
     </p>
     <p>
-      <i><b>Note:</b> '$sso->authorization()->callback()' returns 7P\SSO\TokenSet object which extends from ArrayObject. Even ArrayObject is serializable,
-      we still recommend to store plain array into the session instead of 7P\SSO\TokenSet object itself
+      <i><b>Note:</b> '$sso->authorization()->callback()' returns P7\SSO\TokenSet object which extends from ArrayObject. Even ArrayObject is serializable,
+      we still recommend to store plain array into the session instead of P7\SSO\TokenSet object itself
       as doing so might cause issues during PHP session unserialization.
       </i>
     </p>

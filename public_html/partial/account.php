@@ -20,7 +20,7 @@
 
 <pre class="prettyprint">
 $tokensArray = $_SESSION['tokens'];
-$tokens = new \7P\SSO\TokenSet($tokensArray);
+$tokens = new \P7\SSO\TokenSet($tokensArray);
 
 //refresh access token if it's due to expire
 if($tokens->isAccessTokenExpired()) {

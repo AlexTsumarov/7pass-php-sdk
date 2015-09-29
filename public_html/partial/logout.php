@@ -23,7 +23,7 @@
 
 <pre class="prettyprint">
 //remove an authentication data from user's session storage
-$tokens = new \7P\SSO\TokenSet($_SESSION['tokens']);
+$tokens = new \P7\SSO\TokenSet($_SESSION['tokens']);
 
 unset($_SESSION['tokens']);
 
