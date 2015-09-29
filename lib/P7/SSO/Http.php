@@ -16,7 +16,7 @@ class Http {
     $this->options = array_merge_recursive([
       'http_errors' => false,
       'headers' => [
-        'User-Agent' => '7P-SDK-PHP/' . SSO::VERSION . ' (' . PHP_OS . ')',
+        'User-Agent' => '7Pass-SDK-PHP/' . SSO::VERSION . ' (' . PHP_OS . ')',
         'Accept' => 'application/json'
       ],
       'data' => [],
