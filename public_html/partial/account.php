@@ -35,6 +35,11 @@ $accountClient = $sso->accountClient($tokens);
 
 $me = $accountClient->get('/me')->data;
 $emails = $accountClient->get('/me/emails')->data;
+
+$batch = $accountClient->batch([
+  'getUserInfo' => '/me',
+  'getConsents' => '/me/consents'
+]);
 </pre>
   </div>
 </div>
@@ -72,7 +77,7 @@ $emails = $accountClient->get('/me/emails')->data;
 </div>
 <div class="panel panel-default">
   <div class="panel-heading">
-    $batch = $accountClient->batch([
+    $accountClient->batch([
       'getUserInfo' => '/me',
       'getConsents' => '/me/consents'
     ]);
