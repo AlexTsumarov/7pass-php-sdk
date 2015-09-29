@@ -19,24 +19,28 @@ class Http {
         'User-Agent' => '7P-SDK-PHP/' . SSO::VERSION . ' (' . PHP_OS . ')',
         'Accept' => 'application/json'
       ],
-      'data' => []
+      'data' => [],
+      'query' => []
     ], $options);
 
   }
 
   private function request($method, $url, $data = []) {
-    $url = ltrim($url, '/');
+    $url = $this->prefixUrl($url);
+
     $request = new Request($method, $url);
 
-    $data_merged = array_merge_recursive($this->options['data'], $data);
+    $dataMerged = array_merge_recursive($this->options['data'], $data);
 
-    $opts = [];
+    $opts = [
+      'query' => $this->options['query']
+    ];
 
-    if(!empty($data_merged)) {
+    if(!empty($dataMerged)) {
       if(in_array($method, self::$JSON_PAYLOAD_METHODS)) {
-        $opts['json'] = $data_merged;
+        $opts['json'] = $dataMerged;
       } else {
-        $opts['query'] = $data_merged;
+        $opts['query'] = array_merge($opts['query'], $dataMerged);
       }
     }
 
@@ -50,6 +54,29 @@ class Http {
     } catch(RequestException $e) {
       throw new SSO\Exception\HttpException($e->getMessage(), $e->getCode(), $e);
     }
+  }
+
+  public function batch(array $data) {
+
+    $json = [];
+    foreach($data as $key => $url) {
+      $json[$key] = [
+        'url' => '/api/accounts/' . ltrim($url, '/')
+      ];
+    }
+
+    $res = $this->request('POST', '/batch', $json);
+
+    if(!$res->success) {
+      return $res;
+    }
+
+    $ret = [];
+    foreach($res->data as $key => $singleResponse) {
+      $ret[$key] = json_decode($singleResponse->body);
+    }
+
+    return $ret;
   }
 
   public function get($url, $data = []) {
@@ -71,4 +98,15 @@ class Http {
   public function delete($url, $data = []) {
     return $this->request('DELETE', $url, $data);
   }
+
+  protected function prefixUrl($url) {
+    $url = ltrim($url, '/');
+
+    if(empty($this->options['base_uri'])) {
+      return $url;
+    }
+
+    return $this->options['base_uri'] . $url;
+  }
+
 }

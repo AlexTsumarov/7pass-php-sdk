@@ -117,6 +117,11 @@ switch($action) {
 
     $emails = $accountClient->get('/me/emails')->data;
 
+    $batch = $accountClient->batch([
+      'getUserInfo' => '/me',
+      'getConsents' => '/me/consents'
+    ]);
+
     require('partial/account.php');
 
     break;

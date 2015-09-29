@@ -42,7 +42,7 @@ class SSO {
       'headers' => [
         'Authorization' => 'Bearer ' . $accessToken
       ],
-      'data' => [
+      'query' => [
         'appsecret_proof' => $appsecret
       ]
     ]);

@@ -44,7 +44,7 @@ $emails = $accountClient->get('/me/emails')->data;
 </div>
 <div class="panel panel-default">
   <div class="panel-heading">
-    $accountClient->get('/me')
+    $accountClient->get('/me')->data
   </div>
   <div class="panel-body">
     <pre class="prettyprint">
@@ -58,12 +58,29 @@ $emails = $accountClient->get('/me/emails')->data;
 </div>
 <div class="panel panel-default">
   <div class="panel-heading">
-    $accountClient->get('/me/emails')
+    $accountClient->get('/me/emails')->data
   </div>
   <div class="panel-body">
   <pre class="prettyprint">
     <?php print_r($emails)?>
   </pre>
+  </div>
+</div>
+
+<div>
+  <a href="http://guide.docs.7pass.ctf.prosiebensat1.com/api/index.html#api-Accounts-Batch" class="btn btn-default pull-right" target="_blank">Documentation</a>
+</div>
+<div class="panel panel-default">
+  <div class="panel-heading">
+    $batch = $accountClient->batch([
+      'getUserInfo' => '/me',
+      'getConsents' => '/me/consents'
+    ]);
+  </div>
+  <div class="panel-body">
+<pre class="prettyprint">
+  <?php print_r($batch)?>
+</pre>
   </div>
 </div>
 
