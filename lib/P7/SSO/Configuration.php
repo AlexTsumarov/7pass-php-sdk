@@ -2,6 +2,7 @@
 namespace P7\SSO;
 
 use P7\SSO\Exception\HttpException;
+use P7\SSO\Exception\InvalidArgumentException;
 use P7\SSO\Exception\OpenIdConfigurationException;
 use Stash\Interfaces\PoolInterface;
 
@@ -50,15 +51,15 @@ class Configuration {
   public function getOpenIdConfig($refresh = false) {
     $item = $this->getCachePool()->getItem(['config', 'openid', $this->environment]);
 
-    $config = $item->get();
-
-    if($refresh || $item->isMiss()) {
-      $item->lock();
-
-      $config = $this->fetchOpenIdConfig();
-
-      $item->set($config);
+    if(!$refresh && !$item->isMiss()) {
+      return $item->get();
     }
+
+    $item->lock();
+
+    $config = $this->fetchOpenIdConfig();
+
+    $item->set($config);
 
     return $config;
   }
@@ -153,6 +154,15 @@ class Configuration {
   public function __isset($name)
   {
     return isset($this->data[$name]);
+  }
+
+  public function __set($name, $value) {
+    throw new InvalidArgumentException("Configuration is immutable");
+  }
+
+  public function __unset($name)
+  {
+    throw new InvalidArgumentException("Configuration is immutable");
   }
 
 }

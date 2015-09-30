@@ -1,0 +1,59 @@
+
+-
+    request:
+        method: GET
+        url: 'http://sso.7pass.dev/.well-known/openid-configuration'
+        headers:
+            Host: sso.7pass.dev
+            Accept-Encoding: null
+            User-Agent: '7Pass-SDK-PHP/1.0.0 (Linux)'
+            Accept: application/json
+    response:
+        status:
+            http_version: '1.1'
+            code: '200'
+            message: OK
+        headers:
+            Server: 'nginx/1.6.2 (Ubuntu)'
+            Date: 'Wed, 30 Sep 2015 12:25:29 GMT'
+            Content-Type: 'application/json; charset=utf-8'
+            Content-Length: '1183'
+            Connection: keep-alive
+            X-Request-Id: 94b7f3b9-adbc-4765-831a-4a562afab66b
+            Access-Control-Allow-Origin: '*'
+            Access-Control-Allow-Methods: 'GET,HEAD,PUT,POST,DELETE'
+            X-Content-Type-Options: nosniff
+            X-Frame-Options: SAMEORIGIN
+            X-Download-Options: noopen
+            X-XSS-Protection: '1; mode=block'
+            X-Response-Time: 1ms
+        body: '{"issuer":"http://sso.7pass.dev","authorization_endpoint":"http://sso.7pass.dev/connect/v1.0/authorize","token_endpoint":"http://sso.7pass.dev/connect/v1.0/token","userinfo_endpoint":"http://sso.7pass.dev/connect/v1.0/userInfo","end_session_endpoint":"http://sso.7pass.dev/connect/v1.0/logout","jwks_uri":"http://sso.7pass.dev/connect/v1.0/jwks","scopes_supported":["openid","profile","email","address","phone"],"response_types_supported":["none","code","id_token","id_token token","code id_token","code token","code id_token token"],"display_values_supported":["page","popup","touch"],"claims_parameter_supported":false,"request_parameter_supported":true,"request_uri_parameter_supported":false,"claims_supported":["sub","iss","auth_time","email","email_verified"],"claims_locales_supported":[],"response_modes_supported":["query","fragment"],"grant_types_supported":["authorization_code","backoffice_code","support_code","refresh_token","password","device_code","second_screen_pin"],"acr_values_supported":[],"subject_types_supported":["public"],"id_token_signing_alg_values_supported":["RS256"],"token_endpoint_auth_methods_supported":["client_secret_post","client_secret_basic"]}'
+-
+    request:
+        method: GET
+        url: 'http://sso.7pass.dev/connect/v1.0/jwks'
+        headers:
+            Host: sso.7pass.dev
+            Accept-Encoding: null
+            User-Agent: '7Pass-SDK-PHP/1.0.0 (Linux)'
+            Accept: application/json
+    response:
+        status:
+            http_version: '1.1'
+            code: '200'
+            message: OK
+        headers:
+            Server: 'nginx/1.6.2 (Ubuntu)'
+            Date: 'Wed, 30 Sep 2015 12:25:29 GMT'
+            Content-Type: 'application/json; charset=utf-8'
+            Content-Length: '269'
+            Connection: keep-alive
+            X-Request-Id: 6b4506ad-80cc-4718-a807-3ca1441771b6
+            Access-Control-Allow-Origin: '*'
+            Access-Control-Allow-Methods: 'GET,HEAD,PUT,POST,DELETE'
+            X-Content-Type-Options: nosniff
+            X-Frame-Options: SAMEORIGIN
+            X-Download-Options: noopen
+            X-XSS-Protection: '1; mode=block'
+            X-Response-Time: 3ms
+        body: '{"keys":[{"kty":"RSA","alg":"RS256","n":"AK2w5vFZ-sUgZvFqGzdgzgC8Jt32A-jxYvpaEdQf7ySBLjhM2fOC4Yrek88zztd0XUTcYLIGqE0O39jYqiBKp5NOetqld8BeKntk3VXIySJs9ndW1oC4gQProHvVTJTx5b6EKAH6kYwVa2wrtfgDTzILJU-Wy08ToXsKDbOAohFf","e":"AQAB","kid":"4cee9dc4d2aaf2eb997113d6b76dc6fe"}]}'

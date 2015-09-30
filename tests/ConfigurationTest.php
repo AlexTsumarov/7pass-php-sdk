@@ -6,11 +6,13 @@ class ConfigurationTest extends PHPUnit_Framework_TestCase
 {
   protected $requiredParams = [
     'client_id' => '123',
-    'client_secret' => '234',
+    'client_secret' => '234'
   ];
 
-  protected function createConfiguration() {
-    return new Configuration($this->requiredParams);
+  protected function createTestConfiguration() {
+    $config = $this->requiredParams;
+    $config['environment'] = 'test';
+    return new Configuration($config);
   }
 
   public function requiredParams() {
@@ -19,6 +21,7 @@ class ConfigurationTest extends PHPUnit_Framework_TestCase
 
   /**
    * @dataProvider requiredParams
+   *
    * @expectedException P7\SSO\Exception\InvalidArgumentException
    */
   public function testRequiredArguments($missingParam) {
@@ -39,7 +42,7 @@ class ConfigurationTest extends PHPUnit_Framework_TestCase
 
   public function testSetsCorrectlyCustomEnvironmentDefaults()
   {
-    $config = new Configuration(array_merge($this->requiredParams, ['environment' => 'test']));
+    $config = $this->createTestConfiguration();
 
     $this->assertEquals('test', $config->environment);
     $this->assertEquals('http://sso.7pass.dev', $config->host);
@@ -60,15 +63,70 @@ class ConfigurationTest extends PHPUnit_Framework_TestCase
     $this->assertEquals('bar', $config->client_secret);
   }
 
-  public function testSetsUnsetsCorrectly() {
-    $config = new Configuration($this->requiredParams);
+  /**
+   * @expectedException P7\SSO\Exception\InvalidArgumentException
+   */
+  public function testImmutability() {
+    $config = $this->createTestConfiguration();
     $config->foo = 'bar';
-
-    $this->assertEquals(true, isset($config->foo));
-    $this->assertEquals('bar', $config->foo);
-
-    unset($config->foo);
-
-    $this->assertEquals(false, isset($config->foo));
   }
+
+  /**
+   * @vcr configuration_openid
+   */
+  public function testRediscovery() {
+    $config = $this->createTestConfiguration();
+
+    $cacheItem = $this->getMockBuilder('Stash\Item')
+      ->setMethods(['set'])
+      ->getMock();
+
+    $cacheItem->expects($this->once())
+      ->method('set');
+
+    $cachePool = $this->getMockBuilder('Stash\Pool')
+      ->setConstructorArgs([new Stash\Driver\Ephemeral()])
+      ->setMethods(['getItem'])
+      ->getMock();
+
+    $cachePool->expects($this->once())
+      ->method('getItem')
+      ->will($this->returnValue($cacheItem));
+
+    $config->setCachePool($cachePool);
+
+    $config->rediscover();
+  }
+
+  /**
+   * @vcr configuration_openid
+   */
+  public function testGetOpenIdConfigCache() {
+    $config = $this->createTestConfiguration();
+
+    $cacheItem = $this->getMockBuilder('Stash\Item')
+      ->setMethods(['get', 'isMiss'])
+      ->getMock();
+
+    $cacheItem->expects($this->once())
+      ->method('isMiss')
+      ->will($this->returnValue(false));
+
+    $cacheItem->expects($this->once())
+      ->method('get');
+
+    $cachePool = $this->getMockBuilder('Stash\Pool')
+      ->setConstructorArgs([new Stash\Driver\Ephemeral()])
+      ->setMethods(['getItem'])
+      ->getMock();
+
+    $cachePool->expects($this->once())
+      ->method('getItem')
+      ->will($this->returnValue($cacheItem));
+
+    $config->setCachePool($cachePool);
+
+    $config->getOpenIdConfig();
+  }
+
 }
