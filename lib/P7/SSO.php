@@ -65,6 +65,12 @@ class SSO {
     ]);
   }
 
+  public function client(array $params = []) {
+    return new Http(array_merge([
+      'base_uri' => $this->config->host . '/api/',
+    ], $params));
+  }
+
   public function getConfig() {
     return $this->config;
   }
