@@ -4,7 +4,7 @@
   OpenID Connect - Callback
   <div class="btn-group  pull-right" role="group">
     <a class="btn btn-default" href="http://guide.docs.7pass.ctf.prosiebensat1.com/api/index.html#api-OpenID_Connect-OpenIDAuthorize" target="_blank" role="button">Documentation</a>
-    <?php if(!$error):?><a class="btn btn-success" href="/account" role="button">Continue</a><?php endif?>
+    <?php if(empty($error)):?><a class="btn btn-success" href="/account" role="button">Continue</a><?php endif?>
   </div>
 </h2>
 
@@ -42,7 +42,7 @@ if(!empty($_GET['error'])) {
   </div>
 </div>
 
-<?php if($error):?>
+<?php if(!empty($error)):?>
 
   <div class="panel panel-danger">
     <div class="panel-heading">

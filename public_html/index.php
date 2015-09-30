@@ -29,11 +29,25 @@ function getSessionTokens($throws = false) {
   return empty($_SESSION['tokens']) ? null : new \P7\SSO\TokenSet($_SESSION['tokens']);
 }
 
+function authenticatedRedirect() {
+  $tokens = getSessionTokens();
+
+  if(!$tokens) {
+    return false;
+  }
+
+  header('Location: /account');
+  exit;
+}
+
 $loggedIn = getSessionTokens() ? true : false;
 
 switch($action) {
 
   case 'login':
+
+    authenticatedRedirect();
+
     $uri = $sso->authorization()->authorizeUri([
       'redirect_uri' => $callbackUri
     ]);
@@ -44,6 +58,9 @@ switch($action) {
 
 
   case 'login-redirect':
+
+    authenticatedRedirect();
+
     $uri = $sso->authorization()->authorizeUri([
       'redirect_uri' => $callbackUri
     ]);
@@ -54,6 +71,8 @@ switch($action) {
 
 
   case 'callback':
+
+    authenticatedRedirect();
 
     if(!empty($_GET['error'])) {
       $error = $_GET['error'];
