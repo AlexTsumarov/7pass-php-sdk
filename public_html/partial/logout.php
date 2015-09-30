@@ -8,44 +8,51 @@
   </div>
 </h2>
 
+<p>
+  To sign out the user, you need to remove the user specific data from
+  the session and, depending on your application, from other
+  storages. Once the session (and others) are cleared, you can futher
+  decide whether you not only want to sign out the user from your
+  application but also from the 7Pass SSO service itself. To do that,
+  you need to provide the "about to be removed" tokens and specify a
+  post logout URL. The user will be redirected to 7Pass SSO and
+  immediately back to the specified post logout URL. Note that this
+  post logout URL needs to be registered for the client.
+</p>
+
 <div class="panel panel-primary">
   <div class="panel-heading">
-    <h3 class="panel-title">Code</h3>
+    <h3 class="panel-title">Signing out the user</h3>
   </div>
   <div class="panel-body">
-
     <p>
-      After you log user out from your site, you might choose to log them out on 7Pass OP as well.
-      In this case, you can use '$sso->authorization()->logoutUri()' method to generate redirect URL for you.<br>
-      Both 'id_token_hint' and 'post_logout_redirect_uri' parameters are required.
-      'id_token_hint' can be either 'id_token' string itself or TokenSet object as example below shows.
+      The library will again handle the generation of the URL on its
+      own, you just need to pass two arguments: <b>id_token_hint</b>
+      and <b>post_logout_redirect_uri</b>. The value of
+      the <b>id_token_hint</b> can be either the ID token directly or
+      the <i>TokenSet</i> object (the library will extract the ID
+      token automatically). The <b>post_logout_redirect_uri</b> needs
+      to be registered to the client and the user will be redirected
+      to it afterwards.
     </p>
 
 <pre class="prettyprint">
-//remove an authentication data from user's session storage
+// Deserialize the tokens from the session storage
 $tokens = new \P7\SSO\TokenSet($_SESSION['tokens']);
 
+// Remove the authentication data from the session
 unset($_SESSION['tokens']);
 
-//and redirect user to 7Pass
+// Generate the logout URL
 $logoutUri = $sso->authorization()->logoutUri([
   'id_token_hint' => $tokens,
   'post_logout_redirect_uri' => $logoutRedirectUri
 ]);
+
+// Redirect the user
+header('Location: ' . $logoutUri);
+exit;
 </pre>
-  </div>
-</div>
-
-<div class="panel panel-default">
-  <div class="panel-heading">
-    $logoutUri
-  </div>
-  <div class="panel-body">
-
-<pre class="prettyprint">
-<?php print_r($logoutUri)?>
-</pre>
-
   </div>
 </div>
 
@@ -64,15 +71,19 @@ $logoutUri = $sso->authorization()->logoutUri([
 
 <div class="panel panel-default">
   <div class="panel-heading">
-    $tokens
+    $logoutUri
   </div>
   <div class="panel-body">
 
 <pre class="prettyprint">
-<?php print_r($tokens)?>
+<?php print_r($logoutUri)?>
 </pre>
 
   </div>
 </div>
+
+<p>
+  <b>To continue the demonstration, please use the Continue button above</b>.
+</p>
 
 <?php require('partial/footer.php')?>

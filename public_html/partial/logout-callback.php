@@ -12,11 +12,8 @@
       <h3 class="panel-title">Code</h3>
     </div>
     <div class="panel-body">
-
-      At this point, an user is successfully logged out.
-
+      At this point, the user is successfully signed out.
     </div>
   </div>
-
 
 <?php require('partial/footer.php')?>
