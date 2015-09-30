@@ -17,7 +17,7 @@ already, please install [Composer](https://getcomposer.org) using
 Composer is installed, you can install the library as follows:
 
 ```
-composer require p7s1/7pass-php-sdk
+php composer.phar require p7s1/7pass-php-sdk
 ```
 
 This will automatically add the library to the list of your
@@ -35,17 +35,23 @@ To obtain the client credentials, you first need to contact the 7Pass
 SSO team or contact Filip Skokan directly at
 filip.skokan@prosiebensat1.com.
 
-Once you have the credentials available, you can go to the
-`public_html` directory and create the local configuration file:
+Once you have the credentials available, you can go again and install the dependencies:
+
+```bash
+php composer.phar install
+```
+
+Next, you can go to the `public_html` directory and create the local
+configuration file:
 
 ```bash
 cd public_html
 cp config.local.php.example config.local.php
 ```
 
-Next, edit the `config.local.php` file in your favorite editor and
-fill out the details. Once that's done, you can start the application
-using the PHP's built-in server:
+Edit the `config.local.php` file in your favorite editor and fill out
+the details. Once that's done, you can start the application using the
+PHP's built-in server:
 
 ```bash
 php -S localhost:8000
