@@ -1,28 +1,62 @@
 # 7Pass PHP SDK
 
+7Pass PHP SDK is a PHP library for interacting with the
+[7Pass SSO service](https://7pass.de). You can use this library to
+implement authentication for your website and take advantage of the
+already existing features that 7Pass SSO offers.
+
 ## Installation
 
-```
-composer install 7pass-php-sdk
-```
+Before you start working with the library, you need to make sure your
+system meets the required criteria. As of now, the library requires
+PHP 5.5.0 and newer with cURL support.
 
-__Minimum requirements__
-
-- php: >=5.5.0
-- curl
-
-
-## Running an example app
+The library is distributed as a composer package. If you haven't
+already, please install [Composer](https://getcomposer.org) using
+[the official instructions](https://getcomposer.org/doc/00-intro.md#system-requirements). Once
+Composer is instaled, you can install the library as follows:
 
 ```
+composer require p7s1/7pass-php-sdk
+```
+
+This will automatically add the library to the list of your
+application's dependencies.
+
+## Running the example application
+
+To demonstrate the functionality of the library, there's an
+interactive tutorial / guide available. Before we get starting setting
+it up, you need your web application's client. The client represents
+the entity which is associated with a service you want to authenticate
+to.
+
+To obtain the client credentials, you first need to contact the 7Pass
+SSO team or contact Filip Skokan directly at
+filip.skokan@prosiebensat1.com.
+
+Once you have the credentials available, you can go to the
+`public_html` directory and create the local configuration file:
+
+```bash
 cd public_html
+cp config.local.php.example config.local.php
+```
+
+Next, edit the `config.local.php` file in your favorite editor and
+fill out the details. Once that's done, you can start the application
+using the PHP's build in server:
+
+```bash
 php -S localhost:8000
 ```
 
-Example application should be now available at http://localhost:8000.
+The example application should be now available at
+`http://localhost:8000`. The application will guide you through the
+most common use cases of the library and show you code examples and
+server responses along the way.
 
-
-##Usage
+## API Usage
 
 ```
 $sso = new P7\SSO(new P7\SSO\Configuration($config));
