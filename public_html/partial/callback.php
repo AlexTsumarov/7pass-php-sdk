@@ -119,9 +119,10 @@ $_SESSION['tokens'] = $tokens
   things. First, there's an access token. The access token is as an
   authentication mechanism and is send along side the user specific
   requests. Its validity is however limited to just 2 hours (7200
-  seconds). If the token has expired, it can no longer be used and
-  it's necessary to ask for another one using the refresh token. The
-  expiration time of the refresh token itself is set to 60
+  seconds) from the moment it was generated and received (notice the
+  received_at field). If the token has expired, it can no longer be
+  used and it's necessary to ask for another one using the refresh
+  token. The expiration time of the refresh token itself is set to 60
   days. You'll see how to ask for the new access token in the next
   step. Finally, there's an ID token which contains some basic
   information about the user and it's automatically decoded for
