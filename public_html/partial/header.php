@@ -25,7 +25,7 @@
       </div>
       <div id="navbar" class="navbar-collapse collapse">
         <div class="navbar-right">
-          <?php if(!$loggedIn):?><a href="/login" class="btn btn-success navbar-btn">Login</a></li><?php endif?>
+          <?php if(!$loggedIn && $action === 'index'):?><a href="/login" class="btn btn-success navbar-btn">Login</a></li><?php endif?>
           <?php if($loggedIn):?><a href="/account" class="btn btn-default navbar-btn">Account APIs</a><?php endif?>
           <?php if($loggedIn):?><a href="/logout" class="btn btn-danger navbar-btn">Logout</a><?php endif?>
         </div>

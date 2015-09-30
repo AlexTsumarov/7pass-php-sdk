@@ -147,6 +147,7 @@ switch($action) {
 
 
   default:
+    $action = 'index';
     require('partial/index.php');
     break;
 }
