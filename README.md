@@ -14,7 +14,7 @@ PHP 5.5.0 and newer with cURL support.
 The library is distributed as a composer package. If you haven't
 already, please install [Composer](https://getcomposer.org) using
 [the official instructions](https://getcomposer.org/doc/00-intro.md#system-requirements). Once
-Composer is instaled, you can install the library as follows:
+Composer is installed, you can install the library as follows:
 
 ```
 composer require p7s1/7pass-php-sdk
@@ -26,7 +26,7 @@ application's dependencies.
 ## Running the example application
 
 To demonstrate the functionality of the library, there's an
-interactive tutorial / guide available. Before we get starting setting
+interactive tutorial / guide available. Before we get started setting
 it up, you need your web application's client. The client represents
 the entity which is associated with a service you want to authenticate
 to.
@@ -45,7 +45,7 @@ cp config.local.php.example config.local.php
 
 Next, edit the `config.local.php` file in your favorite editor and
 fill out the details. Once that's done, you can start the application
-using the PHP's build in server:
+using the PHP's built-in server:
 
 ```bash
 php -S localhost:8000
