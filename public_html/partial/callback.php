@@ -23,7 +23,7 @@
   </div>
   <div class="panel-body">
     <p>
-      Whenever an error occures, there will be two query parameters
+      Whenever an error occurs, there will be two query parameters
       present in the URL - <b>error</b>
       and <b>error_description</b>. The <b>error</b> parameter
       contains an error code and the <b>error_description</b> contains
@@ -83,7 +83,8 @@ endif
       just need to provide the <b>redirect_uri</b> and also
       the <b>code</b> parameter from the current URL. Note that
       <b>the code can be used only once</b> - an exception is thrown
-      otherwise.
+      otherwise. An exception can be thrown for other reasons as well
+      (invalid redirect URL etc.).
     </p>
 <pre class="prettyprint">
 $code = $_GET['code'];
@@ -93,7 +94,7 @@ $payload = [
   'code' => $code
 ];
 
-$tokenSet = $sso->authorization()->callback($payload);
+$tokenSet = $sso->authorization()->callback($payload); // Beware: May throw an exception!
 $tokens = $tokenSet->getArrayCopy();
 
 // Store tokens into the user's session storage. You might also want
@@ -113,6 +114,19 @@ $_SESSION['tokens'] = $tokens
   </div>
 </div>
 
+<p>
+  When you inspect the <i>$tokens</i>, you can see a few
+  things. First, there's an access token. The access token is as an
+  authentication mechanism and is send along side the user specific
+  requests. Its validity is however limited to just 2 hours (7200
+  seconds). If the token has expired, it can no longer be used and
+  it's necessary to ask for another one using the refresh token. The
+  expiration time of the refresh token itself is set to 60
+  days. You'll see how to ask for the new access token in the next
+  step. Finally, there's an ID token which contains some basic
+  information about the user and it's automatically decoded for
+  convenience.
+</p>
 <div class="panel panel-default">
   <div class="panel-heading">
     $tokens
@@ -125,5 +139,9 @@ $_SESSION['tokens'] = $tokens
 
   </div>
 </div>
+
+<p>
+  <b>To continue the demonstration, please use the Continue button above</b>.
+</p>
 
 <?php require('partial/footer.php')?>
