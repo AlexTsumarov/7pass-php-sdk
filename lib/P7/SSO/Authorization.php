@@ -3,6 +3,7 @@ namespace P7\SSO;
 
 use P7\SSO\Exception\BadRequestException;
 use P7\SSO\Exception\InvalidArgumentException;
+use P7\SSO\Exception\TokenSignatureException;
 use P7\SSO\Exception\TokenVerificationException;
 use \Firebase\JWT\JWT;
 
@@ -11,7 +12,7 @@ class Authorization {
 
   function __construct(Configuration $config) {
     $this->config = $config;
-  }
+    }
 
   public function authorizeUri(array $data) {
     $this->validateParams($data, ['redirect_uri']);
@@ -71,22 +72,26 @@ class Authorization {
   public function backoffice($data) {
     $this->validateParams($data, ['account_id']);
 
-    $jwt = JWT::encode([
-        'service_id' => $this->config->service_id,
-        'account_id' => $data['account_id'],
-        'nonce' => Nonce::generate(),
-        'timestamp' => time()
-    ], $this->config->backoffice_key, 'RS256');
+    try {
+      $jwt = JWT::encode([
+          'service_id' => $this->config->service_id,
+          'account_id' => $data['account_id'],
+          'nonce' => Nonce::generate(),
+          'timestamp' => time()
+      ], $this->config->backoffice_key, 'RS256');
 
-    unset($data['account_id']);
+      unset($data['account_id']);
 
-    //defaults
-    $data = array_merge([
-      'code' => $jwt,
-      'scope' => 'openid'
-    ], $data);
+      //defaults
+      $data = array_merge([
+        'code' => $jwt,
+        'scope' => 'openid'
+      ], $data);
 
-    return $this->getTokens($data, 'backoffice_code');
+      return $this->getTokens($data, 'backoffice_code');
+    } catch(\DomainException $e) {
+      throw new TokenSignatureException('Backoffice JWT token could not be signed', 0, $e);
+    }
   }
 
   protected function decodeIdToken($token) {
@@ -100,7 +105,7 @@ class Authorization {
   protected function getTokens($params, $grant_type) {
     $params['grant_type'] = $grant_type;
 
-    $client = new Http([
+    $client = $this->createHttpClient([
       'auth' => [$this->config->client_id, $this->config->client_secret]
     ]);
 
@@ -118,6 +123,10 @@ class Authorization {
     }
 
     return TokenSet::receiveTokens($data);
+  }
+
+  protected function createHttpClient($params) {
+    return new Http($params);
   }
 
   protected function validateParams(array $data, array $params) {
