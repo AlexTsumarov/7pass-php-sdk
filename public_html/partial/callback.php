@@ -8,56 +8,37 @@
   </div>
 </h2>
 
+<p>
+  After the user has finished with the sign in/up dialog, he/she
+  has been redirected to the <b>redirect_uri</b> URL with the
+  outcome of the sign in process. The user might have successfully
+  authenticated but also might have decided to cancel the process
+  or some other error might have happened. Therefore it's
+  important have proper error handling.
+</p>
+
 <div class="panel panel-primary">
   <div class="panel-heading">
-    <h3 class="panel-title">Code</h3>
+    <h3 class="panel-title">Error handling</h3>
   </div>
   <div class="panel-body">
-
     <p>
-      An user is redirected back to your server now.
-      They are either authenticated successfully, cancelled an authentication, or there might be an unexpected server error.
-    </p>
-    <p>
-      In case of an error, error type and description is sent as 'error' and 'error_description' query parameters
-      which can be used to render appropriate error message to the user.
-    </p>
-    <p>
-      In order to get an access token, your server should call 7Pass token endpoint -
-        this can be achieved using `$sso->authorization()->callback()` method as shown below.
-      Returned tokens are specific to this user only and should be stored securely.
-      They will be used later for access 7Pass API and 'refresh_token' to obtain renewed 'access_token'.
-      In our example, we used PHP session, but SDK doesn't force you to use any particular token set storage.
-    </p>
-    <p>
-      <i><b>Note:</b> '$sso->authorization()->callback()' returns P7\SSO\TokenSet object which extends from ArrayObject. Even ArrayObject is serializable,
-      we still recommend to store plain array into the session instead of P7\SSO\TokenSet object itself
-      as doing so might cause issues during PHP session unserialization.
-      </i>
+      Whenever an error occures, there will be two query parameters
+      present in the URL - <b>error</b>
+      and <b>error_description</b>. The <b>error</b> parameter
+      contains an error code and the <b>error_description</b> contains
+      a human readable description of the error suitable for direct
+      displaying to the user.
     </p>
 <pre class="prettyprint">
 if(!empty($_GET['error'])) {
   $error = $_GET['error'];
   $errorDescription = $_GET['error_description'];
 
-  //handle and display an error to the user
-
-  return;
+  // Display the errors to the user to let him know the reason the
+  // process has failed here.
 }
-
-$code = $_GET['code'];
-
-$payload = [
-  'redirect_uri' => $callbackUri,
-  'code' => $code
-];
-
-$tokenSet = $sso->authorization()->callback($payload);
-
-//store tokens into user's session storage
-$_SESSION['tokens'] = $tokenSet->getArrayCopy();
 </pre>
-
   </div>
 </div>
 
@@ -83,6 +64,55 @@ Description: <?php print_r($errorDescription)?>
 endif
 ?>
 
+</p>
+    In case there's been no error, there will be a <b>code</b>
+    parameter in the URL. This code along with the <b>redirect_uri</b>
+    can be used to retrieve the tokens which will later allow you to
+    fetch the actual information about the user. These tokens are
+    specific to the particular user and are private. You need to keep
+    them secured and do not share them with anybody.
+<p>
+
+<div class="panel panel-primary">
+  <div class="panel-heading">
+    <h3 class="panel-title">Retrieving the tokens</h3>
+  </div>
+  <div class="panel-body">
+    <p>
+      The library will handle retrieving the tokens on its own, you
+      just need to provide the <b>redirect_uri</b> and also
+      the <b>code</b> parameter from the current URL. Note that
+      <b>the code can be used only once</b> - an exception is thrown
+      otherwise.
+    </p>
+<pre class="prettyprint">
+$code = $_GET['code'];
+
+$payload = [
+  'redirect_uri' => $callbackUri,
+  'code' => $code
+];
+
+$tokenSet = $sso->authorization()->callback($payload);
+$tokens = $tokenSet->getArrayCopy();
+
+// Store tokens into the user's session storage. You might also want
+// to store them in your persistent storage (i.e. your database) or
+// any other storage of your own choosing.
+$_SESSION['tokens'] = $tokens
+</pre>
+    <p>
+      <b>Note:</b> <i>$sso->authorization()->callback()</i>
+      returns <i>P7\SSO\TokenSet</i> object which extends from
+      <i>ArrayObject</i>. Even though <i>ArrayObject</i> is
+      serializable, we still recommend to store plain array into the
+      session instead of the <i>TokenSet</i> object itself to avoid
+      any possible issues with the serialization process using
+      the <i>getArrayCopy</i> method.
+    </p>
+  </div>
+</div>
+
 <div class="panel panel-default">
   <div class="panel-heading">
     $tokens
@@ -90,7 +120,7 @@ endif
   <div class="panel-body">
 
 <pre class="prettyprint">
-<?php print_r($tokens)?>
+<?php print_r($tokens->getArrayCopy())?>
 </pre>
 
   </div>
