@@ -58,7 +58,7 @@ class SSO {
     ], $customPayload), $key, 'RS256');
 
     return new Http([
-      'base_uri' => $this->config->host . '/api/',
+      'base_uri' => $this->config->host . '/api/backoffice/',
       'headers' => [
         'Authorization' => '7Pass-Backoffice ' . $jwt
       ]
