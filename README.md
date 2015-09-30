@@ -50,8 +50,10 @@ cp config.local.php.example config.local.php
 ```
 
 Edit the `config.local.php` file in your favorite editor and fill out
-the details. Once that's done, you can start the application using the
-PHP's built-in server:
+the details. You should have all of the parameters at your disposal
+after your client is set up. For testing, keep the environment set to
+`qa`. Once that's done, you can start the application using the PHP's
+built-in server:
 
 ```bash
 php -S localhost:8000
@@ -64,68 +66,123 @@ server responses along the way.
 
 ## API Usage
 
-```
-$sso = new P7\SSO(new P7\SSO\Configuration($config));
-```
+You strongly encouraged to go over the example application first. It
+will show you the API calls with more comments and real values. It
+will also show you the real responses from the 7Pass SSO service as
+you progress.
 
-Configuration options:
+To use the library, it's necessary to initialize it with the
+credentials of the client we want to use. If you don't have the
+credentials yet, please see above.
 
 - client_id (required)
 - client_secret (required)
-- environment - default: production; Available options: 'production' (https://sso.7pass.de), 'staging' (https://sso.qa.7pass.ctf.prosiebensat1.com)
 
-If you are authorized to backoffice requests you can also configure:
+If you're starting the development, it's always a good idea to work
+against a non live instance of the 7Pass SSO service. To specify the
+instance (the environment) against which you want to issue the
+requests, you can pass an additional key called environment to the
+configuration. There're currently two environments running: QA and
+production. Don't forget to switch to the production version before
+you release your application to the public.
 
-- service_id (required)
-- backoffice_key (required)
 
+```php
+$config = [
+  'client_id' => 'YOUR_CLIENT_ID',
+  'client_secret' => 'YOUR_CLIENT_SECRET',
+  'environment' => 'qa' // Optional, defaults to 'production'
+];
 
-##Authentication flow
+// Creates the configuration object
+$ssoConfig = new P7\SSO\Configuration($config);
 
+// Pass the configuration to the SSO object
+$sso = new P7\SSO($ssoConfig);
+```
+
+## Authentication flow
+
+The authentication process is simple and the high level view is as
+follows: The user is redirected to the 7Pass SSO service using a
+specially crafted URL and he/she signs in (or signs up). Once the user
+has finished the process, he/she is redirected back to your
+application with a special code in the URL. The application will then
+use the code in order to get the user's details. The process may vary
+depending on the passed options.
 
 ### 1. Get a redirect URL
 
+The library automatically handles the generation of the URL to which
+the user needs to be redirected. The only required parameter is the
+`redirect_uri` URL. The URL needs to be absolute and can be arbitrary
+(given that it is registered to the client) but will by convention
+lead to the same host and a route called "callback".
+
+```php
+$options = [
+  'redirect_uri' => 'https://example.com/callback', // Required.
+  'scope' => 'openid profile email', // Optional, default value.
+  'response_type' => 'code', // Optional, default value.
+];
+
+$redirectUrl = $sso->authorization()->authorizeUri($options);
 ```
-$redirectUrl = $sso->authorization()->uri($options);
-```
 
-Options:
-
-- redirect_uri - required (if not specified in SSO configuration)
-- scope - default: 'openid profile email'
-- response_type - default: 'code'
-
-_Note: client_id and nonce parameters are set automatically._
-
+The library will automatically set the `client_id` and `nonce` (a
+unique request identifier) parameters automatically.
 
 ### 2. Redirect an user
 
-Redirect an user to generated 7Pass server `$redirectUrl` server where they authenticate.
+Now it's time to redirect the user to the generated URL. In plain PHP,
+you can set the `Location` header:
 
+```php
+header('Location: ' . $redirectUrl);
+exit;
+```
 
 ### 3. Handling 7Pass callback
 
-An user is redirect back to your server now. They either authenticated successfully, cancelled an authentication, or there might be an unexpected server error.
+After the user has finished with the sign in/up dialog, he/she has
+been redirected to the redirect_uri URL with the outcome of the sign
+in process. The user might have successfully authenticated but also
+might have decided to cancel the process or some other error might
+have happened. Therefore it's important have proper error handling.
 
-In case of an error, error type and description is sent as 'error' and 'error_description' query parameters which can be used to render appropriate error message to the user.
+Whenever an error occurs, there will be two query parameters present
+in the URL - error and `error_description`. The error parameter
+contains an error code and the error_description contains a human
+readable description of the error suitable for direct displaying to
+the user.
 
-In order to get an access token, your server should call 7Pass token endpoint - this can be achieved using `$sso->authorization()->callback()` method as shown below.
+```php
+if(!empty($_GET['error'])) {
+  $error = $_GET['error'];
+  $errorDescription = $_GET['error_description'];
 
-```
-$queryParams = $_GET;
-
-if(!empty($queryParams['error'])) {
-    //TODO handle error state
-    return;
+  // Display the errors to the user to let him know the reason the
+  // process has failed here.
 }
+```
 
+In case there's been no error, there will be a code parameter in the
+URL. This code along with the redirect_uri can be used to retrieve the
+tokens which will later allow you to fetch the actual information
+about the user. These tokens are specific to the particular user and
+are private. You need to keep them secured and do not share them with
+anybody.
+
+```php
 $tokens = $sso->authorization()->callback([
-    'code': $queryParams['code']
+    'code': $_GET['code']
 ]);
 ```
 
-Example response:
-```
+The received response will have the following structure. Run the
+example application to see the real values.
+
+```php
 stdClass(
     [access_token] => ACCESS_TOKEN
     [token_type] => 'Bearer'
@@ -136,66 +193,101 @@ stdClass(
 )
 ```
 
-_Note: `id_token_decoded` is decoded and verified OpenID Connect JWT. If token verification fails `P7\SSO\Exception\TokenVerificationException` is thrown_
+Note: The `id_token_decoded` value is decoded from the `id_token`
+field and verified. If token verification fails, the
+`P7\SSO\Exception\TokenVerificationException` exception is thrown.
 
-Exceptions:
-
-- BadRequestException - invalid OAuth request
-- TokenValidationException - id_token is not valid
-
+Further, the call might throw `P7\SSO\Exception\BadRequestException` in
+case the `code` has already been used or is otherwise invalid.
 
 ### 4. Caching an access token
 
-Access token is valid for certain amount of time specified in seconds in `expires_in`.
-You should cache and reuse this access token for this period on every request. Once token is near to expire you can use `refresh_token`
-to obtain new access with extended expiration time even without user's consent.
+Access tokens are valid for certain amount of time specified in
+seconds in the `expires_in` field. Once the access token expires, it
+can no longer be used. You can obtain a new one using the refresh
+token as follows:
 
-Using a refresh token:
-
-```
-$tokens = $sso->authorization()->refresh([
+```php
+if($tokens->isAccessTokenExpired()) {
+  $tokens = $sso->authorization()->refresh([
     'refresh_token' => $tokens->refresh_token
-]);
+  ]);
+}
 ```
-
-`$tokens` contains same token set as `$sso->authorization()->callback()` returns.
-
 
 ### 5. Calling our API endpoints
 
+Now that we're sure the tokens are up to date, we can start making
+requests to the 7Pass SSO service to get the user data.
 
+Same as with the previous example, run the example application to see
+the real server response.
 
-```
-$accountClient = $sso->accountClient($tokens->access_token);
+```php
+$accountClient = $sso->accountClient($tokens);
 $response = $accountClient->get('/me');
 ```
 
+The 7Pass SSO service offers quite a few of these endpoints. To learn
+more about them, you can go to
+[the official documentation's overview](http://guide.docs.7pass.ctf.prosiebensat1.com/api/index.html#api-Accounts).
 
 ## Backoffice requests
+
+The library can also be used to perform "backoffice" requests. These
+requests are initiated without direct involvement of users and are
+meant for administrative purposes. Your client needs to have the
+`backoffice_code` grant type allowed. You also need to know the ID of
+the user you want to work with.
 
 Backoffice requests are used to make an API calls on behalf of other users. To get access token for these requests
 you need to use special grant type 'backoffice_code' providing an account_id.
 Upon successful authentication you get a same token set as using standard flow described above.
 
-```
+```php
+$config = [
+  'environment' => 'qa' // Optional, defaults to 'production',
+  'service_id' => 'SERVICE_ID', // Required for backoffice access
+  'backoffice_key' => 'BACKOFFICEC_KEY' // Required for backoffice access
+];
+
+// Creates the configuration object
+$ssoConfig = new P7\SSO\Configuration($config);
+
+// Pass the configuration to the SSO object
+$sso = new P7\SSO($ssoConfig);
+
+// Get the tokens using the backoffice
 $tokens = $sso->authorization()->backoffice([
-    'account_id' => $accountId
+  'account_id' => 'account_id' // Required, the ID of the user you want to access
 ]);
 
-$backofficeClient = $sso->backofficeClient($tokens->access_token);
+// Use the client as you normally would when using the standard access
+$backofficeClient = $sso->backofficeClient($tokens);
 $response = $backofficeClient->get('/me');
 ```
 
+The response will be as usual. Once you get the tokens, the 7Pass SSO
+service will act as if the access token has been obtained using the
+"standard" way.
 
 ## Caching
 
-SDK caches OpenID configuration and public keys. SDK make use of [Stash Caching Library](https://github.com/tedious/stash/).
-By default it tries to use [Apc](http://www.stashphp.com/Drivers.html#apc) if available,
-otherwise it uses [Filesystem driver](http://www.stashphp.com/Drivers.html#filesystem) with default settings.
+Before the library can work properly, it needs to fetch some
+information from the configured instance of the 7Pass SSO service. To
+make sure these information are not downloaded every time, the library
+uses a configurable caching mechanism.
 
-You can set and configure your own cache storage as below:
+Under the hood, it uses the
+[Stash Caching Library](https://github.com/tedious/stash/) library and
+tries to use the [Apc](http://www.stashphp.com/Drivers.html#apc)
+driver first. If not avaible, it will use the
+[Filesystem driver](http://www.stashphp.com/Drivers.html#filesystem)
+instead.
 
-```
+If desired, you can configure your own cache driver as follows:
+
+```php
 $ssoConfig = new P7\SSO\Configuration($config);
 
 $driver = new Stash\Driver\Memcache();
@@ -206,9 +298,13 @@ $ssoConfig->setCachePool(new Stash\Pool($driver));
 $sso = new P7\SSO($ssoConfig);
 ```
 
+To manually refresh the cache (not needed under normal circumstances),
+use the `rediscover` method:
 
-Use `rediscover()` to update cached OpenID Configuration.
-
-```
+```php
 $sso->getConfig()->rediscover();
 ```
+
+If you have any questions or something's not working as expected,
+please do not hesitate to contact Filip Skokan at
+filip.skokan@prosiebensat1.com.

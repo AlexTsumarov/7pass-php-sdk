@@ -144,7 +144,7 @@ $batch = $accountClient->batch([
   with. To learn more about them, you can go to
   the <a href="http://guide.docs.7pass.ctf.prosiebensat1.com/api/index.html#api-Accounts"
   target="_blank">oficial documentation's overview</a>. If you have
-  any questions or something's not working as it should, please do not
+  any questions or something's not working as expected, please do not
   hesitate to contact Filip Skokan
   at <a href="mailto:filip.skokan@prosiebensat1.com?subject=7Pass Dev
   Account" target="_blank">filip.skokan@prosiebensat1.com</a>.
