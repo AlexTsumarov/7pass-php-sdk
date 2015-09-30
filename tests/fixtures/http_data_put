@@ -1,0 +1,27 @@
+
+-
+    request:
+        method: PUT
+        url: 'http://httpbin.org/put'
+        headers:
+            Host: httpbin.org
+            Expect: null
+            Accept-Encoding: null
+            User-Agent: '7Pass-SDK-PHP/1.0.0 (Linux)'
+            Accept: application/json
+            Content-Type: application/json
+        body: '{"bar":"baz"}'
+    response:
+        status:
+            http_version: '1.1'
+            code: '200'
+            message: OK
+        headers:
+            Server: nginx
+            Date: 'Wed, 30 Sep 2015 13:24:59 GMT'
+            Content-Type: application/json
+            Content-Length: '384'
+            Connection: keep-alive
+            Access-Control-Allow-Origin: '*'
+            Access-Control-Allow-Credentials: 'true'
+        body: "{\n  \"args\": {}, \n  \"data\": \"{\\\"bar\\\":\\\"baz\\\"}\", \n  \"files\": {}, \n  \"form\": {}, \n  \"headers\": {\n    \"Accept\": \"application/json\", \n    \"Content-Length\": \"13\", \n    \"Content-Type\": \"application/json\", \n    \"Host\": \"httpbin.org\", \n    \"User-Agent\": \"7Pass-SDK-PHP/1.0.0 (Linux)\"\n  }, \n  \"json\": {\n    \"bar\": \"baz\"\n  }, \n  \"origin\": \"91.127.174.168\", \n  \"url\": \"http://httpbin.org/put\"\n}\n"
