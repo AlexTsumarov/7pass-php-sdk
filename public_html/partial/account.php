@@ -85,7 +85,7 @@ $emails = $accountClient->get('/me/emails')->data;
 </div>
 <div class="panel panel-default">
   <div class="panel-heading">
-    $emacs = $accountClient->get('/me/emails')->data
+    $emails = $accountClient->get('/me/emails')->data
   </div>
   <div class="panel-body">
   <pre class="prettyprint">
