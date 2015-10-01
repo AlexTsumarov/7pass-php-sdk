@@ -123,7 +123,7 @@ lead to the same host and a route called "callback".
 $options = [
   'redirect_uri' => 'https://example.com/callback', // Required.
   'scope' => 'openid profile email', // Optional, default value.
-  'response_type' => 'code', // Optional, default value.
+  'response_type' => 'code' // Optional, default value.
 ];
 
 $redirectUrl = $sso->authorization()->authorizeUri($options);
