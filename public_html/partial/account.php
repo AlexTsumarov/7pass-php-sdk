@@ -60,8 +60,8 @@ if($tokens->isAccessTokenExpired()) {
 // Create a client object using the tokens
 $accountClient = $sso->accountClient($tokens);
 
-$me = $accountClient->get('/me')->data;
-$emails = $accountClient->get('/me/emails')->data;
+$me = $accountClient->get('/me');
+$emails = $accountClient->get('/me/emails');
 </pre>
   </div>
 </div>
@@ -71,7 +71,7 @@ $emails = $accountClient->get('/me/emails')->data;
 </div>
 <div class="panel panel-default">
   <div class="panel-heading">
-    $me = $accountClient->get('/me')->data
+    $me = $accountClient->get('/me')
   </div>
   <div class="panel-body">
     <pre class="prettyprint">
@@ -85,7 +85,7 @@ $emails = $accountClient->get('/me/emails')->data;
 </div>
 <div class="panel panel-default">
   <div class="panel-heading">
-    $emails = $accountClient->get('/me/emails')->data
+    $emails = $accountClient->get('/me/emails')
   </div>
   <div class="panel-body">
   <pre class="prettyprint">

@@ -87,15 +87,10 @@ class Configuration {
         'http_errors' => true
       ]);
 
-      $res = $client->get('.well-known/openid-configuration');
-      if(!$res->success) {
-        throw new OpenIdConfigurationException('OpenID configuration can not be fetched');
-      }
-
-      $config = $res->data;
+      $config = $client->get('.well-known/openid-configuration');
 
       $res = $client->get($config->jwks_uri);
-      $jwks = $res->data->keys;
+      $jwks = $res->keys;
 
       $keys = [];
 

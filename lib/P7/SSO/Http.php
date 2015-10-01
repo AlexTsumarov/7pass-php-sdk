@@ -5,6 +5,7 @@ use GuzzleHttp\Client;
 use GuzzleHttp\Exception\RequestException;
 use GuzzleHttp\Psr7\Request;
 use P7\SSO;
+use P7\SSO\Exception\ApiException;
 
 class Http {
   protected $options;
@@ -36,12 +37,8 @@ class Http {
 
     $res = $this->request('POST', '/batch', $json);
 
-    if(!$res->success) {
-      return $res;
-    }
-
     $ret = [];
-    foreach($res->data as $key => $singleResponse) {
+    foreach($res as $key => $singleResponse) {
       $ret[$key] = json_decode($singleResponse->body);
     }
 
@@ -96,10 +93,38 @@ class Http {
       $client = new Client($this->options);
       $response = $client->send($request, $opts);
 
-      return Response::fromGuzzlehttpResponse($response);
+      return $this->fromGuzzlehttpResponse($response);
 
     } catch(RequestException $e) {
       throw new SSO\Exception\HttpException($e->getMessage(), $e->getCode(), $e);
     }
+  }
+
+  protected function fromGuzzlehttpResponse($r) {
+    $result = json_decode($r->getBody());
+
+    $statusCode = $r->getStatusCode();
+    if($r->getStatusCode() >= 400) {
+
+      $error = $result->error;
+
+      if(is_object($error)) {
+        $ret = [
+          'message' => $error->message,
+          'description' => (isset($error->detail) ? $error->detail : null)
+        ];
+      } else {
+        $ret = [
+          'message' => $error,
+          'description' => $result->error_description
+        ];
+      }
+
+      $ret = (object)$ret;
+
+      throw new ApiException($ret->message, $statusCode, $error);
+    }
+
+    return (isset($result->data) ? $result->data : $result);
   }
 }

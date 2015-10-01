@@ -132,9 +132,9 @@ switch($action) {
 
     $accountClient = $sso->accountClient($tokens);
 
-    $me = $accountClient->get('/me')->data;
+    $me = $accountClient->get('/me');
 
-    $emails = $accountClient->get('/me/emails')->data;
+    $emails = $accountClient->get('/me/emails');
 
     $batch = $accountClient->batch([
       'getUserInfo' => '/me',

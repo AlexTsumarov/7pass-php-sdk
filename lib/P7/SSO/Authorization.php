@@ -109,13 +109,7 @@ class Authorization {
       'auth' => [$this->config->client_id, $this->config->client_secret]
     ]);
 
-    $res = $client->post($this->config->getOpenIdConfig()->token_endpoint, $params);
-
-    if(!$res->success) {
-      throw new BadRequestException($res->error->message . ' - ' . $res->error->description);
-    }
-
-    $data = $res->data;
+    $data = $client->post($this->config->getOpenIdConfig()->token_endpoint, $params);
 
     // Validates ID token signature if token available
     if($data->id_token) {
