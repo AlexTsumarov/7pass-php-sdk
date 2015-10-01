@@ -29,6 +29,14 @@ class TokenSet extends \ArrayObject {
   }
 
   public static function receiveTokens($tokens) {
+    if(is_array($tokens)) {
+      $tokens = (object)$tokens;
+    }
+
+    if(!$tokens instanceof \stdClass) {
+      throw new InvalidArgumentException('$tokens must be an array or stdClass object');
+    }
+
     $tokens->received_at = time();
 
     return new self($tokens);
