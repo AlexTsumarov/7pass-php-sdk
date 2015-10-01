@@ -35,7 +35,7 @@ To obtain the client credentials, you first need to contact the 7Pass
 SSO team or contact Filip Skokan directly at
 filip.skokan@prosiebensat1.com.
 
-Once you have the credentials available, you can go again and install the dependencies:
+Once you have the credentials available, you can go ahead and install the dependencies:
 
 ```bash
 php composer.phar install
