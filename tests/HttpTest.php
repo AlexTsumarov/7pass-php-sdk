@@ -14,7 +14,7 @@ class HttpTest extends PHPUnit_Framework_TestCase
   public function testDataMergeGet() {
     $client = new Http(['data' => ['foo' => 'bar']]);
     $response = $client->get('http://httpbin.org/get', ['bar' => 'baz']);
-    $args = $response->data->args;
+    $args = $response->args;
 
     $this->assertEquals('bar', $args->foo);
     $this->assertEquals('baz', $args->bar);
@@ -25,8 +25,7 @@ class HttpTest extends PHPUnit_Framework_TestCase
   */
   public function testDataMergePostJSON() {
     $client = new Http(['data' => ['foo' => 'bar']]);
-    $response = $client->post('http://httpbin.org/post', ['bar' => 'baz']);
-    $data = $response->data;
+    $data = $client->post('http://httpbin.org/post', ['bar' => 'baz']);
 
     $this->assertEquals('{"foo":"bar","bar":"baz"}', $data);
   }
@@ -36,8 +35,7 @@ class HttpTest extends PHPUnit_Framework_TestCase
   */
   public function testPut() {
     $client = new Http();
-    $response = $client->put('http://httpbin.org/put', ['bar' => 'baz']);
-    $data = $response->data;
+    $data = $client->put('http://httpbin.org/put', ['bar' => 'baz']);
 
     $this->assertEquals('{"bar":"baz"}', $data);
   }

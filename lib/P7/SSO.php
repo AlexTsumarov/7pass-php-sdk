@@ -10,9 +10,7 @@ use P7\SSO\Configuration;
 use P7\SSO\Exception\InvalidArgumentException;
 use P7\SSO\Nonce;
 use P7\SSO\TokenSet;
-use Requests;
-use Requests_Auth_Basic;
-use P7\SSO\Http;
+use P7\SSO\ApiClient;
 use P7\SSO\Session;
 
 class SSO {
@@ -44,7 +42,7 @@ class SSO {
 
     $appsecret = ($this->config->client_secret ? hash_hmac('sha256', $accessToken, $this->config->client_secret) : null);
 
-    return new Http([
+    return new ApiClient([
       'base_uri' => $this->config->host . '/api/accounts/',
       'headers' => [
         'Authorization' => 'Bearer ' . $accessToken
@@ -64,7 +62,7 @@ class SSO {
       'timestamp' => time()
     ], $customPayload), $key, 'RS256');
 
-    return new Http([
+    return new ApiClient([
       'base_uri' => $this->config->host . '/api/backoffice/',
       'headers' => [
         'Authorization' => '7Pass-Backoffice ' . $jwt
@@ -73,7 +71,7 @@ class SSO {
   }
 
   public function client(array $params = []) {
-    return new Http(array_merge([
+    return new ApiClient(array_merge([
       'base_uri' => $this->config->host . '/api/',
     ], $params));
   }

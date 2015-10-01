@@ -7,7 +7,7 @@ use GuzzleHttp\Psr7\Request;
 use P7\SSO;
 use P7\SSO\Exception\ApiException;
 
-class Http {
+class ApiClient {
   protected $options;
 
   public static $JSON_PAYLOAD_METHODS = ['POST', 'PUT'];
@@ -93,20 +93,20 @@ class Http {
       $client = new Client($this->options);
       $response = $client->send($request, $opts);
 
-      return $this->fromGuzzlehttpResponse($response);
+      return $this->fromHttpResponse($response);
 
     } catch(RequestException $e) {
       throw new SSO\Exception\HttpException($e->getMessage(), $e->getCode(), $e);
     }
   }
 
-  protected function fromGuzzlehttpResponse($r) {
-    $result = json_decode($r->getBody());
+  protected function fromHttpResponse($r) {
+    $body = json_decode($r->getBody());
 
     $statusCode = $r->getStatusCode();
     if($r->getStatusCode() >= 400) {
 
-      $error = $result->error;
+      $error = $body->error;
 
       if(is_object($error)) {
         $ret = [
@@ -116,7 +116,7 @@ class Http {
       } else {
         $ret = [
           'message' => $error,
-          'description' => $result->error_description
+          'description' => $body->error_description
         ];
       }
 
@@ -125,6 +125,6 @@ class Http {
       throw new ApiException($ret->message, $statusCode, $error);
     }
 
-    return (isset($result->data) ? $result->data : $result);
+    return (isset($body->data) ? $body->data : $body);
   }
 }

@@ -1,7 +1,8 @@
 <?php
 namespace P7\SSO;
 
-use P7\SSO\Exception\HttpException;
+use GuzzleHttp\Client;
+use GuzzleHttp\Exception\RequestException;
 use P7\SSO\Exception\InvalidArgumentException;
 use P7\SSO\Exception\OpenIdConfigurationException;
 use Stash\Interfaces\PoolInterface;
@@ -82,15 +83,17 @@ class Configuration {
   protected function fetchOpenIdConfig() {
 
     try {
-      $client = new Http([
-        'base_uri' => $this->host,
-        'http_errors' => true
-      ]);
+      $config = $this->httpGet('.well-known/openid-configuration');
+      if($config === null) {
+        throw new OpenIdConfigurationException('Invalid OpenID Configuration JSON format');
+      }
 
-      $config = $client->get('.well-known/openid-configuration');
+      $jwkRes = $this->httpGet($config->jwks_uri);
+      if($jwkRes === null) {
+        throw new OpenIdConfigurationException('Invalid OpenID Configuration JWKs JSON format');
+      }
 
-      $res = $client->get($config->jwks_uri);
-      $jwks = $res->keys;
+      $jwks = $jwkRes->keys;
 
       $keys = [];
 
@@ -117,10 +120,22 @@ class Configuration {
 
       return $config;
 
-    } catch (HttpException $e) {
+    } catch (RequestException $e) {
       throw new OpenIdConfigurationException('OpenID configuration can not be fetched', 0, $e);
     }
 
+  }
+
+  protected function httpGet($url) {
+    $httpClient = new Client([
+      'base_uri' => $this->host,
+      'http_errors' => true
+    ]);
+
+    $response = $httpClient->request('GET', $url);
+
+    $json = json_decode($response->getBody());
+    return $json;
   }
 
   // Access data from array directly

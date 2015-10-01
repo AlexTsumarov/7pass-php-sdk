@@ -1,7 +1,6 @@
 <?php
 namespace P7\SSO;
 
-use P7\SSO\Exception\BadRequestException;
 use P7\SSO\Exception\InvalidArgumentException;
 use P7\SSO\Exception\TokenSignatureException;
 use P7\SSO\Exception\TokenVerificationException;
@@ -105,7 +104,7 @@ class Authorization {
   protected function getTokens($params, $grantType) {
     $params['grant_type'] = $grantType;
 
-    $client = $this->createHttpClient([
+    $client = $this->createApiClient([
       'auth' => [$this->config->client_id, $this->config->client_secret]
     ]);
 
@@ -119,8 +118,8 @@ class Authorization {
     return TokenSet::receiveTokens($data);
   }
 
-  protected function createHttpClient($params) {
-    return new Http($params);
+  protected function createApiClient($params) {
+    return new ApiClient($params);
   }
 
   protected function validateParams(array $data, array $params) {
