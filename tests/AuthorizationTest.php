@@ -6,13 +6,15 @@ use \P7\SSO\Configuration;
 class AuthorizationTest extends PHPUnit_Framework_TestCase
 {
 
+  protected $configDefault = [
+    'environment' => 'test',
+    'client_id' => '54523ed2d3d7a3b4333a9426',
+    'client_secret' => 'd7078d0b804522d6c28677d826e39879122c7a80214cc9bfa60be6022f503fec'
+  ];
+
   protected function getValidAuthorization($configuration = null) {
     if($configuration === null) {
-      $configuration = new Configuration([
-        'environment' => 'test',
-        'client_id' => '54523ed2d3d7a3b4333a9426',
-        'client_secret' => 'd7078d0b804522d6c28677d826e39879122c7a80214cc9bfa60be6022f503fec'
-      ]);
+      $configuration = new Configuration($this->configDefault);
     }
 
     return new Authorization($configuration);
@@ -21,11 +23,7 @@ class AuthorizationTest extends PHPUnit_Framework_TestCase
   protected function getValidAuthorizationMock(array $methods, $configuration = null) {
 
     if($configuration === null) {
-      $configuration = new Configuration([
-        'environment' => 'test',
-        'client_id' => 'barbaz',
-        'client_secret' => '123'
-      ]);
+      $configuration = new Configuration($this->configDefault);
     }
 
     return $this->getMockBuilder('P7\SSO\Authorization')
@@ -213,7 +211,7 @@ class AuthorizationTest extends PHPUnit_Framework_TestCase
 
   /**
    * @vcr authorization_get_tokens_callback_exception
-   * @expectedException P7\SSO\Exception\BadRequestException
+   * @expectedException P7\SSO\Exception\ApiException
    */
   public function testGetTokensCallbackException()
   {
@@ -226,12 +224,14 @@ class AuthorizationTest extends PHPUnit_Framework_TestCase
 
   }
 
+
   /**
    * @vcr authorization_get_tokens_callback
    */
   public function testGetTokensCallback()
   {
-    $authorization = $this->getValidAuthorization();
+    $authorization = $this->getValidAuthorizationMock(['decodeIdToken']);
+    $authorization->method('decodeIdToken')->will($this->returnValue((object)[]));
 
     $tokens = $authorization->callback([
       'code' => 'dfY642LBAhPt2cGugFsGAJ0ChLp7eYo8wUg1bPrBvNVp3SuUmRx5fxcPVUyWB6TUTJf6FOB3jKZ9D8WH',
@@ -240,4 +240,5 @@ class AuthorizationTest extends PHPUnit_Framework_TestCase
 
     $this->assertInstanceOf('P7\SSO\TokenSet', $tokens);
   }
+
 }

@@ -1,0 +1,70 @@
+<?php
+
+use P7\SSO\ApiClient;
+
+class ApiClientTest extends PHPUnit_Framework_TestCase
+{
+  /**
+  * @vcr http_data_merge_get
+  */
+  public function testDataMergeGet() {
+    $client = new ApiClient(['data' => ['foo' => 'bar']]);
+    $response = $client->get('http://httpbin.org/get', ['bar' => 'baz']);
+
+    $args = $response->args;
+
+    $this->assertEquals('bar', $args->foo);
+    $this->assertEquals('baz', $args->bar);
+  }
+
+  /**
+  * @vcr http_data_merge_post
+  */
+  public function testDataMergePostJSON() {
+    $client = new ApiClient(['data' => ['foo' => 'bar']]);
+    $data = $client->post('http://httpbin.org/post', ['bar' => 'baz']);
+
+    $this->assertEquals('{"foo":"bar","bar":"baz"}', $data->data);
+  }
+
+  /**
+  * @vcr http_data_put
+  */
+  public function testPut() {
+    $client = new ApiClient();
+    $data = $client->put('http://httpbin.org/put', ['bar' => 'baz']);
+
+    $this->assertEquals('{"bar":"baz"}', $data->data);
+  }
+
+  /**
+  * @vcr http_data_patch
+  */
+  public function testPatch() {
+    $client = new ApiClient();
+    $data = $client->patch('http://httpbin.org/patch', ['foo' => 'bar']);
+
+    $this->assertEquals('bar', $data->json->foo);
+  }
+
+  /**
+  * @vcr http_data_delete
+  */
+  public function testDelete() {
+    $client = new ApiClient();
+    $data = $client->delete('http://httpbin.org/delete', ['foo' => 'bar']);
+
+    $this->assertEquals('bar', $data->args->foo);
+  }
+
+  /**
+  * @vcr http_base_uri_get
+  */
+  public function testWorksWithBaseUri() {
+    $client = new ApiClient(['base_uri' => 'http://httpbin.org/']);
+    $data = $client->get('/get', ['foo' => 'bar']);
+
+    $this->assertEquals('http://httpbin.org/get?foo=bar', $data->url);
+  }
+
+}

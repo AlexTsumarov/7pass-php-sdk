@@ -5,6 +5,7 @@ use GuzzleHttp\Client;
 use GuzzleHttp\Exception\RequestException;
 use P7\SSO\Exception\InvalidArgumentException;
 use P7\SSO\Exception\OpenIdConfigurationException;
+use P7\SSO;
 use Stash\Interfaces\PoolInterface;
 
 class Configuration {
@@ -129,7 +130,11 @@ class Configuration {
   protected function httpGet($url) {
     $httpClient = new Client([
       'base_uri' => $this->host,
-      'http_errors' => true
+      'http_errors' => true,
+      'headers' => [
+        'User-Agent' => '7Pass-SDK-PHP/' . SSO::VERSION . ' (' . PHP_OS . ')',
+        'Accept' => 'application/json'
+      ],
     ]);
 
     $response = $httpClient->request('GET', $url);

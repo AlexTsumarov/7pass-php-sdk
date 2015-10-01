@@ -68,7 +68,7 @@ class SSOTest extends PHPUnit_Framework_TestCase
     $sso = $this->validSSO();
 
     $client = $sso->accountClient($this->validTokenSet);
-    $this->assertInstanceOf('P7\SSO\Http', $client);
+    $this->assertInstanceOf('P7\SSO\ApiClient', $client);
   }
 
   public function testAccountClientWithTokenString()
@@ -78,7 +78,7 @@ class SSOTest extends PHPUnit_Framework_TestCase
     $accessToken = $this->validTokenSet->access_token;
 
     $client = $sso->accountClient($accessToken);
-    $this->assertInstanceOf('P7\SSO\Http', $client);
+    $this->assertInstanceOf('P7\SSO\ApiClient', $client);
     $this->assertEquals('Bearer ' . $accessToken, $client->getOptions()['headers']['Authorization']);
   }
 
@@ -87,7 +87,7 @@ class SSOTest extends PHPUnit_Framework_TestCase
     $sso = $this->validSSO();
 
     $client = $sso->backofficeClient();
-    $this->assertInstanceOf('P7\SSO\Http', $client);
+    $this->assertInstanceOf('P7\SSO\ApiClient', $client);
 
     $this->assertContains('7Pass-Backoffice', $client->getOptions()['headers']['Authorization']);
   }

@@ -10,7 +10,7 @@ use P7\SSO\Exception\ApiException;
 class ApiClient {
   protected $options;
 
-  public static $JSON_PAYLOAD_METHODS = ['POST', 'PUT'];
+  public static $JSON_PAYLOAD_METHODS = ['POST', 'PUT', 'PATCH'];
 
   function __construct(array $options = []) {
 
@@ -101,6 +101,7 @@ class ApiClient {
   }
 
   protected function fromHttpResponse($r) {
+
     $body = json_decode($r->getBody());
 
     $statusCode = $r->getStatusCode();
@@ -125,6 +126,7 @@ class ApiClient {
       throw new ApiException($ret->message, $statusCode, $error);
     }
 
-    return (isset($body->data) ? $body->data : $body);
+    return $body;
+    //return (isset($body->data) ? $body->data : $body);
   }
 }
