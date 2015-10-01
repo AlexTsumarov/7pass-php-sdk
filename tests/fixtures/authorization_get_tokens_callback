@@ -1,0 +1,92 @@
+
+-
+    request:
+        method: GET
+        url: 'http://sso.7pass.dev/.well-known/openid-configuration'
+        headers:
+            Host: sso.7pass.dev
+            Accept-Encoding: null
+            User-Agent: '7Pass-SDK-PHP/1.0.0 (Linux)'
+            Accept: application/json
+    response:
+        status:
+            http_version: '1.1'
+            code: '200'
+            message: OK
+        headers:
+            Server: 'nginx/1.6.2 (Ubuntu)'
+            Date: 'Thu, 01 Oct 2015 10:19:20 GMT'
+            Content-Type: 'application/json; charset=utf-8'
+            Content-Length: '1183'
+            Connection: keep-alive
+            X-Request-Id: ce0b88af-7932-4be0-8aca-64b0d2b4d460
+            Access-Control-Allow-Origin: '*'
+            Access-Control-Allow-Methods: 'GET,HEAD,PUT,POST,DELETE'
+            X-Content-Type-Options: nosniff
+            X-Frame-Options: SAMEORIGIN
+            X-Download-Options: noopen
+            X-XSS-Protection: '1; mode=block'
+            X-Response-Time: 3ms
+        body: '{"issuer":"http://sso.7pass.dev","authorization_endpoint":"http://sso.7pass.dev/connect/v1.0/authorize","token_endpoint":"http://sso.7pass.dev/connect/v1.0/token","userinfo_endpoint":"http://sso.7pass.dev/connect/v1.0/userInfo","end_session_endpoint":"http://sso.7pass.dev/connect/v1.0/logout","jwks_uri":"http://sso.7pass.dev/connect/v1.0/jwks","scopes_supported":["openid","profile","email","address","phone"],"response_types_supported":["none","code","id_token","id_token token","code id_token","code token","code id_token token"],"display_values_supported":["page","popup","touch"],"claims_parameter_supported":false,"request_parameter_supported":true,"request_uri_parameter_supported":false,"claims_supported":["sub","iss","auth_time","email","email_verified"],"claims_locales_supported":[],"response_modes_supported":["query","fragment"],"grant_types_supported":["authorization_code","backoffice_code","support_code","refresh_token","password","device_code","second_screen_pin"],"acr_values_supported":[],"subject_types_supported":["public"],"id_token_signing_alg_values_supported":["RS256"],"token_endpoint_auth_methods_supported":["client_secret_post","client_secret_basic"]}'
+-
+    request:
+        method: GET
+        url: 'http://sso.7pass.dev/connect/v1.0/jwks'
+        headers:
+            Host: sso.7pass.dev
+            Accept-Encoding: null
+            User-Agent: '7Pass-SDK-PHP/1.0.0 (Linux)'
+            Accept: application/json
+    response:
+        status:
+            http_version: '1.1'
+            code: '200'
+            message: OK
+        headers:
+            Server: 'nginx/1.6.2 (Ubuntu)'
+            Date: 'Thu, 01 Oct 2015 10:19:20 GMT'
+            Content-Type: 'application/json; charset=utf-8'
+            Content-Length: '269'
+            Connection: keep-alive
+            X-Request-Id: 6e7bf5a2-4eea-4739-9e3f-b7fefa7b568c
+            Access-Control-Allow-Origin: '*'
+            Access-Control-Allow-Methods: 'GET,HEAD,PUT,POST,DELETE'
+            X-Content-Type-Options: nosniff
+            X-Frame-Options: SAMEORIGIN
+            X-Download-Options: noopen
+            X-XSS-Protection: '1; mode=block'
+            X-Response-Time: 3ms
+        body: '{"keys":[{"kty":"RSA","alg":"RS256","n":"AK2w5vFZ-sUgZvFqGzdgzgC8Jt32A-jxYvpaEdQf7ySBLjhM2fOC4Yrek88zztd0XUTcYLIGqE0O39jYqiBKp5NOetqld8BeKntk3VXIySJs9ndW1oC4gQProHvVTJTx5b6EKAH6kYwVa2wrtfgDTzILJU-Wy08ToXsKDbOAohFf","e":"AQAB","kid":"4cee9dc4d2aaf2eb997113d6b76dc6fe"}]}'
+-
+    request:
+        method: POST
+        url: 'http://sso.7pass.dev/connect/v1.0/token'
+        headers:
+            Host: sso.7pass.dev
+            Expect: null
+            Accept-Encoding: null
+            User-Agent: '7Pass-SDK-PHP/1.0.0 (Linux)'
+            Accept: application/json
+            Content-Type: application/json
+            Authorization: 'Basic NTQ1MjNlZDJkM2Q3YTNiNDMzM2E5NDI2OmQ3MDc4ZDBiODA0NTIyZDZjMjg2NzdkODI2ZTM5ODc5MTIyYzdhODAyMTRjYzliZmE2MGJlNjAyMmY1MDNmZWM='
+        body: '{"code":"dfY642LBAhPt2cGugFsGAJ0ChLp7eYo8wUg1bPrBvNVp3SuUmRx5fxcPVUyWB6TUTJf6FOB3jKZ9D8WH","redirect_uri":"http:\/\/localhost:8000\/callback","grant_type":"authorization_code"}'
+    response:
+        status:
+            http_version: '1.1'
+            code: '200'
+            message: OK
+        headers:
+            Server: 'nginx/1.6.2 (Ubuntu)'
+            Date: 'Thu, 01 Oct 2015 10:19:20 GMT'
+            Content-Type: 'application/json; charset=utf-8'
+            Content-Length: '1118'
+            Connection: keep-alive
+            X-Request-Id: a4279ef5-12db-49c4-be10-102a8239dca8
+            Access-Control-Allow-Origin: '*'
+            Access-Control-Allow-Methods: 'GET,HEAD,PUT,POST,DELETE'
+            X-Content-Type-Options: nosniff
+            X-Frame-Options: SAMEORIGIN
+            X-Download-Options: noopen
+            X-XSS-Protection: '1; mode=block'
+            X-Response-Time: 97ms
+        body: '{"access_token":"DnVQpMCbfyEOoXdYQLmGfsmvWr2MuByiN326x7RQUMz24IIpGVIRgSjrctfjpvhqBRJOagp1IKQXf131G5oeTzq3Sf","token_type":"Bearer","refresh_token":"qNEpO0K0tyOm8h5kR3f1YeDKOKZgb4etVuUhG8077v6srmRMcTNPAcekDUuHPvtJNLrtfl02Jba2o4GxJ9S6OPENWiZzwBsq6m1C7VDg7KLOeo1gnKpgt7pa","expires_in":7200,"id_token":"eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImtpZCI6IjRjZWU5ZGM0ZDJhYWYyZWI5OTcxMTNkNmI3NmRjNmZlIn0.eyJzdWIiOiI1NWU2ZjU1YzU5MjViY2ZiMjVjOThhNGYiLCJhdWQiOlsiNTQxMTcxOWM2NTYzMzI2ODdkMDAwMDAwIiwiNTQ1MjNlZDJkM2Q3YTNiNDMzM2E5NDI2Il0sImF1dGhfdGltZSI6MTQ0MzY4NTI2MCwiYXpwIjoiNTQ1MjNlZDJkM2Q3YTNiNDMzM2E5NDI2IiwiZ2VuZGVyIjoibWFsZSIsImJpcnRoZGF0ZSI6IjE5NzktMDItMDMiLCJmaXJzdF9uYW1lIjoiTWF0dXMiLCJsYXN0X25hbWUiOiJaZW1hbiIsImJpcnRoZGF0ZV92ZXJpZmllZCI6ZmFsc2UsImVtYWlsIjoibWF0dXMuemVtYW5AZ21haWwuY29tIiwiZW1haWxfdmVyaWZpZWQiOmZhbHNlLCJhdF9oYXNoIjoiaGx3ZkVGVFRySkdSUWRJU2o0ZEtCUSIsImlhdCI6MTQ0MzY5NDc2MCwiZXhwIjoxNDQzNzAxOTYwLCJpc3MiOiJodHRwOi8vc3NvLjdwYXNzLmRldiJ9.ly0nL76BlFO1O9IFgRW2EFc3R2NN4Quc29e9c0qC7QCuCadu0zDEtkLJ3Vw46cXJFTjru28cHN886cr5XEwan5lYkEnw_IhVAF3m02A2OAp6u9uyQNbM-hB2wwfsys_Rrv66bmZpVC1aCN2bqsin8B4FkjnkVsfi6LvtYjr32-M"}'
