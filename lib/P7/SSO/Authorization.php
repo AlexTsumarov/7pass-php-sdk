@@ -102,8 +102,8 @@ class Authorization {
     }
   }
 
-  protected function getTokens($params, $grant_type) {
-    $params['grant_type'] = $grant_type;
+  protected function getTokens($params, $grantType) {
+    $params['grant_type'] = $grantType;
 
     $client = $this->createHttpClient([
       'auth' => [$this->config->client_id, $this->config->client_secret]

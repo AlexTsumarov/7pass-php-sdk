@@ -7,7 +7,7 @@ use GuzzleHttp\Psr7\Request;
 use P7\SSO;
 
 class Http {
-  private $options;
+  protected $options;
 
   public static $JSON_PAYLOAD_METHODS = ['POST', 'PUT'];
 
@@ -23,37 +23,6 @@ class Http {
       'query' => []
     ], $options);
 
-  }
-
-  private function request($method, $url, $data = []) {
-    $url = ltrim($url, '/');
-
-    $request = new Request($method, $url);
-
-    $dataMerged = array_merge_recursive($this->options['data'], $data);
-
-    $opts = [
-      'query' => $this->options['query']
-    ];
-
-    if(!empty($dataMerged)) {
-      if(in_array($method, self::$JSON_PAYLOAD_METHODS)) {
-        $opts['json'] = $dataMerged;
-      } else {
-        $opts['query'] = array_merge($opts['query'], $dataMerged);
-      }
-    }
-
-    try {
-
-      $client = new Client($this->options);
-      $response = $client->send($request, $opts);
-
-      return Response::fromGuzzlehttpResponse($response);
-
-    } catch(RequestException $e) {
-      throw new SSO\Exception\HttpException($e->getMessage(), $e->getCode(), $e);
-    }
   }
 
   public function batch(array $data) {
@@ -99,4 +68,38 @@ class Http {
     return $this->request('DELETE', $url, $data);
   }
 
+  public function getOptions() {
+    return $this->options;
+  }
+
+  protected function request($method, $url, $data = []) {
+    $url = ltrim($url, '/');
+
+    $request = new Request($method, $url);
+
+    $dataMerged = array_merge_recursive($this->options['data'], $data);
+
+    $opts = [
+      'query' => $this->options['query']
+    ];
+
+    if(!empty($dataMerged)) {
+      if(in_array($method, self::$JSON_PAYLOAD_METHODS)) {
+        $opts['json'] = $dataMerged;
+      } else {
+        $opts['query'] = array_merge($opts['query'], $dataMerged);
+      }
+    }
+
+    try {
+
+      $client = new Client($this->options);
+      $response = $client->send($request, $opts);
+
+      return Response::fromGuzzlehttpResponse($response);
+
+    } catch(RequestException $e) {
+      throw new SSO\Exception\HttpException($e->getMessage(), $e->getCode(), $e);
+    }
+  }
 }

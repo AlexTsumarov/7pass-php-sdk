@@ -10,8 +10,8 @@ class AuthorizationTest extends PHPUnit_Framework_TestCase
     if($configuration === null) {
       $configuration = new Configuration([
         'environment' => 'test',
-        'client_id' => 'barbaz',
-        'client_secret' => '123'
+        'client_id' => '54523ed2d3d7a3b4333a9426',
+        'client_secret' => 'd7078d0b804522d6c28677d826e39879122c7a80214cc9bfa60be6022f503fec'
       ]);
     }
 
@@ -41,7 +41,7 @@ class AuthorizationTest extends PHPUnit_Framework_TestCase
   {
     $authorization = $this->getValidAuthorization();
 
-    $this->assertEquals('http://sso.7pass.dev/connect/v1.0/authorize?response_type=code&client_id=barbaz&scope=openid+profile+email&redirect_uri=REDIRECT&nonce=foobar',
+    $this->assertEquals('http://sso.7pass.dev/connect/v1.0/authorize?response_type=code&client_id=54523ed2d3d7a3b4333a9426&scope=openid+profile+email&redirect_uri=REDIRECT&nonce=foobar',
       $authorization->authorizeUri([
         'redirect_uri' => 'REDIRECT',
         'nonce' => 'foobar'
@@ -167,6 +167,11 @@ class AuthorizationTest extends PHPUnit_Framework_TestCase
   public function testBackofficeTokenSignatureException()
   {
 
+    $this->markTestIncomplete(
+      'JWT::encode() generates PHP warning when backoffice_key is invalid, we should find out how to force it to throw an exception instead,'
+      . ' or check the key ourselves before - "openssl_sign(): supplied key param cannot be coerced into a private key"'
+    );
+
     $configuration = new Configuration([
       'environment' => 'test',
       'client_id' => 'barbaz',
@@ -207,31 +212,32 @@ class AuthorizationTest extends PHPUnit_Framework_TestCase
   }
 
   /**
-   * @vcr configuration_openid
+   * @vcr authorization_get_tokens_callback_exception
+   * @expectedException P7\SSO\Exception\BadRequestException
    */
-  public function testGetTokens()
+  public function testGetTokensCallbackException()
   {
-    $this->markTestIncomplete();
-    return;
+    $authorization = $this->getValidAuthorization();
 
-    $configuration = new Configuration([
-      'environment' => 'test',
-      'client_id' => 'barbaz',
-      'client_secret' => '123',
-      'service_id' => 'SERVICE_ID',
-      'backoffice_key' => openssl_pkey_get_private('file://' . __DIR__ . '/fixtures/certs/rsa.pem')
+    $tokens = $authorization->callback([
+      'code' => 'INVALID',
+      'redirect_uri' => 'INVALID'
     ]);
 
-    $authorization = $this->getValidAuthorizationMock(['createHttpClient']);
+  }
 
-    $authorization->expects($this->once())
-      ->method('createHttpClient')
-      ->with($this->anything(), $this->equalTo('backoffice_code'))
-      ->will($this->returnValue($cacheItem));;
+  /**
+   * @vcr authorization_get_tokens_callback
+   */
+  public function testGetTokensCallback()
+  {
+    $authorization = $this->getValidAuthorization();
 
-    $tokens = $authorization->backoffice([
-      'account_id' => 'ACCOUNT_ID'
+    $tokens = $authorization->callback([
+      'code' => 'dfY642LBAhPt2cGugFsGAJ0ChLp7eYo8wUg1bPrBvNVp3SuUmRx5fxcPVUyWB6TUTJf6FOB3jKZ9D8WH',
+      'redirect_uri' => 'http://localhost:8000/callback'
     ]);
 
+    $this->assertInstanceOf('P7\SSO\TokenSet', $tokens);
   }
 }

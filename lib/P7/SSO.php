@@ -4,9 +4,11 @@ namespace P7;
 
 require __DIR__ . '/../../vendor/autoload.php';
 
+use Firebase\JWT\JWT;
 use P7\SSO\Authorization;
 use P7\SSO\Configuration;
 use P7\SSO\Exception\InvalidArgumentException;
+use P7\SSO\Nonce;
 use P7\SSO\TokenSet;
 use Requests;
 use Requests_Auth_Basic;

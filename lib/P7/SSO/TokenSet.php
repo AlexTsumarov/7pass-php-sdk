@@ -9,19 +9,19 @@ class TokenSet extends \ArrayObject {
   public function __construct($data) {
     $data = (object)$data;
 
-    if(!$data->access_token) {
+    if(empty($data->access_token)) {
       throw new InvalidArgumentException('TokenSet access_token parameter missing');
     }
 
-    if(!$data->expires_in) {
+    if(empty($data->expires_in)) {
       throw new InvalidArgumentException('TokenSet expires_in parameter missing');
     }
 
-    if(!$data->received_at) {
+    if(empty($data->received_at)) {
       throw new InvalidArgumentException('TokenSet received_at parameter missing');
     }
 
-    if(!$data->refresh_token) {
+    if(empty($data->refresh_token)) {
       throw new InvalidArgumentException('TokenSet refresh_token parameter missing');
     }
 
@@ -47,6 +47,6 @@ class TokenSet extends \ArrayObject {
    * @return bool
    */
   public function isAccessTokenExpired() {
-    return ($this->received_at + $this->expires_in + 60) < time();
+    return ($this->received_at + $this->expires_in - 60) < time();
   }
 } 

@@ -27,19 +27,6 @@ class Configuration {
   protected $data;
 
   function __construct(array $options) {
-
-    $mandatoryOptions = ['client_id', 'client_secret'];
-
-    if(!empty($options['backoffice_key']) || !empty($options['service_id'])) {
-      $mandatoryOptions = array_merge($mandatoryOptions, ['backoffice_key', 'service_id']);
-    }
-
-    foreach($mandatoryOptions as $mandatoryOption) {
-      if(empty($options[$mandatoryOption])) {
-        throw new Exception\InvalidArgumentException("Config option required: " . $mandatoryOption);
-      }
-    }
-
     $this->data = array_merge(self::$DEFAULTS, $options);
     $this->data = array_merge($this->data, self::$ENVIRONMENT_DEFAULTS[$this->environment], $options);
   }
