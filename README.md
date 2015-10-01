@@ -263,8 +263,8 @@ $tokens = $sso->authorization()->backoffice([
 ]);
 
 // Use the client as you normally would when using the standard access
-$backofficeClient = $sso->backofficeClient($tokens);
-$response = $backofficeClient->get('/me');
+$accountClient = $sso->accountClient($tokens);
+$response = $accountClient->get('/me');
 ```
 
 The response will be as usual. Once you get the tokens, the 7Pass SSO
