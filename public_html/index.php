@@ -9,6 +9,10 @@ $url = parse_url($_SERVER['REQUEST_URI']);
 $action = ltrim($url['path'], '/');
 
 set_exception_handler(function($e) {
+  if($e instanceof \P7\SSO\Exception\ApiException && $e->getCode() === 401) {
+    unset($_SESSION['tokens']);
+  }
+
   $exception = $e;
   require('partial/exception.php');
 });
