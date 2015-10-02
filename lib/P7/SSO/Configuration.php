@@ -1,17 +1,14 @@
 <?php
 namespace P7\SSO;
 
-use GuzzleHttp\Client;
-use GuzzleHttp\Exception\RequestException;
 use P7\SSO\Exception\InvalidArgumentException;
 use P7\SSO\Exception\OpenIdConfigurationException;
 use P7\SSO;
 use Stash\Interfaces\PoolInterface;
 
 class Configuration {
-  public static $DEFAULTS = [
-    'environment' => 'production'
-  ];
+
+  const VERSION = '1.0.0';
 
   public static $ENVIRONMENT_DEFAULTS = [
     'production' => [
@@ -29,8 +26,21 @@ class Configuration {
   protected $data;
 
   function __construct(array $options) {
-    $this->data = array_merge(self::$DEFAULTS, $options);
+
+    $defaults = [
+      'environment' => 'production',
+      'user_agent' => '7Pass-SDK-PHP/:version: (:os:)'
+    ];
+
+    $this->data = array_merge($defaults, $options);
     $this->data = array_merge($this->data, self::$ENVIRONMENT_DEFAULTS[$this->environment], $options);
+
+    $replaceWith = [
+      ':version:' => self::VERSION,
+      ':os:' => PHP_OS
+    ];
+
+    $this->data['user_agent'] = str_replace(array_keys($replaceWith), array_values($replaceWith), $this->data['user_agent']);
   }
 
   public function rediscover() {
@@ -123,6 +133,7 @@ class Configuration {
 
   protected function getApiClient() {
     return new ApiClient([
+      'user_agent' => $this->user_agent,
       'host' => $this->host
     ]);
   }

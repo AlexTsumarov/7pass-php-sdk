@@ -21,6 +21,10 @@ class ApiClient {
       throw new SSO\Exception\InvalidArgumentException('ApiClient host param missing');
     }
 
+    if(empty($options['user_agent'])) {
+      throw new SSO\Exception\InvalidArgumentException('ApiClient user_agent param missing');
+    }
+
     $this->host = rtrim($options['host'], '/');
 
     $this->baseUri = '';
@@ -32,7 +36,7 @@ class ApiClient {
     $this->options = array_merge_recursive([
       'http_errors' => true,
       'headers' => [
-        'User-Agent' => '7Pass-SDK-PHP/' . SSO::VERSION . ' (' . PHP_OS . ')',
+        'User-Agent' => $options['user_agent'],
         'Accept' => 'application/json'
       ],
       'data' => [],

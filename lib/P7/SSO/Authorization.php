@@ -120,6 +120,7 @@ class Authorization {
 
   protected function createApiClient() {
     return new ApiClient([
+      'user_agent' => $this->config->user_agent,
       'host' => $this->config->host,
       'auth' => [$this->config->client_id, $this->config->client_secret]
     ]);

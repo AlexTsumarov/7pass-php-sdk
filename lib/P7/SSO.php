@@ -14,8 +14,6 @@ use P7\SSO\ApiClient;
 use P7\SSO\Session;
 
 class SSO {
-  const VERSION = '1.0.0';
-
   protected $config;
   protected $authorizationCache;
 
@@ -53,6 +51,7 @@ class SSO {
     return new ApiClient([
       'host' => $this->config->host,
       'base_uri' => '/api/backoffice/',
+      'user_agent' => $this->config->user_agent,
       'headers' => [
         'Authorization' => '7Pass-Backoffice ' . $jwt
       ]
@@ -63,6 +62,7 @@ class SSO {
 
     $clientParams = array_merge([
       'host' => $this->config->host,
+      'user_agent' => $this->config->user_agent,
     ], $params);
 
     if($accessToken instanceof TokenSet) {

@@ -40,8 +40,8 @@ function authenticatedRedirect() {
     return false;
   }
 
-//  header('Location: /account');
-//  exit;
+  header('Location: /account');
+  exit;
 }
 
 $loggedIn = getSessionTokens() ? true : false;
