@@ -86,15 +86,8 @@ class Configuration {
     try {
       $apiClient = $this->getApiClient();
       $config = $apiClient->get('.well-known/openid-configuration');
-      if($config === null) {
-        throw new OpenIdConfigurationException('Invalid OpenID Configuration JSON format');
-      }
 
       $jwkRes = $apiClient->get($config->jwks_uri);
-      if($jwkRes === null) {
-        throw new OpenIdConfigurationException('Invalid OpenID Configuration JWKs JSON format');
-      }
-
       $jwks = $jwkRes->keys;
 
       $keys = [];
@@ -122,7 +115,7 @@ class Configuration {
 
       return $config;
 
-    } catch (RequestException $e) {
+    } catch (SSO\Exception\HttpException $e) {
       throw new OpenIdConfigurationException('OpenID configuration can not be fetched', 0, $e);
     }
 

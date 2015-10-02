@@ -30,7 +30,7 @@ class ApiClient {
     }
 
     $this->options = array_merge_recursive([
-      'http_errors' => false,
+      'http_errors' => true,
       'headers' => [
         'User-Agent' => '7Pass-SDK-PHP/' . SSO::VERSION . ' (' . PHP_OS . ')',
         'Accept' => 'application/json'
@@ -138,42 +138,41 @@ class ApiClient {
     }
 
     try {
-
       $client = new Client($this->options);
       $response = $client->send($request, $opts);
 
       return $this->fromHttpResponse($response);
 
     } catch(RequestException $e) {
-      throw new SSO\Exception\HttpException($e->getMessage(), $e->getCode(), $e);
+      $httpResponse = $e->getResponse();
+      $statusCode = $httpResponse->getStatusCode();
+
+      $body = json_decode($httpResponse->getBody());
+      if($body === null) {
+        throw new SSO\Exception\HttpException($e->getMessage(), $statusCode, $e);
+      }
+
+      $responseError = $body->error;
+      if(is_object($responseError)) {
+        $error = [
+          'message' => $responseError->message,
+          'description' => (isset($responseError->detail) ? $responseError->detail : null)
+        ];
+      } else {
+        $error = [
+          'message' => $responseError,
+          'description' => $body->error_description
+        ];
+      }
+
+      $message = empty($error['description']) ? $error['message'] : $error['message'] . ' - ' . $error['description'];
+      throw new ApiException($message, $statusCode, $e);
     }
   }
 
   protected function fromHttpResponse($httpResponse) {
 
     $body = json_decode($httpResponse->getBody());
-
-    $statusCode = $httpResponse->getStatusCode();
-    if($httpResponse->getStatusCode() >= 400) {
-
-      $error = $body->error;
-
-      if(is_object($error)) {
-        $ret = [
-          'message' => $error->message,
-          'description' => (isset($error->detail) ? $error->detail : null)
-        ];
-      } else {
-        $ret = [
-          'message' => $error,
-          'description' => $body->error_description
-        ];
-      }
-
-      $ret = (object)$ret;
-
-      throw new ApiException($ret->message . ' - ' . $ret->description, $statusCode, $error);
-    }
 
     $data = call_user_func($this->responseDataParser, $body);
 
