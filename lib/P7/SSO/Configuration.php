@@ -84,12 +84,13 @@ class Configuration {
   protected function fetchOpenIdConfig() {
 
     try {
-      $config = $this->httpGet('.well-known/openid-configuration');
+      $apiClient = $this->getApiClient();
+      $config = $apiClient->get('.well-known/openid-configuration');
       if($config === null) {
         throw new OpenIdConfigurationException('Invalid OpenID Configuration JSON format');
       }
 
-      $jwkRes = $this->httpGet($config->jwks_uri);
+      $jwkRes = $apiClient->get($config->jwks_uri);
       if($jwkRes === null) {
         throw new OpenIdConfigurationException('Invalid OpenID Configuration JWKs JSON format');
       }
@@ -127,20 +128,10 @@ class Configuration {
 
   }
 
-  protected function httpGet($url) {
-    $httpClient = new Client([
-      'base_uri' => $this->host,
-      'http_errors' => true,
-      'headers' => [
-        'User-Agent' => '7Pass-SDK-PHP/' . SSO::VERSION . ' (' . PHP_OS . ')',
-        'Accept' => 'application/json'
-      ],
+  protected function getApiClient() {
+    return new ApiClient([
+      'base_uri' => $this->host
     ]);
-
-    $response = $httpClient->request('GET', $url);
-
-    $json = json_decode($response->getBody());
-    return $json;
   }
 
   // Access data from array directly

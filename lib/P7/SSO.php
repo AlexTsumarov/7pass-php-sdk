@@ -32,24 +32,12 @@ class SSO {
   }
 
   public function accountClient($accessToken) {
-    if($accessToken instanceof TokenSet) {
-      $accessToken = $accessToken->access_token;
-    }
-
     if(empty($accessToken)) {
       throw new InvalidArgumentException('AccessToken is undefined');
     }
 
-    $appsecret = ($this->config->client_secret ? hash_hmac('sha256', $accessToken, $this->config->client_secret) : null);
-
-    return new ApiClient([
+    return $this->client($accessToken, [
       'base_uri' => $this->config->host . '/api/accounts/',
-      'headers' => [
-        'Authorization' => 'Bearer ' . $accessToken
-      ],
-      'query' => [
-        'appsecret_proof' => $appsecret
-      ]
     ]);
   }
 
@@ -70,10 +58,31 @@ class SSO {
     ]);
   }
 
-  public function client(array $params = []) {
-    return new ApiClient(array_merge([
+  public function client($accessToken = null, array $params = []) {
+
+    $clientParams = array_merge([
       'base_uri' => $this->config->host . '/api/',
-    ], $params));
+    ], $params);
+
+    if($accessToken instanceof TokenSet) {
+      $accessToken = $accessToken->access_token;
+    }
+
+    if(!empty($accessToken)) {
+      $appsecret = ($this->config->client_secret ? hash_hmac('sha256', $accessToken, $this->config->client_secret) : null);
+
+      $clientParams = array_merge_recursive($clientParams, [
+        'headers' => [
+          'Authorization' => 'Bearer ' . $accessToken
+        ],
+        'query' => [
+          'appsecret_proof' => $appsecret
+        ]
+      ]);
+
+    }
+
+    return new ApiClient($clientParams);
   }
 
   public function getConfig() {

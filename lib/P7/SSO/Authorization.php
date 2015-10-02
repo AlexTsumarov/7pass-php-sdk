@@ -11,7 +11,7 @@ class Authorization {
 
   function __construct(Configuration $config) {
     $this->config = $config;
-    }
+  }
 
   public function authorizeUri(array $data) {
     $this->validateParams($data, ['redirect_uri']);
@@ -108,11 +108,13 @@ class Authorization {
       'auth' => [$this->config->client_id, $this->config->client_secret]
     ]);
 
-    $data = $client->post($this->config->getOpenIdConfig()->token_endpoint, $params);
+    $response = $client->post($this->config->getOpenIdConfig()->token_endpoint, $params);
+
+    $data = $response->getArrayCopy();
 
     // Validates ID token signature if token available
-    if($data->id_token) {
-      $data->id_token_decoded = $this->decodeIdToken($data->id_token);
+    if(!empty($data['id_token'])) {
+      $data['id_token_decoded'] = $this->decodeIdToken($data['id_token']);
     }
 
     return TokenSet::receiveTokens($data);

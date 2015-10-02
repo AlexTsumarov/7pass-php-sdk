@@ -9,10 +9,11 @@ use P7\SSO\Exception\ApiException;
 
 class ApiClient {
   protected $options;
+  protected $responseDataParser;
 
   public static $JSON_PAYLOAD_METHODS = ['POST', 'PUT', 'PATCH'];
 
-  function __construct(array $options = []) {
+  function __construct(array $options = [], $responseDataParser = null) {
 
     $this->options = array_merge_recursive([
       'http_errors' => false,
@@ -24,6 +25,19 @@ class ApiClient {
       'query' => []
     ], $options);
 
+    $this->responseDataParser = array($this, 'defaultResponseDataParser');
+
+    if($responseDataParser !== null) {
+      if(!is_callable($responseDataParser)) {
+        throw new SSO\Exception\InvalidArgumentException('Response parser needs to be callable');
+      }
+
+      $this->responseDataParser = $responseDataParser;
+    }
+  }
+
+  public function defaultResponseDataParser($body) {
+    return (isset($body->data) ? $body->data : $body);
   }
 
   public function batch(array $data) {
@@ -39,7 +53,8 @@ class ApiClient {
 
     $ret = [];
     foreach($res as $key => $singleResponse) {
-      $ret[$key] = json_decode($singleResponse->body);
+      $body = json_decode($singleResponse->body);
+      $ret[$key] = call_user_func($this->responseDataParser, $body);
     }
 
     return $ret;
@@ -123,10 +138,11 @@ class ApiClient {
 
       $ret = (object)$ret;
 
-      throw new ApiException($ret->message, $statusCode, $error);
+      throw new ApiException($ret->message . ' - ' . $ret->description, $statusCode, $error);
     }
 
-    return $body;
-    //return (isset($body->data) ? $body->data : $body);
+    $data = call_user_func($this->responseDataParser, $body);
+
+    return new ApiResponse($data, $r);
   }
 }

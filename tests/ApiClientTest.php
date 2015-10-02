@@ -4,11 +4,20 @@ use P7\SSO\ApiClient;
 
 class ApiClientTest extends PHPUnit_Framework_TestCase
 {
+
+  protected function createClient($params = []) {
+    $client = new ApiClient($params, function($body) {
+      return $body;
+    });
+
+    return $client;
+  }
+
   /**
   * @vcr http_data_merge_get
   */
   public function testDataMergeGet() {
-    $client = new ApiClient(['data' => ['foo' => 'bar']]);
+    $client = $this->createClient(['data' => ['foo' => 'bar']]);
     $response = $client->get('http://httpbin.org/get', ['bar' => 'baz']);
 
     $args = $response->args;
@@ -21,7 +30,7 @@ class ApiClientTest extends PHPUnit_Framework_TestCase
   * @vcr http_data_merge_post
   */
   public function testDataMergePostJSON() {
-    $client = new ApiClient(['data' => ['foo' => 'bar']]);
+    $client = $this->createClient(['data' => ['foo' => 'bar']]);
     $data = $client->post('http://httpbin.org/post', ['bar' => 'baz']);
 
     $this->assertEquals('{"foo":"bar","bar":"baz"}', $data->data);
@@ -31,7 +40,7 @@ class ApiClientTest extends PHPUnit_Framework_TestCase
   * @vcr http_data_put
   */
   public function testPut() {
-    $client = new ApiClient();
+    $client = $this->createClient();
     $data = $client->put('http://httpbin.org/put', ['bar' => 'baz']);
 
     $this->assertEquals('{"bar":"baz"}', $data->data);
@@ -41,7 +50,7 @@ class ApiClientTest extends PHPUnit_Framework_TestCase
   * @vcr http_data_patch
   */
   public function testPatch() {
-    $client = new ApiClient();
+    $client = $this->createClient();
     $data = $client->patch('http://httpbin.org/patch', ['foo' => 'bar']);
 
     $this->assertEquals('bar', $data->json->foo);
@@ -51,7 +60,7 @@ class ApiClientTest extends PHPUnit_Framework_TestCase
   * @vcr http_data_delete
   */
   public function testDelete() {
-    $client = new ApiClient();
+    $client = $this->createClient();
     $data = $client->delete('http://httpbin.org/delete', ['foo' => 'bar']);
 
     $this->assertEquals('bar', $data->args->foo);
@@ -61,7 +70,7 @@ class ApiClientTest extends PHPUnit_Framework_TestCase
   * @vcr http_base_uri_get
   */
   public function testWorksWithBaseUri() {
-    $client = new ApiClient(['base_uri' => 'http://httpbin.org/']);
+    $client = $this->createClient(['base_uri' => 'http://httpbin.org/']);
     $data = $client->get('/get', ['foo' => 'bar']);
 
     $this->assertEquals('http://httpbin.org/get?foo=bar', $data->url);

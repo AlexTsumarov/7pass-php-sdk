@@ -5,16 +5,16 @@ namespace P7\SSO\Exception;
 
 class ApiException extends HttpException implements SSOException {
 
-  protected $error;
+  protected $httpResponse;
 
-  public function __construct($message, $code, $error) {
+  public function __construct($message, $code, $httpResponse) {
     parent::__construct($message, $code);
 
-    $this->error = $error;
+    $this->httpResponse = $httpResponse;
   }
 
-  public function getError() {
-    return $this->error;
+  public function getHttpResponse() {
+    return $this->httpResponse;
   }
 
 } 
