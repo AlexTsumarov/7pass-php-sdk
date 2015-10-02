@@ -10,10 +10,24 @@ use P7\SSO\Exception\ApiException;
 class ApiClient {
   protected $options;
   protected $responseDataParser;
+  protected $host;
+  protected $baseUri;
 
   public static $JSON_PAYLOAD_METHODS = ['POST', 'PUT', 'PATCH'];
 
-  function __construct(array $options = [], $responseDataParser = null) {
+  function __construct(array $options, $responseDataParser = null) {
+
+    if(empty($options['host'])) {
+      throw new SSO\Exception\InvalidArgumentException('ApiClient host param missing');
+    }
+
+    $this->host = rtrim($options['host'], '/');
+
+    $this->baseUri = '';
+    if(!empty($options['base_uri'])) {
+      $this->baseUri = rtrim($options['base_uri'], '/');
+      unset($options['base_uri']);
+    }
 
     $this->options = array_merge_recursive([
       'http_errors' => false,
@@ -45,11 +59,11 @@ class ApiClient {
     $json = [];
     foreach($data as $key => $url) {
       $json[$key] = [
-        'url' => '/api/accounts/' . ltrim($url, '/')
+        'url' => $this->getApiUrl($url, false)
       ];
     }
 
-    $res = $this->request('POST', '/batch', $json);
+    $res = $this->request('POST', '/api/accounts/batch', $json);
 
     $ret = [];
     foreach($res as $key => $singleResponse) {
@@ -84,8 +98,28 @@ class ApiClient {
     return $this->options;
   }
 
+  protected function getApiUrl($url, $includeHost = true) {
+    if(strpos($url, 'http') === 0) {
+      if(!$includeHost) {
+        return str_replace($this->host, '', $url);
+      }
+
+      return $url;
+    }
+
+    if($url[0] !== '/') {
+      $url = $this->baseUri . '/' . $url;
+    }
+
+    if($includeHost) {
+      $url = $this->host . $url;
+    }
+
+    return $url;
+  }
+
   protected function request($method, $url, $data = []) {
-    $url = ltrim($url, '/');
+    $url = $this->getApiUrl($url);
 
     $request = new Request($method, $url);
 
@@ -115,12 +149,12 @@ class ApiClient {
     }
   }
 
-  protected function fromHttpResponse($r) {
+  protected function fromHttpResponse($httpResponse) {
 
-    $body = json_decode($r->getBody());
+    $body = json_decode($httpResponse->getBody());
 
-    $statusCode = $r->getStatusCode();
-    if($r->getStatusCode() >= 400) {
+    $statusCode = $httpResponse->getStatusCode();
+    if($httpResponse->getStatusCode() >= 400) {
 
       $error = $body->error;
 
@@ -143,6 +177,6 @@ class ApiClient {
 
     $data = call_user_func($this->responseDataParser, $body);
 
-    return new ApiResponse($data, $r);
+    return new ApiResponse($data, $httpResponse);
   }
 }

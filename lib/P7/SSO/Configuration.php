@@ -130,7 +130,7 @@ class Configuration {
 
   protected function getApiClient() {
     return new ApiClient([
-      'base_uri' => $this->host
+      'host' => $this->host
     ]);
   }
 

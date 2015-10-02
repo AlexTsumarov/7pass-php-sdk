@@ -104,9 +104,7 @@ class Authorization {
   protected function getTokens($params, $grantType) {
     $params['grant_type'] = $grantType;
 
-    $client = $this->createApiClient([
-      'auth' => [$this->config->client_id, $this->config->client_secret]
-    ]);
+    $client = $this->createApiClient();
 
     $response = $client->post($this->config->getOpenIdConfig()->token_endpoint, $params);
 
@@ -120,8 +118,11 @@ class Authorization {
     return TokenSet::receiveTokens($data);
   }
 
-  protected function createApiClient($params) {
-    return new ApiClient($params);
+  protected function createApiClient() {
+    return new ApiClient([
+      'host' => $this->config->host,
+      'auth' => [$this->config->client_id, $this->config->client_secret]
+    ]);
   }
 
   protected function validateParams(array $data, array $params) {

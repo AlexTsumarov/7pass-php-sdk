@@ -37,7 +37,7 @@ class SSO {
     }
 
     return $this->client($accessToken, [
-      'base_uri' => $this->config->host . '/api/accounts/',
+      'base_uri' => '/api/accounts/',
     ]);
   }
 
@@ -51,7 +51,8 @@ class SSO {
     ], $customPayload), $key, 'RS256');
 
     return new ApiClient([
-      'base_uri' => $this->config->host . '/api/backoffice/',
+      'host' => $this->config->host,
+      'base_uri' => '/api/backoffice/',
       'headers' => [
         'Authorization' => '7Pass-Backoffice ' . $jwt
       ]
@@ -61,7 +62,7 @@ class SSO {
   public function client($accessToken = null, array $params = []) {
 
     $clientParams = array_merge([
-      'base_uri' => $this->config->host . '/',
+      'host' => $this->config->host,
     ], $params);
 
     if($accessToken instanceof TokenSet) {

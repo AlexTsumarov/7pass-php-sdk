@@ -17,6 +17,28 @@ set_exception_handler(function($e) {
   require('partial/exception.php');
 });
 
+
+$data = [
+  new stdClass()
+];
+
+//$data = (object) [
+//  'sss' => 'bububub'
+//];
+
+//$response = new \P7\SSO\ApiResponse($data);
+//
+////echo $response->sss;
+////
+////echo __FILE__ . ' Line: ' . __LINE__; var_dump($response->sss); exit; //XXX
+//
+//foreach($data as $key => $value) {
+//  echo __FILE__ . ' Line: ' . __LINE__; var_dump($key); exit; //XXX
+//}
+//
+//echo __FILE__ . ' Line: ' . __LINE__; var_dump($response); exit; //XXX
+
+
 //creates configuration
 $ssoConfig = new P7\SSO\Configuration($config);
 
@@ -136,14 +158,16 @@ switch($action) {
 
     $accountClient = $sso->accountClient($tokens);
 
-    $me = $accountClient->get('/me');
+    $me = $accountClient->get('me');
 
-    $emails = $accountClient->get('/me/emails');
+    $emails = $accountClient->get('me/emails');
 
     $batch = $accountClient->batch([
-      'getUserInfo' => '/me',
-      'getConsents' => '/me/consents'
+      'getUserInfo' => 'me',
+      'getConsents' => 'me/consents'
     ]);
+
+    $userInfo = $accountClient->get('/connect/v1.0/userInfo');
 
     require('partial/account.php');
 

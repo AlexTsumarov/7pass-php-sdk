@@ -60,8 +60,8 @@ if($tokens->isAccessTokenExpired()) {
 // Create a client object using the tokens
 $accountClient = $sso->accountClient($tokens);
 
-$me = $accountClient->get('/me');
-$emails = $accountClient->get('/me/emails');
+$me = $accountClient->get('me');
+$emails = $accountClient->get('me/emails');
 </pre>
   </div>
 </div>
@@ -71,11 +71,11 @@ $emails = $accountClient->get('/me/emails');
 </div>
 <div class="panel panel-default">
   <div class="panel-heading">
-    $me = $accountClient->get('/me')
+    $me = $accountClient->get('me')
   </div>
   <div class="panel-body">
     <pre class="prettyprint">
-      <?php print_r($me)?>
+      <?php var_dump($me)?>
     </pre>
   </div>
 </div>
@@ -85,11 +85,11 @@ $emails = $accountClient->get('/me/emails');
 </div>
 <div class="panel panel-default">
   <div class="panel-heading">
-    $emails = $accountClient->get('/me/emails')
+    $emails = $accountClient->get('me/emails')
   </div>
   <div class="panel-body">
   <pre class="prettyprint">
-    <?php print_r($emails)?>
+    <?php var_dump($emails)?>
   </pre>
   </div>
 </div>
@@ -115,8 +115,8 @@ $emails = $accountClient->get('/me/emails');
 
 <pre class="prettyprint">
 $batch = $accountClient->batch([
-  'getUserInfo' => '/me',
-  'getConsents' => '/me/consents'
+  'getUserInfo' => 'me',
+  'getConsents' => 'me/consents'
 ]);
 </pre>
   </div>
@@ -128,13 +128,28 @@ $batch = $accountClient->batch([
 <div class="panel panel-default">
   <div class="panel-heading">
     $accountClient->batch([
-      'getUserInfo' => '/me',
-      'getConsents' => '/me/consents'
+      'getUserInfo' => 'me',
+      'getConsents' => 'me/consents'
     ]);
   </div>
   <div class="panel-body">
 <pre class="prettyprint">
-  <?php print_r($batch)?>
+  <?php var_dump($batch)?>
+</pre>
+  </div>
+</div>
+
+
+<div>
+  <a href="http://guide.docs.7pass.ctf.prosiebensat1.com/api/index.html#api-OpenID_Connect-OpenIDUserInfo" class="btn btn-info pull-right" target="_blank">Documentation</a>
+</div>
+<div class="panel panel-default">
+  <div class="panel-heading">
+    $userInfo = $accountClient->get('/connect/v1.0/userInfo');
+  </div>
+  <div class="panel-body">
+<pre class="prettyprint">
+  <?php var_dump($userInfo)?>
 </pre>
   </div>
 </div>
