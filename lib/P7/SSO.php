@@ -61,7 +61,7 @@ class SSO {
   public function client($accessToken = null, array $params = []) {
 
     $clientParams = array_merge([
-      'base_uri' => $this->config->host . '/api/',
+      'base_uri' => $this->config->host . '/',
     ], $params);
 
     if($accessToken instanceof TokenSet) {
