@@ -159,6 +159,18 @@ class AuthorizationTest extends PHPUnit_Framework_TestCase
   }
 
   /**
+   * @expectedException P7\SSO\Exception\TokenVerificationException
+   *
+   * @vcr authorization_decode_id_failed
+   */
+  public function testDecodeIdTokenFailed() {
+    $authorization = $this->getValidAuthorization();
+    $tokens = $authorization->refresh([
+      'refresh_token' => 'eek9cvfU9JMTOHMMtAbVoKk5g0lm2DxGLRJaJDOQFEuutcVTnvRfeq4C3wvcwcFya8467vk3jdRblwh8ExgmCcySQH32aqYCFAWwZ6SR2c0jlNh7hjBPUQMe',
+    ]);
+  }
+
+  /**
    * @vcr configuration_openid
    */
   public function testBackoffice()
