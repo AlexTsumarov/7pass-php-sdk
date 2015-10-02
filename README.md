@@ -225,7 +225,7 @@ the real server response.
 
 ```php
 $accountClient = $sso->accountClient($tokens);
-$response = $accountClient->get('/me');
+$response = $accountClient->get('me');
 ```
 
 The 7Pass SSO service offers quite a few of these endpoints. To learn
@@ -264,7 +264,7 @@ $tokens = $sso->authorization()->backoffice([
 
 // Use the client as you normally would when using the standard access
 $accountClient = $sso->accountClient($tokens);
-$response = $accountClient->get('/me');
+$response = $accountClient->get('me');
 ```
 
 The response will be as usual. Once you get the tokens, the 7Pass SSO
