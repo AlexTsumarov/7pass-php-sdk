@@ -7,7 +7,8 @@ class ApiClientTest extends PHPUnit_Framework_TestCase
 
   protected function createClient($params = []) {
     $client = new ApiClient(array_merge([
-      'host' => 'http://httpbin.org'
+      'host' => 'http://httpbin.org',
+      'user_agent' => 'Test client'
     ], $params), function($body) {
       return $body;
     });

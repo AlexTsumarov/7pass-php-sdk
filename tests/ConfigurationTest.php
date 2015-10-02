@@ -20,6 +20,14 @@ class ConfigurationTest extends PHPUnit_Framework_TestCase
     return new Configuration($config);
   }
 
+  public function testUserAgent() {
+    $config = $this->validParams;
+    $config['user_agent'] = ':version::os:';
+    $c = new Configuration($config);
+
+    $this->assertEquals(Configuration::VERSION . PHP_OS, $c->user_agent);
+  }
+
   public function testSetsCorrectlyDefaults()
   {
     $config = new Configuration($this->validParams);

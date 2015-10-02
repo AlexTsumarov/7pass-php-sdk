@@ -160,32 +160,6 @@ class AuthorizationTest extends PHPUnit_Framework_TestCase
 
   /**
    * @vcr configuration_openid
-   * @expectedException P7\SSO\Exception\TokenSignatureException
-   */
-  public function testBackofficeTokenSignatureException()
-  {
-
-    $this->markTestIncomplete(
-      'JWT::encode() generates PHP warning when backoffice_key is invalid, we should find out how to force it to throw an exception instead,'
-      . ' or check the key ourselves before - "openssl_sign(): supplied key param cannot be coerced into a private key"'
-    );
-
-    $configuration = new Configuration([
-      'environment' => 'test',
-      'client_id' => 'barbaz',
-      'client_secret' => '123',
-      'service_id' => 'SERVICE_ID',
-      'backoffice_key' => 'INVALID_KEY'
-    ]);
-
-    $authorization = $this->getValidAuthorization($configuration);
-    $tokens = $authorization->backoffice([
-      'account_id' => 'ACCOUNT_ID'
-    ]);
-  }
-
-  /**
-   * @vcr configuration_openid
    */
   public function testBackoffice()
   {
