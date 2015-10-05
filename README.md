@@ -183,13 +183,14 @@ The received response will have the following structure. Run the
 example application to see the real values.
 
 ```php
-stdClass(
+P7\SSO\TokenSet(
     [access_token] => ACCESS_TOKEN
     [token_type] => 'Bearer'
     [refresh_token] => REFRESH_TOKEN
     [expires_in] => 7200
     [id_token] => JWT_STRING
-    [id_token_decoded] => DECODED_JWT
+    [id_token_decoded] => DECODED_JWT,
+    [received_at] => RECEIVED_AT_TIMESTAMP
 )
 ```
 
@@ -197,7 +198,7 @@ Note: The `id_token_decoded` value is decoded from the `id_token`
 field and verified. If token verification fails, the
 `P7\SSO\Exception\TokenVerificationException` exception is thrown.
 
-Further, the call might throw `P7\SSO\Exception\BadRequestException` in
+Further, the call might throw `P7\SSO\Exception\ApiException` in
 case the `code` has already been used or is otherwise invalid.
 
 ### 4. Caching an access token
@@ -214,6 +215,8 @@ if($tokens->isAccessTokenExpired()) {
   ]);
 }
 ```
+
+_Note: `refresh()` method above also accepts `P7\SSO\TokenSet` object as an argument._
 
 ### 5. Calling our API endpoints
 
