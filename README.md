@@ -203,6 +203,20 @@ case the `code` has already been used or is otherwise invalid.
 
 ### 4. Caching an access token
 
+The tokens are represented in a single object of type
+`P7\SSO\TokenSet`. You can serialize the object directly, however, we
+recommend that you first convert the `TokenSet` into a simpler array
+object and serialize it instead. As soon as you need the `TokenSet`
+again, you can pass the array object into its constructor.
+
+```php
+// Serialize the TokenSet object and store it in e.g. the current session
+$_SESSION['tokens'] = $tokens->getArrayCopy();
+
+// Deserialize and get the TokenSet object again
+$tokens = new \P7\SSO\TokenSet($_SESSION['tokens']);
+```
+
 Access tokens are valid for certain amount of time specified in
 seconds in the `expires_in` field. Once the access token expires, it
 can no longer be used. You can obtain a new one using the refresh
