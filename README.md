@@ -17,7 +17,7 @@ already, please install [Composer](https://getcomposer.org) using
 Composer is installed, you can install the library as follows:
 
 ```
-php composer.phar require p7s1/7pass-php-sdk
+composer require p7s1/7pass-php-sdk
 ```
 
 This will automatically add the library to the list of your
@@ -37,14 +37,14 @@ filip.skokan@prosiebensat1.com.
 
 Once you have the credentials available, you can go ahead and install the dependencies:
 
-```bash
-php composer.phar install
+```
+composer install
 ```
 
 Next, you can go to the `public_html` directory and create the local
 configuration file:
 
-```bash
+```
 cd public_html
 cp config.local.php.example config.local.php
 ```
@@ -55,7 +55,7 @@ after your client is set up. For testing, keep the environment set to
 `qa`. Once that's done, you can start the application using the PHP's
 built-in server:
 
-```bash
+```
 php -S localhost:8000
 ```
 
@@ -325,3 +325,14 @@ $sso->getConfig()->rediscover();
 If you have any questions or something's not working as expected,
 please do not hesitate to contact Filip Skokan at
 filip.skokan@prosiebensat1.com.
+
+## Running the tests
+
+The library uses PHPUnit for testing. The recommended version is
+**4.8** although the tests may run successfully on an older version of
+the 4 series as well.
+
+```
+composer install
+phpunit
+```
