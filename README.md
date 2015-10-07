@@ -325,3 +325,14 @@ $sso->getConfig()->rediscover();
 If you have any questions or something's not working as expected,
 please do not hesitate to contact Filip Skokan at
 filip.skokan@prosiebensat1.com.
+
+## Running the tests
+
+The library uses PHPUnit for testing. The recommended version is
+**4.8** although the tests may run successfully on an older version of
+the 4 series as well.
+
+```
+composer install
+phpunit
+```
