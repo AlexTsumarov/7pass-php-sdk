@@ -37,14 +37,14 @@ filip.skokan@prosiebensat1.com.
 
 Once you have the credentials available, you can go ahead and install the dependencies:
 
-```bash
+```
 php composer.phar install
 ```
 
 Next, you can go to the `public_html` directory and create the local
 configuration file:
 
-```bash
+```
 cd public_html
 cp config.local.php.example config.local.php
 ```
@@ -55,7 +55,7 @@ after your client is set up. For testing, keep the environment set to
 `qa`. Once that's done, you can start the application using the PHP's
 built-in server:
 
-```bash
+```
 php -S localhost:8000
 ```
 
