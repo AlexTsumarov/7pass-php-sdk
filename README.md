@@ -17,7 +17,7 @@ already, please install [Composer](https://getcomposer.org) using
 Composer is installed, you can install the library as follows:
 
 ```
-php composer.phar require p7s1/7pass-php-sdk
+composer require p7s1/7pass-php-sdk
 ```
 
 This will automatically add the library to the list of your
@@ -38,7 +38,7 @@ filip.skokan@prosiebensat1.com.
 Once you have the credentials available, you can go ahead and install the dependencies:
 
 ```
-php composer.phar install
+composer install
 ```
 
 Next, you can go to the `public_html` directory and create the local
