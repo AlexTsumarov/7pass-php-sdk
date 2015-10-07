@@ -8,6 +8,10 @@ interacting with the 7Pass SSO service to get further details about
 the user.
 </p>
 
+<p>
+  <b>To see the Logout process, please use the Logout button above.</b>
+</p>
+
 <div class="panel panel-primary">
   <div class="panel-heading">
     <h3 class="panel-title">Making sure the access token is fresh</h3>
