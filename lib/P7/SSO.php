@@ -4,112 +4,90 @@ namespace P7;
 
 require __DIR__ . '/../../vendor/autoload.php';
 
-use \Requests;
-use \Requests_Auth_Basic;
-use \P7\SSO\Authorization;
-use \P7\SSO\Configuration;
-use \P7\SSO\Http;
-use \P7\SSO\Session;
-use \P7\SSO\Nonce;
-use \Firebase\JWT\JWT;
+use Firebase\JWT\JWT;
+use P7\SSO\Authorization;
+use P7\SSO\Configuration;
+use P7\SSO\Exception\InvalidArgumentException;
+use P7\SSO\Nonce;
+use P7\SSO\TokenSet;
+use P7\SSO\ApiClient;
+use P7\SSO\Session;
 
-/**
- * @property string $client_id
- * @property string $client_secret
- * @property array $backoffice
- * @property string $environment
- */
 class SSO {
-  public $config;
-  private $authorization_cache;
-  private static $cachePool;
+  protected $config;
+  protected $authorizationCache;
 
-  public static function cache() {
-    // Cache to APC by default if available, if not - cache to the tmp directory
-    if(!isset(self::$cachePool)) {
-      if(\Stash\Driver\Apc::isAvailable()) {
-        $driver = new \Stash\Driver\Apc();
-      } else {
-        $driver = new \Stash\Driver\FileSystem();
-      }
-
-      $driver->setOptions();
-      self::$cachePool = new \Stash\Pool($driver);
-    }
-
-    return self::$cachePool;
-  }
-
-  function __construct($options) {
-    $this->config = new Configuration($options);
-
-    if(!isset($this->config->jwks)) {
-      $this->config->jwks = $this->fetchJwks();
-    }
-  }
-
-  private function base64_from_url($base64url) {
-    return strtr($base64url, '-_', '+/');
-  }
-
-  private function fetchJwks() {
-    $item = self::cache()->getItem(['config', 'jwks', $this->config->environment]);
-
-    $data = $item->get();
-
-    if($item->isMiss()) {
-      $item->lock();
-
-      $client = new Http([
-        'base_uri' => $this->config->host,
-        'http_errors' => true
-      ]);
-
-      $res = $client->get('.well-known/openid-configuration');
-      $jwks_uri = $res->data->jwks_uri;
-
-      $res = $client->get($jwks_uri);
-      $keys = $res->data->keys;
-      $data = [];
-
-      $rsa = new \Crypt_RSA();
-
-      foreach($keys as $key) {
-        $public = '<RSAKeyValue>
-                     <Modulus>'.$this->base64_from_url($key->n).'</Modulus>
-                     <Exponent>'.$this->base64_from_url($key->e).'</Exponent>
-                   </RSAKeyValue>';
-        $rsa->loadKey($public, CRYPT_RSA_PUBLIC_FORMAT_XML);
-        $rsa->setPublicKey();
-
-        $data[$key->kid] = $rsa->getPublicKey();
-      }
-
-      $item->set($data);
-    }
-
-    return $data;
+  function __construct(Configuration $config) {
+    $this->config = $config;
   }
 
   public function authorization() {
-    if($this->authorization_cache) {
-      return $this->authorization_cache;
+    if($this->authorizationCache) {
+      return $this->authorizationCache;
     } else {
-      return $this->authorization_cache = new Authorization($this->config);
+      return $this->authorizationCache = new Authorization($this->config);
     }
   }
 
-  public function api($access_token) {
-    $appsecret = ($this->config->client_secret ? hash_hmac('sha256', $access_token, $this->config->client_secret) : null);
+  public function accountClient($accessToken) {
+    if(empty($accessToken)) {
+      throw new InvalidArgumentException('AccessToken is undefined');
+    }
 
-    return new Http([
-      'base_uri' => $this->config->host . '/api/accounts/',
+    return $this->client($accessToken, [
+      'base_uri' => '/api/accounts/',
+    ]);
+  }
+
+  public function backofficeClient(array $customPayload = []) {
+    $key = $this->config->backoffice_key;
+
+    $jwt = JWT::encode(array_merge([
+      'service_id' => $this->config->service_id,
+      'nonce' => Nonce::generate(),
+      'timestamp' => time()
+    ], $customPayload), $key, 'RS256');
+
+    return new ApiClient([
+      'host' => $this->config->host,
+      'base_uri' => '/api/backoffice/',
+      'user_agent' => $this->config->user_agent,
       'headers' => [
-        'Authorization' => 'Bearer ' . $access_token
-      ],
-      'data' => [
-        'appsecret_proof' => $appsecret
+        'Authorization' => '7Pass-Backoffice ' . $jwt
       ]
     ]);
   }
+
+  public function client($accessToken = null, array $params = []) {
+
+    $clientParams = array_merge([
+      'host' => $this->config->host,
+      'user_agent' => $this->config->user_agent,
+    ], $params);
+
+    if($accessToken instanceof TokenSet) {
+      $accessToken = $accessToken->access_token;
+    }
+
+    if(!empty($accessToken)) {
+      $appsecret = ($this->config->client_secret ? hash_hmac('sha256', $accessToken, $this->config->client_secret) : null);
+
+      $clientParams = array_merge_recursive($clientParams, [
+        'headers' => [
+          'Authorization' => 'Bearer ' . $accessToken
+        ],
+        'query' => [
+          'appsecret_proof' => $appsecret
+        ]
+      ]);
+
+    }
+
+    return new ApiClient($clientParams);
+  }
+
+  public function getConfig() {
+    return $this->config;
+  }
+
 }

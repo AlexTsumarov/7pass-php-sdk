@@ -1,74 +1,136 @@
 <?php
 namespace P7\SSO;
 
-use \P7\SSO\Nonce;
-use \P7\SSO\Http;
+use P7\SSO\Exception\InvalidArgumentException;
+use P7\SSO\Exception\TokenSignatureException;
+use P7\SSO\Exception\TokenVerificationException;
 use \Firebase\JWT\JWT;
 
 class Authorization {
   private $config;
 
-  function __construct($config) {
+  function __construct(Configuration $config) {
     $this->config = $config;
   }
 
-  public function uri($options) {
-    $default_options = [
+  public function authorizeUri(array $data) {
+    $this->validateParams($data, ['redirect_uri']);
+
+    $data = array_merge([
       'response_type' => 'code',
       'client_id' => $this->config->client_id,
       'scope' => 'openid profile email',
-      'nonce' => Nonce::generate()
-    ];
+    ], $data);
 
-    $data = array_merge($default_options, $options);
-
-    // Validate redirect_uri is present
-    return $this->config->host . '/connect/v1.0/authorize?' . http_build_query($data);
-  }
-
-  private function getTokens($data, $grant_type) {
-    $data['grant_type'] = $grant_type;
-
-    $client = new Http([
-      'base_uri' => $this->config->host,
-      'auth' => [$this->config->client_id, $this->config->client_secret]
-    ]);
-
-    $res = $client->post('/connect/v1.0/token', $data);
-
-    if($res->success) {
-      // Validates ID token signature
-      $this->decodeIdToken($res->data->id_token);
+    if(empty($data['nonce']) && strpos($data['response_type'], 'id_token') !== false) {
+      $data['nonce'] = Nonce::generate();
     }
 
-    return $res;
+    return $this->config->getOpenIdConfig()->authorization_endpoint . '?' . http_build_query($data);
   }
 
-  public function decodeIdToken($token) {
-    return JWT::decode($token, $this->config->jwks, ['RS256']);
+  public function logoutUri(array $data) {
+    $this->validateParams($data, ['id_token_hint', 'post_logout_redirect_uri']);
+
+    if($data['id_token_hint'] instanceof TokenSet) {
+      $data['id_token_hint'] = $data['id_token_hint']->id_token;
+    }
+
+    return $this->config->getOpenIdConfig()->end_session_endpoint . '?' . http_build_query($data);
   }
 
   public function callback($data) {
+    $this->validateParams($data, ['redirect_uri']);
+
     return $this->getTokens($data, 'authorization_code');
   }
 
   public function refresh($data) {
+    if($data instanceof TokenSet) {
+      $data = [
+        'refresh_token' => $data->refresh_token
+      ];
+    }
+
+    $this->validateParams($data, ['refresh_token']);
+
     return $this->getTokens($data, 'refresh_token');
   }
 
-  public function backoffice($account_id, $custom_payload = []) {
-    $jwt = JWT::encode(array_merge([
-        'service_id' => $this->config->service_id,
-        'account_id' => $account_id,
-        'nonce' => Nonce::generate(),
-        'timestamp' => time()
-    ], $custom_payload), $this->config->backoffice_key, 'RS256');
+  public function password(array $data) {
+    $this->validateParams($data, ['login', 'password']);
 
-    $data = [
-      'code' => $jwt,
-      'scope' => 'openid'
-    ];
+    $data = array_merge([
+      'client_id' => $this->config->client_id,
+      'scope' => 'openid profile email'
+    ], $data);
 
-    return $this->getTokens($data, 'backoffice_code');
+    return $this->getTokens($data, 'password');
+  }
+
+  public function backoffice($data) {
+    $this->validateParams($data, ['account_id']);
+
+    try {
+      $jwt = JWT::encode([
+          'service_id' => $this->config->service_id,
+          'account_id' => $data['account_id'],
+          'nonce' => Nonce::generate(),
+          'timestamp' => time()
+      ], $this->config->backoffice_key, 'RS256');
+
+      unset($data['account_id']);
+
+      //defaults
+      $data = array_merge([
+        'code' => $jwt,
+        'scope' => 'openid'
+      ], $data);
+
+      return $this->getTokens($data, 'backoffice_code');
+    } catch(\DomainException $e) {
+      throw new TokenSignatureException('Backoffice JWT token could not be signed', 0, $e);
+    }
+  }
+
+  protected function decodeIdToken($token) {
+    try {
+      return JWT::decode($token, $this->config->getKeys(), ['RS256']);
+    } catch(\Exception $e) {
+      throw new TokenVerificationException("ID token verification failed - " . $e->getMessage(), 0, $e);
+    }
+  }
+
+  protected function getTokens($params, $grantType) {
+    $params['grant_type'] = $grantType;
+
+    $client = $this->createApiClient();
+
+    $response = $client->post($this->config->getOpenIdConfig()->token_endpoint, $params);
+
+    $data = $response->getArrayCopy();
+
+    // Validates ID token signature if token available
+    if(!empty($data['id_token'])) {
+      $data['id_token_decoded'] = $this->decodeIdToken($data['id_token']);
+    }
+
+    return TokenSet::receiveTokens($data);
+  }
+
+  protected function createApiClient() {
+    return new ApiClient([
+      'user_agent' => $this->config->user_agent,
+      'host' => $this->config->host,
+      'auth' => [$this->config->client_id, $this->config->client_secret]
+    ]);
+  }
+
+  protected function validateParams(array $data, array $params) {
+    foreach($params as $param) {
+      if(empty($data[$param])) {
+        throw new InvalidArgumentException('Missing param: ' . $param);
+      }
+    }
   }
 }

@@ -1,13 +1,15 @@
-
 -
     request:
         method: PATCH
-        url: 'http://httpbin.org/patch?foo=bar'
+        url: 'http://httpbin.org/patch'
         headers:
             Host: httpbin.org
+            Expect: null
             Accept-Encoding: null
+            User-Agent: '7Pass-SDK-PHP/1.0.0 (Linux)'
             Accept: application/json
-            User-Agent: 'GuzzleHttp/6.0.2 curl/7.37.1 PHP/5.6.11'
+            Content-Type: application/json
+        body: '{"foo":"bar"}'
     response:
         status:
             http_version: '1.1'
@@ -15,10 +17,10 @@
             message: OK
         headers:
             Server: nginx
-            Date: 'Fri, 24 Jul 2015 15:59:17 GMT'
+            Date: 'Thu, 01 Oct 2015 17:56:06 GMT'
             Content-Type: application/json
-            Content-Length: '320'
+            Content-Length: '386'
             Connection: keep-alive
             Access-Control-Allow-Origin: '*'
             Access-Control-Allow-Credentials: 'true'
-        body: "{\n  \"args\": {\n    \"foo\": \"bar\"\n  }, \n  \"data\": \"\", \n  \"files\": {}, \n  \"form\": {}, \n  \"headers\": {\n    \"Accept\": \"application/json\", \n    \"Host\": \"httpbin.org\", \n    \"User-Agent\": \"GuzzleHttp/6.0.2 curl/7.37.1 PHP/5.6.11\"\n  }, \n  \"json\": null, \n  \"origin\": \"77.104.252.88\", \n  \"url\": \"http://httpbin.org/patch?foo=bar\"\n}\n"
+        body: "{\n  \"args\": {}, \n  \"data\": \"{\\\"foo\\\":\\\"bar\\\"}\", \n  \"files\": {}, \n  \"form\": {}, \n  \"headers\": {\n    \"Accept\": \"application/json\", \n    \"Content-Length\": \"13\", \n    \"Content-Type\": \"application/json\", \n    \"Host\": \"httpbin.org\", \n    \"User-Agent\": \"7Pass-SDK-PHP/1.0.0 (Linux)\"\n  }, \n  \"json\": {\n    \"foo\": \"bar\"\n  }, \n  \"origin\": \"91.127.174.168\", \n  \"url\": \"http://httpbin.org/patch\"\n}\n"

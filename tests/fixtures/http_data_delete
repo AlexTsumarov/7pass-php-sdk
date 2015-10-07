@@ -6,8 +6,8 @@
         headers:
             Host: httpbin.org
             Accept-Encoding: null
+            User-Agent: '7Pass-SDK-PHP/1.0.0 (Linux)'
             Accept: application/json
-            User-Agent: 'GuzzleHttp/6.0.2 curl/7.37.1 PHP/5.6.11'
     response:
         status:
             http_version: '1.1'
@@ -15,10 +15,10 @@
             message: OK
         headers:
             Server: nginx
-            Date: 'Fri, 24 Jul 2015 15:59:17 GMT'
+            Date: 'Wed, 30 Sep 2015 13:25:00 GMT'
             Content-Type: application/json
-            Content-Length: '321'
+            Content-Length: '310'
             Connection: keep-alive
             Access-Control-Allow-Origin: '*'
             Access-Control-Allow-Credentials: 'true'
-        body: "{\n  \"args\": {\n    \"foo\": \"bar\"\n  }, \n  \"data\": \"\", \n  \"files\": {}, \n  \"form\": {}, \n  \"headers\": {\n    \"Accept\": \"application/json\", \n    \"Host\": \"httpbin.org\", \n    \"User-Agent\": \"GuzzleHttp/6.0.2 curl/7.37.1 PHP/5.6.11\"\n  }, \n  \"json\": null, \n  \"origin\": \"77.104.252.88\", \n  \"url\": \"http://httpbin.org/delete?foo=bar\"\n}\n"
+        body: "{\n  \"args\": {\n    \"foo\": \"bar\"\n  }, \n  \"data\": \"\", \n  \"files\": {}, \n  \"form\": {}, \n  \"headers\": {\n    \"Accept\": \"application/json\", \n    \"Host\": \"httpbin.org\", \n    \"User-Agent\": \"7Pass-SDK-PHP/1.0.0 (Linux)\"\n  }, \n  \"json\": null, \n  \"origin\": \"91.127.174.168\", \n  \"url\": \"http://httpbin.org/delete?foo=bar\"\n}\n"

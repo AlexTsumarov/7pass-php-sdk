@@ -6,37 +6,44 @@ use \GuzzleHttp\Client;
 
 class SSOTest extends PHPUnit_Framework_TestCase
 {
-  const CODE = 'Gwl9EvEyG7tyiUF72j3x0TnNvQe6yiQCRlfg4Yb7bLjlbneSoUi2fme4OFpMdblDmSkUgCzOuENbczpX';
-  const REDIRECT_URI = 'http://localhost:8000/callback';
-  const SERVER_KID = '4cee9dc4d2aaf2eb997113d6b76dc6fe';
-  const SERVER_PUBLIC_KEY = "-----BEGIN PUBLIC KEY-----\r\n"
-                            . "MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQCtsObxWfrFIGbxahs3YM4AvCbd\r\n"
-                            . "9gPo8WL6WhHUH+8kgS44TNnzguGK3pPPM87XdF1E3GCyBqhNDt/Y2KogSqeTTnra\r\n"
-                            . "pXfAXip7ZN1VyMkibPZ3VtaAuIED66B71UyU8eW+hCgB+pGMFWtsK7X4A08yCyVP\r\n"
-                            . "lstPE6F7Cg2zgKIRXwIDAQAB\r\n"
-                            . "-----END PUBLIC KEY-----";
 
-  private function validSSO() {
-    return new SSO([
-      'client_id' => '55b0b8964a616e16b9320000',
-      'client_secret' => '6b776407825a50b0f72941315194a3d50886b86b81bc40bbcf1714bdf50b3aa4',
+  public function setUp() {
+    $this->code = 'RnbV8u1CWoljG2yV2k3VTdLZ2lxcckUGV9NOAL9xOd7bPAuoAn07UTEv3qfD0YUXQfxfzyv2xsSAl0nO';
+    $this->redirectUri = 'http://localhost:8000/callback';
+    $this->serverKid = '4cee9dc4d2aaf2eb997113d6b76dc6fe';
+    $this->serverPublicKey = "-----BEGIN PUBLIC KEY-----\r\n"
+      . "MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQCtsObxWfrFIGbxahs3YM4AvCbd\r\n"
+      . "9gPo8WL6WhHUH+8kgS44TNnzguGK3pPPM87XdF1E3GCyBqhNDt/Y2KogSqeTTnra\r\n"
+      . "pXfAXip7ZN1VyMkibPZ3VtaAuIED66B71UyU8eW+hCgB+pGMFWtsK7X4A08yCyVP\r\n"
+      . "lstPE6F7Cg2zgKIRXwIDAQAB\r\n"
+      . "-----END PUBLIC KEY-----";
+
+    $this->defaultConfig = [
+      'client_id' => '54523ed2d3d7a3b4333a9426',
+      'client_secret' => 'd7078d0b804522d6c28677d826e39879122c7a80214cc9bfa60be6022f503fec',
       'environment' => 'test',
       'backoffice_key' => file_get_contents(__DIR__ . '/fixtures/certs/rsa.pem'),
-      'jwks' => ['4cee9dc4d2aaf2eb997113d6b76dc6fe' => self::SERVER_PUBLIC_KEY]
+      'service_id' => '123',
+    ];
+
+    $this->validTokenSet = SSO\TokenSet::receiveTokens([
+      'received_at' => 1443685260,
+      'access_token' => '1oNtGE1P69OjbRT4bArC21IL5seKBWYTNhueYEDIrYJTiCN5hKNsIFVZSK71Uudhl7ZSzZXuvXuj41Al54uPVLrivy',
+      'token_type' => 'Bearer',
+      'refresh_token' => 'eB2nHuqYS7mE4mw4aRDr11CZBipW03b14zOAMxlvCxA2SdyB3ZNozuAuEt8i0aIryfE1oyASm1snvl5y6q3UYaBcVXR4UwLK80s5EVngKEf6VPKzbwidKenY',
+      'expires_in' => 7200,
+      'id_token' => 'ID TOKEN',
+      'id_token_decoded' => (object)[
+          'sub' => '55e6f55c5925bcfb25c98a4f'
+          //other params
+        ]
     ]);
   }
 
-  public function testGeneratesUri()
-  {
-    $sso = $this->validSSO();
-    $authorization = $sso->authorization();
-
-    $uri = $authorization->uri([
-      'redirect_uri' => self::REDIRECT_URI,
-      'nonce' => 'somerandomstring'
-    ]);
-
-    $this->assertEquals('http://sso.7pass.dev/connect/v1.0/authorize?response_type=code&client_id=55b0b8964a616e16b9320000&scope=openid+profile+email&nonce=somerandomstring&redirect_uri=http%3A%2F%2Flocalhost%3A8000%2Fcallback', $uri);
+  protected function validSSO() {
+    $config = new SSO\Configuration($this->defaultConfig);
+    $config->setCachePool(new Stash\Pool(new Stash\Driver\Ephemeral()));
+    return new SSO($config);
   }
 
   public function testAuthorizationCache()
@@ -48,142 +55,40 @@ class SSOTest extends PHPUnit_Framework_TestCase
     $this->assertSame($authorization1, $authorization2);
   }
 
-  /**
-  * @vcr callback_valid_code
-  */
-  public function testReturnsAllTokensWithValidCode()
+  public function testAuthorization()
   {
     $sso = $this->validSSO();
+
     $authorization = $sso->authorization();
-
-    $response = $authorization->callback([
-      'redirect_uri' => self::REDIRECT_URI,
-      'code' => self::CODE
-    ]);
-
-    $data = $response->data;
-
-    $this->assertObjectHasAttribute('access_token', $data);
-    $this->assertObjectHasAttribute('refresh_token', $data);
-    $this->assertObjectHasAttribute('id_token', $data);
-
-    return $data;
+    $this->assertInstanceOf('P7\SSO\Authorization', $authorization);
   }
 
-  /**
-  * @depends testReturnsAllTokensWithValidCode
-  * @vcr refresh_valid_code
-  */
-  public function testReturnsAllTokensWithRefreshToken($tokens) {
-    $sso = $this->validSSO();
-    $authorization = $sso->authorization();
-
-    $response = $authorization->refresh([
-      'refresh_token' => $tokens->refresh_token
-    ]);
-
-    $data = $response->data;
-
-    $this->assertObjectHasAttribute('access_token', $data);
-    $this->assertObjectHasAttribute('refresh_token', $data);
-    $this->assertObjectHasAttribute('id_token', $data);
-
-    return $data;
-  }
-
-  /**
-  * @depends testReturnsAllTokensWithValidCode
-  * @vcr api_get_elevated_access
-  */
-  public function testGetsAccountInfoWithAccessTokenWithElevatedAccess($tokens) {
-    $sso = $this->validSSO();
-    $api = $sso->api($tokens->access_token);
-
-    $data = $api->get('/me')->data;
-    $this->assertObjectHasAttribute('birthdate', $data);
-    $this->assertObjectHasAttribute('email_id', $data);
-    $this->assertObjectHasAttribute('email_verified', $data);
-  }
-
-  /**
-  * @depends testReturnsAllTokensWithValidCode
-  * @vcr api_get_standard_access
-  */
-  public function testGetsAccountInfoWithAccessTokenWithoutClientSecret($tokens) {
-    $sso = $this->validSSO();
-    $sso->config->client_secret = null;
-    $api = $sso->api($tokens->access_token);
-
-    $data = $api->get('/me')->data;
-    $this->assertObjectHasAttribute('birthdate', $data);
-    $this->assertObjectHasAttribute('email_id', $data);
-    $this->assertObjectNotHasAttribute('email_verified', $data);
-  }
-
-  /**
-  * @vcr api_get_backoffice
-  */
-  public function testGetsAccountInfoUsingBackoffice() {
-    $sso = $this->validSSO();
-    $timestamp = 1438172819;
-    $api = $sso->backoffice(null, ['nonce' => 'foobar', 'timestamp' => $timestamp, 'iat' => $timestamp]);
-
-    $data = $api->get('/55acdb27b42f77842d745f4c')->data;
-    $this->assertObjectHasAttribute('birthdate', $data);
-    $this->assertObjectHasAttribute('email_id', $data);
-    $this->assertObjectHasAttribute('email_verified', $data);
-  }
-
-  /**
-  * @vcr callback_invalid_code
-  */
-  public function testReturnsErrorWithInvalidCode()
+  public function testAccountClientWithTokenSet()
   {
     $sso = $this->validSSO();
-    $authorization = $sso->authorization();
 
-    $response = $authorization->callback([
-      'redirect_uri' => 'http://localhost:8000/callback',
-      'code' => 'mesoinvalid'
-    ]);
-
-    $error = $response->error;
-
-    $this->assertObjectHasAttribute('description', $error);
-    $this->assertEquals('Authorization code is invalid', $error->description);
+    $client = $sso->accountClient($this->validTokenSet);
+    $this->assertInstanceOf('P7\SSO\ApiClient', $client);
   }
 
-  /**
-  * @vcr jwks
-  */
-  public function testDiscoversJwks()
+  public function testAccountClientWithTokenString()
   {
-    $pool = SSO::cache();
-    $item = $pool->getItem('config/jwks/test');
-    $item->clear();
+    $sso = $this->validSSO();
 
-    $sso = new SSO(['environment' => 'test']);
-    $key = $sso->config->jwks[self::SERVER_KID];
+    $accessToken = $this->validTokenSet->access_token;
 
-    $this->assertEquals(self::SERVER_PUBLIC_KEY, $key);
+    $client = $sso->accountClient($accessToken);
+    $this->assertInstanceOf('P7\SSO\ApiClient', $client);
+    $this->assertEquals('Bearer ' . $accessToken, $client->getOptions()['headers']['Authorization']);
   }
 
-  /**
-  * @vcr jwks
-  */
-  public function testRediscoverAfterClear()
+  public function testBackofficeClient()
   {
-    $pool = SSO::cache();
-    $item = $pool->getItem('config/jwks/test');
+    $sso = $this->validSSO();
 
-    $item->set(['foo' => 'bar']);
+    $client = $sso->backofficeClient();
+    $this->assertInstanceOf('P7\SSO\ApiClient', $client);
 
-    $sso = new SSO(['environment' => 'test']);
-    $this->assertEquals('bar', $sso->config->jwks['foo']);
-
-    $item->clear();
-
-    $sso = new SSO(['environment' => 'test']);
-    $this->assertEquals(self::SERVER_PUBLIC_KEY, $sso->config->jwks[self::SERVER_KID]);
+    $this->assertContains('7Pass-Backoffice', $client->getOptions()['headers']['Authorization']);
   }
 }

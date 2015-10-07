@@ -1,79 +1,159 @@
 <?php
-
 require __DIR__ . '/../vendor/autoload.php';
-use \P7\SSO;
 
-$config = require __DIR__ . '/config.local.php';
+session_start();
 
-$action = ltrim(@$_SERVER['PATH_INFO'], '/');
+$config = require __DIR__ . '/config.php';
 
-SSO::cache()->flush();
+$url = parse_url($_SERVER['REQUEST_URI']);
+$action = ltrim($url['path'], '/');
 
-$sso = new SSO($config['sso_client']);
+set_exception_handler(function($e) {
+  if($e instanceof \P7\SSO\Exception\ApiException && $e->getCode() === 401) {
+    unset($_SESSION['tokens']);
+  }
 
-$callback_uri = 'http://' . $_SERVER['HTTP_HOST'] . '/callback';
+  $exception = $e;
+  require('partial/exception.php');
+});
 
+//creates configuration
+$ssoConfig = new P7\SSO\Configuration($config);
 
-// Redirect to login url
-if($action == 'login') {
-  $uri = $sso->authorization()->uri([
-    'redirect_uri' => $callback_uri
-  ]);
+//creates SSO object
+$sso = new P7\SSO($ssoConfig);
 
-  header('Location: ' . $uri);
+$callbackUri = $config['redirect_uri'];
+
+function getSessionTokens($throws = false) {
+  if($throws && empty($_SESSION['tokens'])) {
+    throw new \Exception("No session tokens");
+  }
+
+  return empty($_SESSION['tokens']) ? null : new \P7\SSO\TokenSet($_SESSION['tokens']);
 }
-?>
 
-<ul>
-  <li><a href='/login'>Login</a></li>
-  <li><a href='/backoffice'>Backoffice</a></li>
-</ul>
+function authenticatedRedirect() {
+  $tokens = getSessionTokens();
 
-<pre>
-<?php
-if($action == 'backoffice') {
-  $response = $sso->authorization()->backoffice($config['account_id']);
-  if($response->success) {
-    echo '<h3>Success</h3>';
-    print_r($response->data);
+  if(!$tokens) {
+    return false;
   }
-  else {
-    echo '<h3>Error</h3>';
-    print_r($response->error);
-  }
+
+  header('Location: /account');
+  exit;
 }
-?>
-<?php
 
-if($action == 'callback') {
-  $code = $_GET['code'];
+$loggedIn = getSessionTokens() ? true : false;
 
-  $payload = [
-    'redirect_uri' => $callback_uri,
-    'code' => $code
-  ];
+switch($action) {
 
-  $response = $sso->authorization()->callback($payload);
+  case 'login':
 
-  if($response->success) {
-    $tokens = $response->data;
-    echo '<h3>#callback(' . var_export($payload, true) . ')</h3>';
-    print_r($tokens);
+    authenticatedRedirect();
 
-    $payload = ['refresh_token' => $tokens->refresh_token];
-    echo '<h3>#refresh(' . var_export($payload, true) . ')</h3>';
-    $tokens = $sso->authorization()->refresh($payload)->data;
-    print_r($tokens);
+    $uri = $sso->authorization()->authorizeUri([
+      'redirect_uri' => $callbackUri
+    ]);
 
-    $api = $sso->api($tokens->access_token);
+    require('partial/login.php');
 
-    echo '<h3>GET /me</h3>';
-    print_r($api->get('/me')->data);
+    break;
 
-    echo '<h3>GET /me/emails</h3>';
-    print_r($api->get('/me/emails')->data);
-  } else {
-    echo '<h3>Error</h3>';
-    print_r($response->error);
-  }
+
+  case 'login-redirect':
+
+    authenticatedRedirect();
+
+    $uri = $sso->authorization()->authorizeUri([
+      'redirect_uri' => $callbackUri
+    ]);
+
+    header('Location: ' . $uri);
+
+    break;
+
+
+  case 'callback':
+
+    authenticatedRedirect();
+
+    if(!empty($_GET['error'])) {
+      $error = $_GET['error'];
+      $errorDescription = $_GET['error_description'];
+
+      require('partial/callback.php');
+      break;
+    }
+
+    $code = $_GET['code'];
+
+    $payload = [
+      'redirect_uri' => $callbackUri,
+      'code' => $code
+    ];
+
+    $tokens = $sso->authorization()->callback($payload);
+
+    $_SESSION['tokens'] = $tokens;
+
+    require('partial/callback.php');
+
+    break;
+
+
+  case 'logout':
+
+    $tokens = getSessionTokens(true);
+
+    $loggedIn = false;
+    unset($_SESSION['tokens']);
+
+    $logoutUri = $sso->authorization()->logoutUri([
+      'id_token_hint' => $tokens->id_token,
+      'post_logout_redirect_uri' => $config['post_logout_redirect_uri']
+    ]);
+
+    require('partial/logout.php');
+
+    break;
+
+  case 'logout-callback':
+
+    require('partial/logout-callback.php');
+
+    break;
+
+
+  case 'account':
+
+    $tokens = getSessionTokens(true);
+
+    if($tokens->isAccessTokenExpired()) {
+      $tokens = $sso->authorization()->refresh($tokens);
+      $_SESSION['tokens'] = $tokens->getArrayCopy();
+    }
+
+    $accountClient = $sso->accountClient($tokens);
+
+    $me = $accountClient->get('me');
+
+    $emails = $accountClient->get('me/emails');
+
+    $batch = $accountClient->batch([
+      'getUserInfo' => 'me',
+      'getConsents' => 'me/consents'
+    ]);
+
+    $userInfo = $accountClient->get('/connect/v1.0/userInfo');
+
+    require('partial/account.php');
+
+    break;
+
+
+  default:
+    $action = 'index';
+    require('partial/index.php');
+    break;
 }
