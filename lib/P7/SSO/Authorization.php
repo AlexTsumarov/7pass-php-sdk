@@ -40,7 +40,7 @@ class Authorization {
   }
 
   public function callback($data) {
-    $this->validateParams($data, ['redirect_uri']);
+    $this->validateParams($data, ['code', 'redirect_uri']);
 
     return $this->getTokens($data, 'authorization_code');
   }
@@ -106,13 +106,11 @@ class Authorization {
 
     $client = $this->createApiClient();
 
-    $response = $client->post($this->config->getOpenIdConfig()->token_endpoint, $params);
-
-    $data = $response->getArrayCopy();
+    $data = $client->post($this->config->getOpenIdConfig()->token_endpoint, $params);
 
     // Validates ID token signature if token available
-    if(!empty($data['id_token'])) {
-      $data['id_token_decoded'] = $this->decodeIdToken($data['id_token']);
+    if(!empty($data->id_token)) {
+      $data->id_token_decoded = $this->decodeIdToken($data->id_token);
     }
 
     return TokenSet::receiveTokens($data);

@@ -79,7 +79,7 @@ $emails = $accountClient->get('me/emails');
   </div>
   <div class="panel-body">
     <pre class="prettyprint">
-      <?php var_dump($me)?>
+      <?php print_r($me)?>
     </pre>
   </div>
 </div>
@@ -93,7 +93,7 @@ $emails = $accountClient->get('me/emails');
   </div>
   <div class="panel-body">
   <pre class="prettyprint">
-    <?php var_dump($emails)?>
+    <?php print_r($emails)?>
   </pre>
   </div>
 </div>
@@ -138,7 +138,7 @@ $batch = $accountClient->batch([
   </div>
   <div class="panel-body">
 <pre class="prettyprint">
-  <?php var_dump($batch)?>
+  <?php print_r($batch)?>
 </pre>
   </div>
 </div>
@@ -153,7 +153,7 @@ $batch = $accountClient->batch([
   </div>
   <div class="panel-body">
 <pre class="prettyprint">
-  <?php var_dump($userInfo)?>
+  <?php print_r($userInfo)?>
 </pre>
   </div>
 </div>

@@ -78,24 +78,24 @@ class ApiClient {
     return $ret;
   }
 
-  public function get($url, $data = []) {
-    return $this->request('GET', $url, $data);
+  public function get($url, $data = [], $apiResponse = false) {
+    return $this->request('GET', $url, $data, $apiResponse);
   }
 
-  public function post($url, $data = []) {
-    return $this->request('POST', $url, $data);
+  public function post($url, $data = [], $apiResponse = false) {
+    return $this->request('POST', $url, $data, $apiResponse);
   }
 
-  public function patch($url, $data = []) {
-    return $this->request('PATCH', $url, $data);
+  public function patch($url, $data = [], $apiResponse = false) {
+    return $this->request('PATCH', $url, $data, $apiResponse);
   }
 
-  public function put($url, $data = []) {
-    return $this->request('PUT', $url, $data);
+  public function put($url, $data = [], $apiResponse = false) {
+    return $this->request('PUT', $url, $data, $apiResponse);
   }
 
-  public function delete($url, $data = []) {
-    return $this->request('DELETE', $url, $data);
+  public function delete($url, $data = [], $apiResponse = false) {
+    return $this->request('DELETE', $url, $data, $apiResponse);
   }
 
   public function getOptions() {
@@ -122,7 +122,7 @@ class ApiClient {
     return $url;
   }
 
-  protected function request($method, $url, $data = []) {
+  protected function request($method, $url, $data = [], $apiResponse = false) {
     $url = $this->getApiUrl($url);
 
     $request = new Request($method, $url);
@@ -145,7 +145,7 @@ class ApiClient {
       $client = new Client($this->options);
       $response = $client->send($request, $opts);
 
-      return $this->fromHttpResponse($response);
+      return $this->fromHttpResponse($response, $apiResponse);
 
     } catch(RequestException $e) {
       $httpResponse = $e->getResponse();
@@ -174,12 +174,16 @@ class ApiClient {
     }
   }
 
-  protected function fromHttpResponse($httpResponse) {
+  protected function fromHttpResponse($httpResponse, $apiResponse) {
 
     $body = json_decode($httpResponse->getBody());
 
     $data = call_user_func($this->responseDataParser, $body);
 
-    return new ApiResponse($data, $httpResponse);
+    if($apiResponse) {
+      return new ApiResponse($data, $httpResponse);
+    }
+
+    return $data;
   }
 }

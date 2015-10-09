@@ -30,6 +30,16 @@ class ApiClientTest extends PHPUnit_Framework_TestCase
   }
 
   /**
+   * @vcr http_data_merge_get
+   */
+  public function testGetApiResponse() {
+    $client = $this->createClient(['data' => ['foo' => 'bar']]);
+    $response = $client->get('get', ['bar' => 'baz'], true);
+
+    $this->assertInstanceOf('P7\SSO\ApiResponse', $response);
+  }
+
+  /**
   * @vcr http_data_merge_post
   */
   public function testDataMergePostJSON() {

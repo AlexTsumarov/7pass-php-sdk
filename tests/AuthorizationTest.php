@@ -91,6 +91,7 @@ class AuthorizationTest extends PHPUnit_Framework_TestCase
       ->with($this->anything(), $this->equalTo('authorization_code'));
 
     $tokens = $authorization->callback([
+      'code' => 'CODE',
       'redirect_uri' => 'REDIRECT_URI'
     ]);
 
