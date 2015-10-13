@@ -153,16 +153,15 @@ have happened. Therefore it's important have proper error handling.
 Whenever an error occurs, there will be two query parameters present
 in the URL - error and `error_description`. The error parameter
 contains an error code and the error_description contains a human
-readable description of the error suitable for direct displaying to
-the user.
+readable description of the error. Handle the error and display
+appropriate message to your end-user.
 
 ```php
 if(!empty($_GET['error'])) {
   $error = $_GET['error'];
   $errorDescription = $_GET['error_description'];
 
-  // Display the errors to the user to let him know the reason the
-  // process has failed here.
+  // Handle the error and display appropriate message to your end-user.
 }
 ```
 

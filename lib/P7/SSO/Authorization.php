@@ -19,7 +19,7 @@ class Authorization {
     $data = array_merge([
       'response_type' => 'code',
       'client_id' => $this->config->client_id,
-      'scope' => 'openid profile email',
+      'scope' => $this->config->default_scopes,
     ], $data);
 
     if(empty($data['nonce']) && strpos($data['response_type'], 'id_token') !== false) {
@@ -62,7 +62,7 @@ class Authorization {
 
     $data = array_merge([
       'client_id' => $this->config->client_id,
-      'scope' => 'openid profile email'
+      'scope' => $this->config->default_scopes
     ], $data);
 
     return $this->getTokens($data, 'password');
@@ -84,7 +84,7 @@ class Authorization {
       //defaults
       $data = array_merge([
         'code' => $jwt,
-        'scope' => 'openid'
+        'scope' => $this->config->default_scopes
       ], $data);
 
       return $this->getTokens($data, 'backoffice_code');

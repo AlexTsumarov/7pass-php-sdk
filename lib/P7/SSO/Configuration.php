@@ -29,7 +29,8 @@ class Configuration {
 
     $defaults = [
       'environment' => 'production',
-      'user_agent' => '7Pass-SDK-PHP/:version: (:os:)'
+      'user_agent' => '7Pass-SDK-PHP/:version: (:os:)',
+      'default_scopes' => 'openid profile email'
     ];
 
     $this->data = array_merge($defaults, $options);

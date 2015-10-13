@@ -35,8 +35,7 @@ if(!empty($_GET['error'])) {
   $error = $_GET['error'];
   $errorDescription = $_GET['error_description'];
 
-  // Display the errors to the user to let him know the reason the
-  // process has failed here.
+  // Handle the error and display appropriate message to your end-user.
 }
 </pre>
   </div>
