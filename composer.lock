@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "4d9a39645af5ce477bf1f2a6d1f7bc5f",
-    "content-hash": "43e323e62cde118fd0d2853ceb131857",
+    "hash": "6e4b9b568b84360c8a82d7b925a3557d",
+    "content-hash": "c70d62e189a7e0a07e017b54fad80c6b",
     "packages": [
         {
             "name": "firebase/php-jwt",
@@ -530,6 +530,49 @@
                 "instantiate"
             ],
             "time": "2015-06-14 21:17:01"
+        },
+        {
+            "name": "munkie/phpunit-teamcity-testlistener",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/munkie/phpunit-teamcity-testlistener.git",
+                "reference": "94bd42157940c305a8f02c3d8b0574e8529e1404"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/munkie/phpunit-teamcity-testlistener/zipball/94bd42157940c305a8f02c3d8b0574e8529e1404",
+                "reference": "94bd42157940c305a8f02c3d8b0574e8529e1404",
+                "shasum": ""
+            },
+            "require": {
+                "phpunit/phpunit": ">=3.7,<5.0"
+            },
+            "require-dev": {
+                "codeception/aspect-mock": "~0.5",
+                "scrutinizer/ocular": "~1.0"
+            },
+            "type": "library",
+            "autoload": {
+                "files": [
+                    "src/PHPUnit/TeamCity/TestListener.php"
+                ],
+                "psr-4": {
+                    "PHPUnit\\TeamCity\\Tests\\": "tests/PHPUnit/TeamCity/Tests"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Mikhail Shamin",
+                    "email": "munk13@gmail.com"
+                }
+            ],
+            "description": "PHPUnit test listener for TeamCity CI Server",
+            "time": "2015-06-16 07:52:11"
         },
         {
             "name": "php-vcr/php-vcr",
@@ -1564,7 +1607,9 @@
     ],
     "aliases": [],
     "minimum-stability": "stable",
-    "stability-flags": [],
+    "stability-flags": {
+        "munkie/phpunit-teamcity-testlistener": 20
+    },
     "prefer-stable": false,
     "prefer-lowest": false,
     "platform": [],
