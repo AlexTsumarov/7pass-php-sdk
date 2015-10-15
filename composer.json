@@ -9,6 +9,8 @@
         "firebase/php-jwt": "~3.0"
     },
     "require-dev": {
-        "php-vcr/phpunit-testlistener-vcr": "~1.1"
+        "php-vcr/phpunit-testlistener-vcr": "~1.1",
+        "phpunit/phpunit": "4.8.*",
+        "munkie/phpunit-teamcity-testlistener": "dev-master#94bd42157940c305a8f02c3d8b0574e8529e1404"
     }
 }
