@@ -17,7 +17,7 @@ already, please install [Composer](https://getcomposer.org) using
 Composer is installed, you can install the library as follows:
 
 ```
-composer require p7s1/7pass-php-sdk
+composer require p7s1-ctf/7pass-php-sdk
 ```
 
 This will automatically add the library to the list of your
