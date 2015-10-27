@@ -1,4 +1,20 @@
 {
+    "name": "p7s1-ctf/7pass-php-sdk",
+    "description": "The PHP SDK for 7Pass.",
+    "type": "library",
+    "keywords": [
+        "7Pass",
+        "SDK"
+    ],
+    "homepage": "https://7pass.de/",
+    "license": "BSD-3-Clause",
+    "authors": [
+        {
+            "name": "TBD",
+            "email": "TBD",
+            "role": "TBD"
+        }
+    ],
     "autoload": {
         "psr-4": {"P7\\": "lib/P7/"}
     },
