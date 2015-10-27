@@ -1,18 +1,14 @@
 {
     "name": "p7s1-ctf/7pass-php-sdk",
-    "description": "The PHP SDK for 7Pass.",
+    "description": "7Pass SDK for PHP",
     "type": "library",
-    "keywords": [
-        "7Pass",
-        "SDK"
-    ],
-    "homepage": "https://7pass.de/",
-    "license": "BSD-3-Clause",
+    "keywords": ["7Pass", "sdk"],
+    "homepage": "https://github.com/p7s1-ctf/7pass-php-sdk",
+    "license": "P7S1 CTF Platform",
     "authors": [
         {
-            "name": "TBD",
-            "email": "TBD",
-            "role": "TBD"
+            "name": "7Pass Development Team",
+            "homepage": "https://github.com/p7s1-ctf/7pass-php-sdk/contributors"
         }
     ],
     "autoload": {
