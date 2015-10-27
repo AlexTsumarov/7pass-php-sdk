@@ -1,4 +1,16 @@
 {
+    "name": "p7s1-ctf/7pass-php-sdk",
+    "description": "7Pass SDK for PHP",
+    "type": "library",
+    "keywords": ["7Pass", "sdk"],
+    "homepage": "https://github.com/p7s1-ctf/7pass-php-sdk",
+    "license": "P7S1 CTF Platform",
+    "authors": [
+        {
+            "name": "7Pass Development Team",
+            "homepage": "https://github.com/p7s1-ctf/7pass-php-sdk/contributors"
+        }
+    ],
     "autoload": {
         "psr-4": {"P7\\": "lib/P7/"}
     },
