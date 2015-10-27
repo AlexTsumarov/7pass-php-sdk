@@ -15,6 +15,7 @@
         "psr-4": {"P7\\": "lib/P7/"}
     },
     "require": {
+        "php": ">=5.5.0",
         "guzzlehttp/guzzle": "~6.0",
         "tedivm/stash": "0.12.*",
         "phpseclib/phpseclib": "0.3.*",
