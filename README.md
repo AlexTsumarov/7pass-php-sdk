@@ -32,8 +32,7 @@ the entity which is associated with a service you want to authenticate
 to.
 
 To obtain the client credentials, you first need to contact the 7Pass
-SSO team or contact Filip Skokan directly at
-filip.skokan@prosiebensat1.com.
+Tech Team.
 
 Once you have the credentials available, you can go ahead and install the dependencies:
 
@@ -322,8 +321,7 @@ $sso->getConfig()->rediscover();
 ```
 
 If you have any questions or something's not working as expected,
-please do not hesitate to contact Filip Skokan at
-filip.skokan@prosiebensat1.com.
+please do not hesitate to contact the 7Pass Tech Team.
 
 ## Running the tests
 
