@@ -245,7 +245,7 @@ $response = $accountClient->get('me');
 
 The 7Pass SSO service offers quite a few of these endpoints. To learn
 more about them, you can go to
-[the official documentation's overview](http://guide.docs.7pass.ctf.prosiebensat1.com/api/index.html#api-Accounts).
+[the official documentation's overview](http://guide.docs.7pass.ctf.prosiebensat1.com/api/index.html?focusTabs=php#api-Accounts).
 
 ## Backoffice requests
 
