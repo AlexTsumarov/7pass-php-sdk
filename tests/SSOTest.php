@@ -82,6 +82,14 @@ class SSOTest extends PHPUnit_Framework_TestCase
     $this->assertEquals('Bearer ' . $accessToken, $client->getOptions()['headers']['Authorization']);
   }
 
+  public function testClientCredentialsClientWithTokenSet()
+  {
+    $sso = $this->validSSO();
+
+    $client = $sso->clientCredentialsClient($this->validTokenSet);
+    $this->assertInstanceOf('P7\SSO\ApiClient', $client);
+  }
+
   public function testBackofficeClient()
   {
     $sso = $this->validSSO();

@@ -124,6 +124,20 @@ class AuthorizationTest extends PHPUnit_Framework_TestCase
   }
 
   /**
+   * @vcr configuration_openid
+   */
+  public function testClientCredentials()
+  {
+    $authorization = $this->getValidAuthorizationMock(['getTokens']);
+
+    $authorization->expects($this->once())
+      ->method('getTokens')
+      ->with($this->anything(), $this->equalTo('client_credentials'));
+
+    $tokens = $authorization->clientCredentials();
+  }
+
+  /**
    * @expectedException P7\SSO\Exception\InvalidArgumentException
    */
   public function testPasswordRequiredParamsException()

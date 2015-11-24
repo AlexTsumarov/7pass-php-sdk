@@ -20,10 +20,7 @@
 <p>
   To use the library, you need to have a valid client. The client
   represents the entity which is associated with a service you want to
-  authenticate to. To obtain the client credentials, you first need to
-  contact the 7Pass SSO team or contact Filip Skokan directly
-  at <a href="mailto:filip.skokan@prosiebensat1.com?subject=7Pass Dev
-  Account" target="_blank">filip.skokan@prosiebensat1.com</a>.
+  authenticate to. To obtain the client credentials, you first need to contact the 7Pass Tech Team.
 </p>
 
 

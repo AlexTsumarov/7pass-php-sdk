@@ -39,13 +39,13 @@ class Authorization {
     return $this->config->getOpenIdConfig()->end_session_endpoint . '?' . http_build_query($data);
   }
 
-  public function callback($data) {
+  public function callback(array $data) {
     $this->validateParams($data, ['code', 'redirect_uri']);
 
     return $this->getTokens($data, 'authorization_code');
   }
 
-  public function refresh($data) {
+  public function refresh(array $data) {
     if($data instanceof TokenSet) {
       $data = [
         'refresh_token' => $data->refresh_token
@@ -68,7 +68,11 @@ class Authorization {
     return $this->getTokens($data, 'password');
   }
 
-  public function backoffice($data) {
+  public function clientCredentials(array $data = []) {
+    return $this->getTokens($data, 'client_credentials');
+  }
+
+  public function backoffice(array $data) {
     $this->validateParams($data, ['account_id']);
 
     try {
@@ -101,7 +105,7 @@ class Authorization {
     }
   }
 
-  protected function getTokens($params, $grantType) {
+  protected function getTokens(array $params, $grantType) {
     $params['grant_type'] = $grantType;
 
     $client = $this->createApiClient();
