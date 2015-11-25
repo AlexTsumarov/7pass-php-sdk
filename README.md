@@ -249,13 +249,15 @@ more about them, you can go to
 
 ## Client Credentials requests
 
-TODO:
+The library supports multiple types of "clients". These clients
+generally differ in the required configuration parameters and
+afterwards in the functionality they provide. The "client credentials"
+client is a special kind of client which is not associated with a user
+account and can be only used to call the "clients" APIs.
 
-* need client_id and client_secret
-* application client APIs - no user involved
-* need to get valid access token using `client_credentials` grant type
-* [documented](http://guide.docs.7pass.ctf.prosiebensat1.com/api/) with accessType = 'client'
-
+You can see all of the available endpoints in the
+[documentation](http://guide.docs.7pass.ctf.prosiebensat1.com/api)
+with the accessType parameter equal to `client`.
 
 ```php
 $config = [
