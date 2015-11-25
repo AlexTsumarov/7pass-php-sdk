@@ -261,7 +261,7 @@ with the accessType parameter equal to `client`.
 
 ```php
 $config = [
-  'environment' => 'qa' // Optional, defaults to 'production',
+  'environment' => 'qa', // Optional, defaults to 'production',
   'client_id' => 'CLIENT_ID',
   'client_secret' => 'CLIENT_SECRET'
 ];
