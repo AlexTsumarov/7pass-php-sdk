@@ -21,10 +21,6 @@ class TokenSet extends \ArrayObject {
       throw new InvalidArgumentException('TokenSet received_at parameter missing');
     }
 
-    if(empty($data->refresh_token)) {
-      throw new InvalidArgumentException('TokenSet refresh_token parameter missing');
-    }
-
     parent::__construct($data, \ArrayObject::ARRAY_AS_PROPS);
   }
 

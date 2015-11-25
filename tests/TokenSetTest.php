@@ -43,7 +43,7 @@ class TokenSetTest extends PHPUnit_Framework_TestCase
 
 
   public function requiredConstructorParams() {
-    return [['received_at'], ['access_token'], ['expires_in'], ['refresh_token']];
+    return [['received_at'], ['access_token'], ['expires_in']];
   }
 
   /**

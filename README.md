@@ -247,6 +247,41 @@ The 7Pass SSO service offers quite a few of these endpoints. To learn
 more about them, you can go to
 [the official documentation's overview](http://guide.docs.7pass.ctf.prosiebensat1.com/api/index.html?focusTabs=php#api-Accounts).
 
+## Client Credentials requests
+
+The library supports multiple types of "clients". These clients
+generally differ in the required configuration parameters and
+afterwards in the functionality they provide. The "client credentials"
+client is a special kind of client which is not associated with a user
+account and can be only used to call the "clients" APIs.
+
+You can see all of the available endpoints in the
+[documentation](http://guide.docs.7pass.ctf.prosiebensat1.com/api)
+with the accessType parameter equal to `client`.
+
+```php
+$config = [
+  'environment' => 'qa' // Optional, defaults to 'production',
+  'client_id' => 'CLIENT_ID',
+  'client_secret' => 'CLIENT_SECRET'
+];
+
+// Creates the configuration object
+$ssoConfig = new P7\SSO\Configuration($config);
+
+// Pass the configuration to the SSO object
+$sso = new P7\SSO($ssoConfig);
+
+// Get the tokens using the client credentials grant type
+$tokens = $sso->authorization()->clientCredentials();
+
+// Use the client
+$client = $sso->clientCredentialsClient($tokens);
+$response = $client->post('checkPassword', [
+  'password' => 'PASSWORD'
+]);
+```
+
 ## Backoffice requests
 
 The library can also be used to perform "backoffice" requests. These

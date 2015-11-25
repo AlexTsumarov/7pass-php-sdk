@@ -39,6 +39,16 @@ class SSO {
     ]);
   }
 
+  public function clientCredentialsClient($accessToken) {
+    if(empty($accessToken)) {
+      throw new InvalidArgumentException('AccessToken is undefined');
+    }
+
+    return $this->client($accessToken, [
+      'base_uri' => '/api/client/',
+    ]);
+  }
+
   public function backofficeClient(array $customPayload = []) {
     $key = $this->config->backoffice_key;
 
