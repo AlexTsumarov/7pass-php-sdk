@@ -13,6 +13,10 @@ class Authorization {
     $this->config = $config;
   }
 
+  public function getConfig() {
+    return $this->config;
+  }
+
   public function authorizeUri(array $data) {
     $this->validateParams($data, ['redirect_uri']);
 
@@ -95,6 +99,37 @@ class Authorization {
     } catch(\DomainException $e) {
       throw new TokenSignatureException('Backoffice JWT token could not be signed', 0, $e);
     }
+  }
+
+  public function createAutologinJwt(TokenSet $tokenSet, array $data = []) {
+    if(empty($tokenSet->id_token)) {
+      throw new InvalidArgumentException('Missing id_token');
+    }
+
+    $data = array_merge([
+      'remember_me' => true,
+      'access_token' => $tokenSet->access_token,
+      'id_token' => $tokenSet->id_token
+    ], $data);
+
+    return JWT::encode($data, $this->config->client_secret, 'HS256');
+  }
+
+  public function autologinUri(TokenSet $tokenSet, array $data, array $tokenData = []) {
+    $this->validateParams($data, ['redirect_uri']);
+
+    $data = array_merge([
+      'client_id' => $this->config->client_id,
+    ], $data);
+
+    if(empty($data['nonce'])) {
+      $data['nonce'] = Nonce::generate();
+    }
+
+    $jwt = $this->createAutologinJwt($tokenSet, $tokenData);
+    $data['autologin'] = $jwt;
+
+    return $this->config->getOpenIdConfig()->authorization_endpoint . '?' . http_build_query($data);
   }
 
   protected function decodeIdToken($token) {

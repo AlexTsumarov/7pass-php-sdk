@@ -1,5 +1,6 @@
 <?php
 
+use Firebase\JWT\JWT;
 use \P7\SSO\Authorization;
 use \P7\SSO\Configuration;
 
@@ -30,6 +31,15 @@ class AuthorizationTest extends PHPUnit_Framework_TestCase
       ->setMethods($methods)
       ->setConstructorArgs([$configuration])
       ->getMock();
+  }
+
+  /**
+   * @vcr configuration_openid
+   */
+  public function testGetConfig()
+  {
+    $authorization = $this->getValidAuthorization();
+    $this->assertEquals(new Configuration($this->configDefault), $authorization->getConfig());
   }
 
   /**
@@ -68,6 +78,64 @@ class AuthorizationTest extends PHPUnit_Framework_TestCase
 
     $this->assertContains('id_token_hint=ID_TOKEN', $url);
     $this->assertContains('post_logout_redirect_uri=REDIRECT_URL', $url);
+  }
+
+  /**
+   * @vcr configuration_openid
+   */
+  public function testCreateAutologinJwt()
+  {
+    $authorization = $this->getValidAuthorization();
+
+    $tokenSet = new \P7\SSO\TokenSet([
+      'access_token' => 'ACCESS_TOKEN',
+      'id_token' => 'ID_TOKEN_TOKEN',
+      'expires_in' => 1234,
+      'received_at' => 5678
+    ]);
+
+    $loginToken = JWT::decode($authorization->createAutologinJwt($tokenSet),
+      $authorization->getConfig()->client_secret, ['HS256']);
+
+    $this->assertEquals((object)[
+      'access_token' => 'ACCESS_TOKEN',
+      'id_token' => 'ID_TOKEN_TOKEN',
+      'remember_me' => true
+    ], $loginToken);
+  }
+
+  /**
+   * @vcr configuration_openid
+   */
+  public function testAutologinUri()
+  {
+    $authorization = $this->getValidAuthorization();
+
+    $tokenSet = new \P7\SSO\TokenSet([
+      'access_token' => 'ACCESS_TOKEN',
+      'id_token' => 'ID_TOKEN_TOKEN',
+      'expires_in' => 1234,
+      'received_at' => 5678
+    ]);
+
+    $uri = $authorization->autologinUri($tokenSet, [
+      'redirect_uri' => 'REDIRECT_URI',
+    ], [
+      'remember_me' => false,
+    ]);
+
+    $config = $authorization->getConfig();
+
+    $parsed = parse_url($uri);
+    $this->assertEquals('/connect/v1.0/authorize', $parsed['path']);
+
+    $query = [];
+    parse_str($parsed['query'], $query);
+    $this->assertArraySubset([
+      'client_id' => $config->client_id,
+      'redirect_uri' => 'REDIRECT_URI',
+      'autologin' => $authorization->createAutologinJwt($tokenSet, ['remember_me' => false])
+    ], $query);
   }
 
   /**
