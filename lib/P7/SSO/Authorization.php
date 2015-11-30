@@ -107,7 +107,7 @@ class Authorization {
     }
 
     $data = array_merge([
-      'remember_me' => true,
+      'remember_me' => false,
       'access_token' => $tokenSet->access_token,
       'id_token' => $tokenSet->id_token
     ], $data);
@@ -115,21 +115,17 @@ class Authorization {
     return JWT::encode($data, $this->config->client_secret, 'HS256');
   }
 
-  public function autologinUri(TokenSet $tokenSet, array $data, array $tokenData = []) {
-    $this->validateParams($data, ['redirect_uri']);
+  public function autologinUri(TokenSet $tokenSet, array $params, array $tokenData = []) {
+    $this->validateParams($params, ['redirect_uri']);
 
-    $data = array_merge([
+    $params = array_merge([
       'client_id' => $this->config->client_id,
-    ], $data);
-
-    if(empty($data['nonce'])) {
-      $data['nonce'] = Nonce::generate();
-    }
+    ], $params);
 
     $jwt = $this->createAutologinJwt($tokenSet, $tokenData);
-    $data['autologin'] = $jwt;
+    $params['autologin'] = $jwt;
 
-    return $this->config->getOpenIdConfig()->authorization_endpoint . '?' . http_build_query($data);
+    return $this->config->getOpenIdConfig()->authorization_endpoint . '?' . http_build_query($params);
   }
 
   protected function decodeIdToken($token) {

@@ -100,7 +100,7 @@ class AuthorizationTest extends PHPUnit_Framework_TestCase
     $this->assertEquals((object)[
       'access_token' => 'ACCESS_TOKEN',
       'id_token' => 'ID_TOKEN_TOKEN',
-      'remember_me' => true
+      'remember_me' => false
     ], $loginToken);
   }
 
@@ -121,7 +121,7 @@ class AuthorizationTest extends PHPUnit_Framework_TestCase
     $uri = $authorization->autologinUri($tokenSet, [
       'redirect_uri' => 'REDIRECT_URI',
     ], [
-      'remember_me' => false,
+      'remember_me' => true,
     ]);
 
     $config = $authorization->getConfig();
@@ -134,7 +134,7 @@ class AuthorizationTest extends PHPUnit_Framework_TestCase
     $this->assertArraySubset([
       'client_id' => $config->client_id,
       'redirect_uri' => 'REDIRECT_URI',
-      'autologin' => $authorization->createAutologinJwt($tokenSet, ['remember_me' => false])
+      'autologin' => $authorization->createAutologinJwt($tokenSet, ['remember_me' => true])
     ], $query);
   }
 
