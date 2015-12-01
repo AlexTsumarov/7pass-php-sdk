@@ -328,7 +328,7 @@ When you register new users using the
 you might want to bounce them to the 7Pass SSO service so that the user's session is created and the user logged in.
 
 This SDK provides a method called `autologinUri()` which can be used to generate the redirect (bounce) URL.
-The method accepts a `TokenSet` as the its first parameter. You can retrieve the user's tokens when using the registration API
+The method accepts a `TokenSet` as its first parameter. You can retrieve the user's tokens when using the registration API
 by providing the `scope` parameter. See the [registration API](http://guide.docs.7pass.ctf.prosiebensat1.com/api/index.html#api-Accounts-ActionSessionRegistration)
 documentation for more details.
 
