@@ -321,6 +321,27 @@ The response will be as usual. Once you get the tokens, the 7Pass SSO
 service will act as if the access token has been obtained using the
 "standard" way.
 
+## Client/backoffice registration
+
+When you register new users using
+[client or backoffice registration API](http://guide.docs.7pass.ctf.prosiebensat1.com/api/index.html#api-Accounts-ActionSessionRegistration),
+you might want to bounce them to SSO service so user's session is created.
+
+This SDK provides a method `autologinUri()` which can be used to generate a redirect URL for you.
+The method accepts `TokenSet` as first parameter. You can retrieve user's tokens when using registration API
+by providing `scope` parameter. See [registration API](http://guide.docs.7pass.ctf.prosiebensat1.com/api/index.html#api-Accounts-ActionSessionRegistration)
+documentation for more details.
+
+```
+$uri = $sso->authorization()->autologinUri($tokens, [
+    'redirect_uri' => 'https://example.com/' // Required.
+], [
+    'remember_me' => true // Default value: false
+])
+
+// Redirect user to $uri
+```
+
 ## Caching
 
 Before the library can work properly, it needs to fetch some
