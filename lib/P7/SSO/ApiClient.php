@@ -169,6 +169,9 @@ class ApiClient {
         ];
       }
 
+      if(!is_string($error['description'])){
+        $error['description'] = json_encode($error['description']);
+      }
       $message = empty($error['description']) ? $error['message'] : $error['message'] . ' - ' . $error['description'];
       throw new ApiException($message, $statusCode, $e);
     }
